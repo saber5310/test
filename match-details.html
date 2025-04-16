@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Match Details</title>
+        <link rel="stylesheet" href="api-football.css">
+    </head>
+    <body>
+        <div id="match-details-container">
+            <div class="loading">Loading match details...</div>
+        </div>
+
+        <script>
+            // دالة لجلب تفاصيل المباراة
+            async function fetchMatchDetails() {
+                const fixtureId = new URLSearchParams(window.location.search).get('id');
+                if (!fixtureId) {
+                    document.getElementById('match-details-container').innerHTML = 
+                        '<div class="error">No match ID provided</div>';
+                    return;
+                }
+
+                const apiKey = '376800a4f1a5582465b88e9c37d3f326';
+                const url = `https://v3.football.api-sports.io/fixtures?id=${fixtureId}`;
+                
+                try {
+                    const response = await fetch(url, {
+                        headers: {
+                            'x-rapidapi-key': apiKey,
+                            'x-rapidapi-host': 'v3.football.api-sports.io'
+                        }
+                    });
+                    const data = await response.json();
+                    displayMatchDetails(data.response[0]);
+                } catch (error) {
+                    console.error('Error fetching match details:', error);
+                    document.getElementById('match-details-container').innerHTML = 
+                        '<div class="error">Failed to load match details. Please try again later.</div>';
+                }
+            }
+
+            // دالة لعرض تفاصيل المباراة
+            function displayMatchDetails(match) {
+                const container = document.getElementById('match-details-container');
+                const matchDate = new Date(match.fixture.timestamp * 1000);
+                const matchTime = matchDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                const matchDateFormatted = matchDate.toLocaleDateString();
+
+                // تحضير أحداث المباراة
+                let eventsHtml = '';
+                if (match.events && match.events.length > 0) {
+                    eventsHtml = '<h3>Match Events</h3><div class="events-container">';
+                    match.events.forEach(event => {
+                        eventsHtml += `
+                            <div class="event">
+                                <span class="event-time">${event.time.elapsed}'</span>
+                                <span class="event-type ${event.type.toLowerCase()}">${event.type}</span>
+                                <span class="event-team">${event.team.name}</span>
+                                <span class="event-player">${event.player.name}</span>
+                                ${event.detail === 'Normal Goal' ? '⚽' : ''}
+                                ${event.detail === 'Yellow Card' ? '🟨' : ''}
+                                ${event.detail === 'Red Card' ? '🟥' : ''}
+                                ${event.detail === 'Penalty' ? '⏏️' : ''}
+                            </div>
+                        `;
+                    });
+                    eventsHtml += '</div>';
+                }
+
+                // تحضير إحصائيات المباراة
+                let statsHtml = '';
+                if (match.statistics && match.statistics.length > 0) {
+                    statsHtml = '<h3>Statistics</h3><div class="stats-container">';
+                    
+                    // إحصائيات الفريق المنزلي
+                    const homeStats = match.statistics.find(s => s.team.id === match.teams.home.id);
+                    // إحصائيات الفريق الضيف
+                    const awayStats = match.statistics.find(s => s.team.id === match.teams.away.id);
+                    
+                    if (homeStats && awayStats) {
+                        statsHtml += `
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Statistic</th>
+                                        <th>${match.teams.home.name}</th>
+                                        <th>${match.teams.away.name}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        `;
+                        
+                        homeStats.statistics.forEach((stat, index) => {
+                            const awayStat = awayStats.statistics[index];
+                            if (stat.type === 'Total Shots') {
+                                statsHtml += `
+                                    <tr>
+                                        <td>${stat.type}</td>
+                                        <td>${stat.value}</td>
+                                        <td>${awayStat.value}</td>
+                                    </tr>
+                                `;
+                            }
+                        });
+                        
+                        statsHtml += `
+                                </tbody>
+                            </table>
+                        `;
+                    }
+                    
+                    statsHtml += '</div>';
+                }
+
+                container.innerHTML = `
+                    <div class="match-details-card">
+                        <div class="league-info">
+                            <img src="${match.league.logo}" alt="${match.league.name}" class="league-logo">
+                            <span>${match.league.name} - ${match.league.round}</span>
+                        </div>
+                        
+                        <div class="match-header">
+                            <div class="match-date">${matchDateFormatted} at ${matchTime}</div>
+                            <div class="match-venue">${match.fixture.venue.name}, ${match.fixture.venue.city}</div>
+                            <div class="match-status ${getStatusClass(match.fixture.status.short)}">
+                                ${match.fixture.status.long}
+                            </div>
+                        </div>
+                        
+                        <div class="teams-details">
+                            <div class="team-detail home-team">
+                                <img src="${match.teams.home.logo}" alt="${match.teams.home.name}" class="team-logo-large">
+                                <span class="team-name">${match.teams.home.name}</span>
+                                <span class="team-score">${match.goals.home}</span>
+                            </div>
+                            
+                            <div class="vs-details">
+                                <span>VS</span>
+                            </div>
+                            
+                            <div class="team-detail away-team">
+                                <span class="team-score">${match.goals.away}</span>
+                                <img src="${match.teams.away.logo}" alt="${match.teams.away.name}" class="team-logo-large">
+                                <span class="team-name">${match.teams.away.name}</span>
+                            </div>
+                        </div>
+                        
+                        ${eventsHtml}
+                        ${statsHtml}
+                        
+                        <div class="match-officials">
+                            <h3>Match Officials</h3>
+                            <div class="referees">
+                                ${match.fixture.referee ? `<div>Referee: ${match.fixture.referee}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // دالة للحصول على كلاس حالة المباراة
+            function getStatusClass(status) {
+                const statusMap = {
+                    'FT': 'finished',
+                    'HT': 'inprogress',
+                    '1H': 'inprogress',
+                    '2H': 'inprogress',
+                    'NS': 'scheduled',
+                    'PST': 'postponed',
+                    'CANC': 'cancelled'
+                };
+                return `status-${statusMap[status] || 'scheduled'}`;
+            }
+
+            // جلب تفاصيل المباراة عند تحميل الصفحة
+            document.addEventListener('DOMContentLoaded', fetchMatchDetails);
+        </script>
+    </body>
+</html>

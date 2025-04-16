@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> ليجــــــا شوت </title>
+        <link rel="stylesheet" href="api-football.css">
+    </head>
+    <body>
+        <h1> ليجــــــا شـــوت </h1>
+        <div id="matches-container"></div>
+
+        <script>
+            // دالة للحصول على التاريخ الحالي وتنسيقه
+            function getCurrentDate() {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+
+            // دالة لجلب بيانات المباريات
+            async function fetchMatches() {
+                const currentDate = getCurrentDate();
+                const apiKey = '376800a4f1a5582465b88e9c37d3f326';
+                const url = `https://v3.football.api-sports.io/fixtures?date=${currentDate}`;
+                
+                try {
+                    const response = await fetch(url, {
+                        headers: {
+                            'x-rapidapi-key': apiKey,
+                            'x-rapidapi-host': 'v3.football.api-sports.io'
+                        }
+                    });
+                    const data = await response.json();
+                    displayMatches(data.response);
+                } catch (error) {
+                    console.error('Error fetching matches:', error);
+                    document.getElementById('matches-container').innerHTML = 
+                        '<div class="error">Failed to load matches. Please try again later.</div>';
+                }
+            }
+
+            // دالة لعرض المباريات على شكل كروت
+            function displayMatches(matches) {
+                const container = document.getElementById('matches-container');
+                
+                if (!matches || matches.length === 0) {
+                    container.innerHTML = '<div class="no-matches">No matches scheduled for today.</div>';
+                    return;
+                }
+                
+                // تجميع المباريات حسب الدوري
+                const matchesByLeague = {};
+                matches.forEach(match => {
+                    const leagueName = match.league.name;
+                    if (!matchesByLeague[leagueName]) {
+                        matchesByLeague[leagueName] = [];
+                    }
+                    matchesByLeague[leagueName].push(match);
+                });
+                
+                // عرض المباريات
+                let html = `<div class="date-header">Matches for ${getCurrentDate()}</div>`;
+                
+                for (const league in matchesByLeague) {
+                    html += `<div class="league-header">${league}</div>`;
+                    
+                    matchesByLeague[league].forEach(match => {
+                        const matchTime = new Date(match.fixture.timestamp * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                        
+                        html += `
+                            <div class="match-card" onclick="openMatchDetails(${match.fixture.id})">
+                                <div class="teams">
+                                    <div class="team">
+                                        <img src="${match.teams.home.logo}" alt="${match.teams.home.name}" class="team-logo">
+                                        <span class="team-name">${match.teams.home.name}</span>
+                                    </div>
+                                    <div class="vs">
+                                        <div class="score">${match.goals.home} - ${match.goals.away}</div>
+                                        <div>VS</div>
+                                    </div>
+                                    <div class="team">
+                                        <img src="${match.teams.away.logo}" alt="${match.teams.away.name}" class="team-logo">
+                                        <span class="team-name">${match.teams.away.name}</span>
+                                    </div>
+                                </div>
+                                <div class="match-info">
+                                    <span class="match-time">${matchTime}</span>
+                                    <span class="match-venue">${match.fixture.venue.name}</span>
+                                </div>
+                                <div class="match-status ${getStatusClass(match.fixture.status.short)}">
+                                    ${match.fixture.status.long}
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                container.innerHTML = html;
+            }
+
+            // دالة لفتح تفاصيل المباراة في صفحة جديدة
+            function openMatchDetails(fixtureId) {
+                window.open(`match-details.html?id=${fixtureId}`, '_blank');
+            }
+
+            // دالة للحصول على كلاس حالة المباراة
+            function getStatusClass(status) {
+                const statusMap = {
+                    'FT': 'finished',
+                    'HT': 'inprogress',
+                    '1H': 'inprogress',
+                    '2H': 'inprogress',
+                    'NS': 'scheduled',
+                    'PST': 'postponed',
+                    'CANC': 'cancelled'
+                };
+                return `status-${statusMap[status] || 'scheduled'}`;
+            }
+
+            // جلب المباريات عند تحميل الصفحة
+            document.addEventListener('DOMContentLoaded', fetchMatches);
+        </script>
+    </body>
+</html>
