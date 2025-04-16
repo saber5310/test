@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>تفاصيل المباراة - ليجا شوت</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="api-football.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <h1 class="logo">
+                <i class="fas fa-futbol"></i> ليجا شوت
+            </h1>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> العودة
+            </a>
+        </div>
+    </header>
+
+    <div class="match-details-container">
+        <div id="match-details-content">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i> جاري تحميل تفاصيل المباراة...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // دالة لجلب تفاصيل المباراة
+        async function fetchMatchDetails() {
+            const fixtureId = new URLSearchParams(window.location.search).get('id');
+            if (!fixtureId) {
+                showError('لم يتم تحديد مباراة');
+                return;
+            }
+
+            const apiKey = 'YOUR_API_KEY'; // استبدل بمفتاح API الخاص بك
+            const url = `https://v3.football.api-sports.io/fixtures?id=${fixtureId}`;
+            
+            try {
+                const response = await fetch(url, {
+                    headers: {
+                        'x-rapidapi-key': apiKey,
+                        'x-rapidapi-host': 'v3.football.api-sports.io'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
+                const data = await response.json();
+                
+                if (data.response && data.response.length > 0) {
+                    displayMatchDetails(data.response[0]);
+                } else {
+                    throw new Error('No match details found');
+                }
+            } catch (error) {
+                console.error('Error fetching match details:', error);
+                showError('فشل تحميل التفاصيل. يرجى المحاولة لاحقاً.');
+            }
+        }
+
+        // دالة لعرض تفاصيل المباراة
+        function displayMatchDetails(match) {
+            const container = document.getElementById('match-details-content');
+            const matchDate = new Date(match.fixture.timestamp * 1000);
+            const matchTime = matchDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            const matchDateFormatted = matchDate.toLocaleDateString('ar-EG', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            const statusClass = getStatusClass(match.fixture.status.short);
+            const statusText = match.fixture.status.long;
+
+            container.innerHTML = `
+                <div class="match-details-card">
+                    ${createLeagueHeader(match)}
+                    ${createMatchHeader(match, matchDateFormatted, matchTime, statusClass, statusText)}
+                    ${createTeamsSection(match)}
+                    ${createEventsSection(match)}
+                    ${createStatsSection(match)}
+                    ${createOfficialsSection(match)}
+                </div>
+            `;
+        }
+
+        // دالة لإنشاء رأس الدوري
+        function createLeagueHeader(match) {
+            return `
+                <div class="league-info">
+                    <img src="${match.league.logo}" alt="${match.league.name}" class="league-logo">
+                    <span>${match.league.name} - ${match.league.round}</span>
+                </div>
+            `;
+        }
+
+        // دالة لإنشاء رأس المباراة
+        function createMatchHeader(match, date, time, statusClass, statusText) {
+            return `
+                <div class="match-header">
+                    <h1 class="match-title">${match.teams.home.name} vs ${match.teams.away.name}</h1>
+                    <div class="match-date">${date} - ${time}</div>
+                    <div class="match-venue">${match.fixture.venue.name}, ${match.fixture.venue.city}</div>
+                    <div class="match-status-badge ${statusClass}">${statusText}</div>
+                </div>
+            `;
+        }
+
+        // دالة لإنشاء قسم الفرق
+        function createTeamsSection(match) {
+            return `
+                <div class="teams-details">
+                    <div class="team-detail home-team">
+                        <img src="${match.teams.home.logo}" alt="${match.teams.home.name}" class="team-logo-large">
+                        <span class="team-name">${match.teams.home.name}</span>
+                        <span class="team-score">${match.goals.home}</span>
+                    </div>
+                    
+                    <div class="vs-details">
+                        <span>VS</span>
+                    </div>
+                    
+                    <div class="team-detail away-team">
+                        <span class="team-score">${match.goals.away}</span>
+                        <img src="${match.teams.away.logo}" alt="${match.teams.away.name}" class="team-logo-large">
+                        <span class="team-name">${match.teams.away.name}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // دالة لإنشاء قسم الأحداث
+        function createEventsSection(match) {
+            if (!match.events || match.events.length === 0) return '';
+            
+            let eventsHtml = `
+                <div class="events-container">
+                    <h2><i class="fas fa-list-alt"></i> أحداث المباراة</h2>
+                    <div class="events-list">
+            `;
+            
+            match.events.forEach(event => {
+                eventsHtml += `
+                    <div class="event">
+                        <span class="event-time">${event.time.elapsed}'</span>
+                        <span class="event-type ${event.type.toLowerCase()}">
+                            ${getEventIcon(event.type, event.detail)} ${event.type}
+                        </span>
+                        <span class="event-team">${event.team.name}</span>
+                        <span class="event-player">${event.player.name}</span>
+                    </div>
+                `;
+            });
+            
+            eventsHtml += `
+                    </div>
+                </div>
+            `;
+            
+            return eventsHtml;
+        }
+
+        // دالة لإنشاء قسم الإحصائيات
+        function createStatsSection(match) {
+            if (!match.statistics || match.statistics.length === 0) return '';
+            
+            let statsHtml = `
+                <div class="stats-container">
+                    <h2><i class="fas fa-chart-bar"></i> إحصائيات المباراة</h2>
+                    <div class="stats-grid">
+            `;
+            
+            const homeStats = match.statistics.find(s => s.team.id === match.teams.home.id);
+            const awayStats = match.statistics.find(s => s.team.id === match.teams.away.id);
+            
+            if (homeStats && awayStats) {
+                const importantStats = [
+                    'Shots on Goal', 'Shots off Goal', 'Total Shots',
+                    'Ball Possession', 'Corner Kicks', 'Fouls', 'Offsides'
+                ];
+                
+                importantStats.forEach(statName => {
+                    const homeStat = homeStats.statistics.find(s => s.type === statName);
+                    const awayStat = awayStats.statistics.find(s => s.type === statName);
+                    
+                    if (homeStat && awayStat) {
+                        statsHtml += `
+                            <div class="stat-item">
+                                <div class="stat-name">${statName}</div>
+                                <div class="stat-values">
+                                    <span class="home-value">${homeStat.value}</span>
+                                    <div class="stat-bar">
+                                        <div class="bar-fill home-fill" style="width: ${getStatPercentage(homeStat.value, awayStat.value)}%"></div>
+                                    </div>
+                                    <span class="away-value">${awayStat.value}</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+            
+            statsHtml += `
+                    </div>
+                </div>
+            `;
+            
+            return statsHtml;
+        }
+
+        // دالة لإنشاء قسم الحكام
+        function createOfficialsSection(match) {
+            if (!match.fixture.referee) return '';
+            
+            return `
+                <div class="officials-container">
+                    <h2><i class="fas fa-whistle"></i> طاقم التحكيم</h2>
+                    <div class="officials-list">
+                        <div class="official">
+                            <i class="fas fa-user-tie"></i>
+                            <span>الحكم الرئيسي: ${match.fixture.referee}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // دالة لعرض الخطأ
+        function showError(message) {
+            document.getElementById('match-details-content').innerHTML = `
+                <div class="error">
+                    <i class="fas fa-exclamation-triangle"></i> ${message}
+                </div>
+            `;
+        }
+
+        // دالة للحصول على أيقونة الحدث
+        function getEventIcon(type, detail) {
+            if (type === 'Goal') return '<i class="fas fa-futbol"></i>';
+            if (type === 'Card' && detail === 'Yellow Card') return '<i class="fas fa-square yellow-card"></i>';
+            if (type === 'Card' && detail === 'Red Card') return '<i class="fas fa-square red-card"></i>';
+            if (type === 'subst') return '<i class="fas fa-exchange-alt"></i>';
+            return '<i class="fas fa-circle"></i>';
+        }
+
+        // دالة لحساب النسبة المئوية للإحصائية
+        function getStatPercentage(homeValue, awayValue) {
+            const home = parseStatValue(homeValue);
+            const away = parseStatValue(awayValue);
+            const total = home + away;
+            return total > 0 ? Math.round((home / total) * 100) : 50;
+        }
+
+        // دالة لتحويل قيمة الإحصائية إلى رقم
+        function parseStatValue(value) {
+            if (typeof value === 'number') return value;
+            if (value.includes('%')) return parseFloat(value);
+            return parseInt(value) || 0;
+        }
+
+        // دالة للحصول على كلاس حالة المباراة
+        function getStatusClass(status) {
+            const statusMap = {
+                'FT': 'finished',
+                'HT': 'inprogress',
+                '1H': 'inprogress',
+                '2H': 'inprogress',
+                'ET': 'inprogress',
+                'P': 'inprogress',
+                'BT': 'inprogress',
+                'NS': 'scheduled',
+                'PST': 'postponed',
+                'CANC': 'cancelled'
+            };
+            return statusMap[status] || 'scheduled';
+        }
+
+        // جلب تفاصيل المباراة عند التحميل
+        document.addEventListener('DOMContentLoaded', fetchMatchDetails);
+    </script>
+</body>
+</html>
