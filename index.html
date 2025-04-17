@@ -7,10 +7,294 @@
         <link rel="stylesheet" href="api-football.css">
       <!-- Google AdSense -->
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
-
+        <style>
+            /* التنسيقات الجديدة */
+            .country-tabs {
+                display: flex;
+                justify-content: center;
+                margin: 15px 0;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .country-tab {
+                padding: 8px 16px;
+                background-color: #f0f0f0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: all 0.3s;
+                color: black;
+            }
+            
+            .country-tab:hover {
+                background-color: #ddd;
+            }
+            
+            .country-tab.active {
+                background-color: #3f51b5;
+                color: white;
+            }
+            
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            
+            .dropdown-btn {
+                padding: 8px 16px;
+                background-color: #f0f0f0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                color: black;
+            }
+            
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                border-radius: 4px;
+                max-height: 300px;
+                overflow-y: auto;
+            }
+            
+            .dropdown-content a {
+                color: black;
+                padding: 8px 12px;
+                text-decoration: none;
+                display: block;
+            }
+            
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+            
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+            
+            /* بقية التنسيقات كما هي */
+            #tabs {
+                display: flex;
+                justify-content: center;
+                margin: 15px 0;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .tab-button {
+                padding: 8px 16px;
+                background-color: #f0f0f0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: all 0.3s;
+                color: black;
+            }
+            
+            .tab-button:hover {
+                background-color: #ddd;
+            }
+            
+            .tab-button.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+            
+            .match-card {
+                color: black;
+                margin-bottom: 15px;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            
+            .team-name, .vs, .score, .match-time, .match-venue {
+                color: black !important;
+            }
+            
+            .match-status {
+                color: white !important;
+                padding: 5px;
+                text-align: center;
+                font-weight: bold;
+            }
+            
+            .status-finished {
+                background-color: #4CAF50;
+            }
+            
+            .status-inprogress {
+                background-color: #2196F3;
+            }
+            
+            .status-scheduled {
+                background-color: #ff9800;
+            }
+            
+            .status-cancelled {
+                background-color: #f44336;
+            }
+            
+            .status-postponed {
+                background-color: #9e9e9e;
+            }
+            
+            .date-header {
+                text-align: center;
+                font-size: 1.3em;
+                margin: 20px 0;
+                color: #333;
+                font-weight: bold;
+            }
+            
+            .league-header {
+                color: black;
+                font-weight: bold;
+                margin: 15px 0 8px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 15px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                background-color: #f8f9fa;
+            }
+            
+            .league-info {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .league-logo {
+                width: 24px;
+                height: 24px;
+                object-fit: contain;
+            }
+            
+            .league-name {
+                font-size: 1.1em;
+                font-weight: bold;
+            }
+            
+            .league-type {
+                font-size: 0.9em;
+                color: #6c757d;
+                background-color: #e9ecef;
+                padding: 2px 8px;
+                border-radius: 12px;
+            }
+            
+            .country-info {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .country-name {
+                font-size: 1em;
+                font-weight: bold;
+                color: #2c7be5;
+            }
+            
+            .country-flag {
+                width: 24px;
+                height: 18px;
+                border-radius: 3px;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            }
+            
+            .no-matches {
+                text-align: center;
+                padding: 20px;
+                font-size: 1.2em;
+                color: #6c757d;
+            }
+            
+            .teams {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px;
+                background-color: white;
+            }
+            
+            .team {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 30%;
+            }
+            
+            .team-logo {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 5px;
+            }
+            
+            .vs {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 30%;
+            }
+            
+            .score {
+                font-weight: bold;
+                font-size: 1.2em;
+                margin-bottom: 5px;
+            }
+            
+            .match-info {
+                display: flex;
+                justify-content: space-between;
+                padding: 8px 15px;
+                background-color: #f5f5f5;
+                font-size: 0.9em;
+            }
+        </style>
     </head>
     <body>
         <h1> ليجــــــا شـــوت </h1>
+        
+        <!-- تبويبات الدول -->
+        <div class="country-tabs" id="country-tabs">
+            <button class="country-tab active" onclick="filterByCountry('all')">الكل</button>
+            <button class="country-tab" onclick="filterByCountry('Egypt')">مصر</button>
+            <button class="country-tab" onclick="filterByCountry('England')">إنجلترا</button>
+            <button class="country-tab" onclick="filterByCountry('Spain')">إسبانيا</button>
+            <button class="country-tab" onclick="filterByCountry('Germany')">ألمانيا</button>
+            <button class="country-tab" onclick="filterByCountry('Italy')">إيطاليا</button>
+            
+            <!-- القائمة المنسدلة للدول الأخرى -->
+            <div class="dropdown">
+                <button class="dropdown-btn">دول أخرى ▼</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="filterByCountry('France')">فرنسا</a>
+                    <a href="#" onclick="filterByCountry('Portugal')">البرتغال</a>
+                    <a href="#" onclick="filterByCountry('Netherlands')">هولندا</a>
+                    <a href="#" onclick="filterByCountry('Belgium')">بلجيكا</a>
+                    <a href="#" onclick="filterByCountry('Turkey')">تركيا</a>
+                    <a href="#" onclick="filterByCountry('Russia')">روسيا</a>
+                    <a href="#" onclick="filterByCountry('Morocco')">المغرب</a>
+                    <a href="#" onclick="filterByCountry('Algeria')">الجزائر</a>
+                    <a href="#" onclick="filterByCountry('Tunisia')">تونس</a>
+                    <a href="#" onclick="filterByCountry('Saudi Arabia')">السعودية</a>
+                    <a href="#" onclick="filterByCountry('Qatar')">قطر</a>
+                    <a href="#" onclick="filterByCountry('UAE')">الإمارات</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- تبويبات حالة المباريات -->
         <div id="tabs">
             <button class="tab-button active" onclick="filterMatches('all')">الكل</button>
             <button class="tab-button" onclick="filterMatches('inprogress')">جارية</button>
@@ -18,6 +302,7 @@
             <button class="tab-button" onclick="filterMatches('finished')">منتهية</button>
             <button class="tab-button" onclick="filterMatches('cancelled')">ملغاة</button>
         </div>
+        
         <div id="matches-container"></div>
 
         <footer>
@@ -34,57 +319,9 @@
         <script>
             // تخزين المباريات بشكل عام للتصفية لاحقاً
             let allMatches = [];
+            let currentCountryFilter = 'all';
+            let currentStatusFilter = 'all';
             
-            // قوائم التصنيف حسب الأولوية
-            const continentalLeagues = [
-                // البطولات القارية الأوروبية
-                'UEFA Champions League',
-                'UEFA Europa League',
-                'UEFA Europa Conference League',
-                'UEFA Nations League',
-                
-                // البطولات القارية الأفريقية
-                'CAF Champions League',
-                'CAF Confederation Cup',
-                'Africa Cup of Nations'
-            ];
-            
-            const topEuropeanLeagues = [
-                'Premier League',         // إنجلترا
-                'La Liga',                // إسبانيا
-                'Ligue 1',                // فرنسا
-                'Serie A',                // إيطاليا
-                'Bundesliga',             // ألمانيا
-                'Primeira Liga',          // البرتغال
-                'Eredivisie',             // هولندا
-                'Belgian Pro League'      // بلجيكا
-            ];
-            
-            const africanLeagues = [
-                'Egyptian Premier League',
-                'Algerian Ligue 1',
-                'Tunisian Ligue 1',
-                'Botola Pro',
-                'South African Premier Division',
-                'Nigerian Professional Football League'
-            ];
-            
-            const otherEuropeanLeagues = [
-                'Scottish Premiership',
-                'Russian Premier League',
-                'Ukrainian Premier League',
-                'Swiss Super League',
-                'Austrian Bundesliga',
-                'Danish Superliga',
-                'Norwegian Eliteserien',
-                'Swedish Allsvenskan',
-                'Polish Ekstraklasa',
-                'Greek Super League',
-                'Czech First League',
-                'Croatian First Football League',
-                'Serbian SuperLiga'
-            ];
-
             // دالة للحصول على التاريخ الحالي وتنسيقه
             function getCurrentDate() {
                 const today = new Date();
@@ -108,53 +345,61 @@
                         }
                     });
                     const data = await response.json();
-                    allMatches = data.response;
-                    displayMatches(allMatches);
+                    allMatches = data.response || [];
+                    applyFilters();
                 } catch (error) {
                     console.error('Error fetching matches:', error);
                     document.getElementById('matches-container').innerHTML = 
-                        '<div class="error">Failed to load matches. Please try again later.</div>';
+                        '<div class="error">فشل تحميل المباريات. يرجى المحاولة لاحقاً.</div>';
                 }
             }
 
-            // دالة لتصفية المباريات حسب الحالة
+            // دالة التصفية حسب الدولة
+            function filterByCountry(country) {
+                currentCountryFilter = country;
+                
+                // تحديث الأزرار النشطة
+                document.querySelectorAll('.country-tab').forEach(button => {
+                    button.classList.remove('active');
+                });
+                event.target.classList.add('active');
+                
+                applyFilters();
+            }
+
+            // دالة التصفية حسب حالة المباراة
             function filterMatches(status) {
+                currentStatusFilter = status;
+                
                 // تحديث الأزرار النشطة
                 document.querySelectorAll('.tab-button').forEach(button => {
                     button.classList.remove('active');
                 });
                 event.target.classList.add('active');
                 
-                if (status === 'all') {
-                    displayMatches(allMatches);
-                    return;
-                }
-                
-                const filteredMatches = allMatches.filter(match => {
-                    const matchStatus = getStatusClass(match.fixture.status.short);
-                    return matchStatus === `status-${status}`;
-                });
-                
-                displayMatches(filteredMatches);
+                applyFilters();
             }
 
-            // دالة لترتيب المباريات حسب الأولوية
-            function sortMatchesByPriority(matches) {
-                return matches.sort((a, b) => {
-                    const aLeague = a.league.name;
-                    const bLeague = b.league.name;
-                    
-                    // تحديد أولوية كل دوري
-                    const getPriority = (league) => {
-                        if (continentalLeagues.includes(league)) return 1;
-                        if (topEuropeanLeagues.includes(league)) return 2;
-                        if (africanLeagues.includes(league)) return 3;
-                        if (otherEuropeanLeagues.includes(league)) return 4;
-                        return 5;
-                    };
-                    
-                    return getPriority(aLeague) - getPriority(bLeague);
-                });
+            // دالة تطبيق الفلاتر
+            function applyFilters() {
+                let filteredMatches = allMatches;
+                
+                // التصفية حسب الدولة
+                if (currentCountryFilter !== 'all') {
+                    filteredMatches = filteredMatches.filter(match => 
+                        match.league.country === currentCountryFilter
+                    );
+                }
+                
+                // التصفية حسب الحالة
+                if (currentStatusFilter !== 'all') {
+                    filteredMatches = filteredMatches.filter(match => {
+                        const matchStatus = getStatusClass(match.fixture.status.short);
+                        return matchStatus === `status-${currentStatusFilter}`;
+                    });
+                }
+                
+                displayMatches(filteredMatches);
             }
 
             // دالة لعرض المباريات على شكل كروت
@@ -166,12 +411,9 @@
                     return;
                 }
                 
-                // ترتيب المباريات حسب الأولوية
-                const sortedMatches = sortMatchesByPriority(matches);
-                
                 // تجميع المباريات حسب الدوري
                 const matchesByLeague = {};
-                sortedMatches.forEach(match => {
+                matches.forEach(match => {
                     const leagueName = match.league.name;
                     if (!matchesByLeague[leagueName]) {
                         matchesByLeague[leagueName] = [];
@@ -190,13 +432,8 @@
                     const leagueLogo = firstMatch.league.logo || '';
                     const leagueType = firstMatch.league.type || 'بطولة';
                     
-                    // تحديد كلاس خاص حسب الأولوية
-                    const leagueClass = continentalLeagues.includes(league) ? 'continental-league' : 
-                                      topEuropeanLeagues.includes(league) ? 'top-european-league' :
-                                      africanLeagues.includes(league) ? 'african-league' : 'other-league';
-                    
                     html += `
-                        <div class="league-header ${leagueClass}">
+                        <div class="league-header">
                             <div class="league-info">
                                 ${leagueLogo ? `<img src="${leagueLogo}" alt="${league}" class="league-logo">` : ''}
                                 <span class="league-name">${league}</span>
@@ -274,207 +511,5 @@
             // جلب المباريات عند تحميل الصفحة
             document.addEventListener('DOMContentLoaded', fetchMatches);
         </script>
-        
-        <style>
-            #tabs {
-                display: flex;
-                justify-content: center;
-                margin: 20px 0;
-                flex-wrap: wrap;
-            }
-            
-            .tab-button {
-                padding: 8px 16px;
-                margin: 0 5px;
-                background-color: #f0f0f0;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-weight: bold;
-                transition: all 0.3s;
-                color: black;
-            }
-            
-            .tab-button:hover {
-                background-color: #ddd;
-            }
-            
-            .tab-button.active {
-                background-color: #4CAF50;
-                color: white;
-            }
-            
-            .match-card {
-                color: black;
-                margin-bottom: 15px;
-                border-radius: 8px;
-                overflow: hidden;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            }
-            
-            .team-name, .vs, .score, .match-time, .match-venue {
-                color: black !important;
-            }
-            
-            .match-status {
-                color: white !important;
-                padding: 5px;
-                text-align: center;
-                font-weight: bold;
-            }
-            
-            .status-finished {
-                background-color: #4CAF50;
-            }
-            
-            .status-inprogress {
-                background-color: #2196F3;
-            }
-            
-            .status-scheduled {
-                background-color: #ff9800;
-            }
-            
-            .status-cancelled {
-                background-color: #f44336;
-            }
-            
-            .status-postponed {
-                background-color: #9e9e9e;
-            }
-            
-            .date-header {
-                text-align: center;
-                font-size: 1.3em;
-                margin: 20px 0;
-                color: #333;
-                font-weight: bold;
-            }
-            
-            .league-header {
-                color: black;
-                font-weight: bold;
-                margin: 15px 0 8px 0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 12px 15px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            
-            /* تنسيقات خاصة حسب الأولوية */
-            .continental-league {
-                background-color: #4a148c;
-                color: white;
-            }
-            
-            .top-european-league {
-                background-color: #1a237e;
-                color: white;
-            }
-            
-            .african-league {
-                background-color: #006064;
-                color: white;
-            }
-            
-            .other-league {
-                background-color: #f8f9fa;
-            }
-            
-            .league-info {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-            
-            .league-logo {
-                width: 24px;
-                height: 24px;
-                object-fit: contain;
-            }
-            
-            .league-name {
-                font-size: 1.1em;
-                font-weight: bold;
-            }
-            
-            .league-type {
-                font-size: 0.9em;
-                color: #e0e0e0;
-                background-color: rgba(0,0,0,0.2);
-                padding: 2px 8px;
-                border-radius: 12px;
-            }
-            
-            .country-info {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-            
-            .country-name {
-                font-size: 1em;
-                font-weight: bold;
-            }
-            
-            .country-flag {
-                width: 24px;
-                height: 18px;
-                border-radius: 3px;
-                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            }
-            
-            .no-matches {
-                text-align: center;
-                padding: 20px;
-                font-size: 1.2em;
-                color: #6c757d;
-            }
-            
-            /* تنسيقات الكروت الداخلية */
-            .teams {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 15px;
-                background-color: white;
-            }
-            
-            .team {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 30%;
-            }
-            
-            .team-logo {
-                width: 40px;
-                height: 40px;
-                margin-bottom: 5px;
-            }
-            
-            .vs {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 30%;
-            }
-            
-            .score {
-                font-weight: bold;
-                font-size: 1.2em;
-                margin-bottom: 5px;
-            }
-            
-            .match-info {
-                display: flex;
-                justify-content: space-between;
-                padding: 8px 15px;
-                background-color: #f5f5f5;
-                font-size: 0.9em;
-            }
-        </style>
     </body>
 </html>
