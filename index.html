@@ -8,10 +8,16 @@
       <!-- Google AdSense -->
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 
-
     </head>
     <body>
         <h1> ليجــــــا شـــوت </h1>
+        <div id="tabs">
+            <button class="tab-button active" onclick="filterMatches('all')">الكل</button>
+            <button class="tab-button" onclick="filterMatches('inprogress')">جارية</button>
+            <button class="tab-button" onclick="filterMatches('scheduled')">قادمة</button>
+            <button class="tab-button" onclick="filterMatches('finished')">منتهية</button>
+            <button class="tab-button" onclick="filterMatches('cancelled')">ملغاة</button>
+        </div>
         <div id="matches-container"></div>
 
         <footer>
@@ -26,6 +32,9 @@
         </footer>
 
         <script>
+            // تخزين المباريات بشكل عام للتصفية لاحقاً
+            let allMatches = [];
+            
             // دالة للحصول على التاريخ الحالي وتنسيقه
             function getCurrentDate() {
                 const today = new Date();
@@ -49,7 +58,8 @@
                         }
                     });
                     const data = await response.json();
-                    displayMatches(data.response);
+                    allMatches = data.response;
+                    displayMatches(allMatches);
                 } catch (error) {
                     console.error('Error fetching matches:', error);
                     document.getElementById('matches-container').innerHTML = 
@@ -57,12 +67,33 @@
                 }
             }
 
+            // دالة لتصفية المباريات حسب الحالة
+            function filterMatches(status) {
+                // تحديث الأزرار النشطة
+                document.querySelectorAll('.tab-button').forEach(button => {
+                    button.classList.remove('active');
+                });
+                event.target.classList.add('active');
+                
+                if (status === 'all') {
+                    displayMatches(allMatches);
+                    return;
+                }
+                
+                const filteredMatches = allMatches.filter(match => {
+                    const matchStatus = getStatusClass(match.fixture.status.short);
+                    return matchStatus === `status-${status}`;
+                });
+                
+                displayMatches(filteredMatches);
+            }
+
             // دالة لعرض المباريات على شكل كروت
             function displayMatches(matches) {
                 const container = document.getElementById('matches-container');
                 
                 if (!matches || matches.length === 0) {
-                    container.innerHTML = '<div class="no-matches">No matches scheduled for today.</div>';
+                    container.innerHTML = '<div class="no-matches">لا توجد مباريات لهذا اليوم.</div>';
                     return;
                 }
                 
@@ -77,16 +108,17 @@
                 });
                 
                 // عرض المباريات
-                let html = `<div class="date-header">Matches for ${getCurrentDate()}</div>`;
+                let html = `<div class="date-header">مباريات يوم ${getCurrentDate()}</div>`;
                 
                 for (const league in matchesByLeague) {
                     html += `<div class="league-header">${league}</div>`;
                     
                     matchesByLeague[league].forEach(match => {
                         const matchTime = new Date(match.fixture.timestamp * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                        const statusClass = getStatusClass(match.fixture.status.short);
                         
                         html += `
-                            <div class="match-card" onclick="openMatchDetails(${match.fixture.id})">
+                            <div class="match-card ${statusClass}" onclick="openMatchDetails(${match.fixture.id})">
                                 <div class="teams">
                                     <div class="team">
                                         <img src="${match.teams.home.logo}" alt="${match.teams.home.name}" class="team-logo">
@@ -105,7 +137,7 @@
                                     <span class="match-time">${matchTime}</span>
                                     <span class="match-venue">${match.fixture.venue.name}</span>
                                 </div>
-                                <div class="match-status ${getStatusClass(match.fixture.status.short)}">
+                                <div class="match-status ${statusClass}">
                                     ${match.fixture.status.long}
                                 </div>
                             </div>
@@ -114,9 +146,6 @@
                 }
                 
                 container.innerHTML = html;
-
-
-
             }
 
             // دالة لفتح تفاصيل المباراة في صفحة جديدة
@@ -131,9 +160,18 @@
                     'HT': 'inprogress',
                     '1H': 'inprogress',
                     '2H': 'inprogress',
+                    'ET': 'inprogress',
+                    'BT': 'inprogress',
+                    'P': 'inprogress',
+                    'SUSP': 'inprogress',
+                    'INT': 'inprogress',
                     'NS': 'scheduled',
+                    'TBD': 'scheduled',
                     'PST': 'postponed',
-                    'CANC': 'cancelled'
+                    'CANC': 'cancelled',
+                    'ABD': 'cancelled',
+                    'AWD': 'cancelled',
+                    'WO': 'cancelled'
                 };
                 return `status-${statusMap[status] || 'scheduled'}`;
             }
@@ -141,5 +179,73 @@
             // جلب المباريات عند تحميل الصفحة
             document.addEventListener('DOMContentLoaded', fetchMatches);
         </script>
+        
+        <style>
+            #tabs {
+                display: flex;
+                justify-content: center;
+                margin: 20px 0;
+                flex-wrap: wrap;
+            }
+            
+            .tab-button {
+                padding: 8px 16px;
+                margin: 0 5px;
+                background-color: #f0f0f0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: all 0.3s;
+                color: black; /* لون النص أسود */
+            }
+            
+            .tab-button:hover {
+                background-color: #ddd;
+            }
+            
+            .tab-button.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+            
+            /* تعديلات لجعل النص داخل الكروت أسود */
+            .match-card {
+                color: black; /* لون النص الأساسي */
+            }
+            
+            .team-name, .vs, .score, .match-time, .match-venue {
+                color: black !important; /* تأكيد أن النص أسود */
+            }
+            
+            .match-status {
+                color: white !important; /* الحفاظ على لون النص الأبيض في حالة المباراة */
+            }
+            
+            .status-finished {
+                background-color: #4CAF50;
+            }
+            
+            .status-inprogress {
+                background-color: #2196F3;
+            }
+            
+            .status-scheduled {
+                background-color: #ff9800;
+            }
+            
+            .status-cancelled {
+                background-color: #f44336;
+            }
+            
+            .status-postponed {
+                background-color: #9e9e9e;
+            }
+            
+            .date-header, .league-header {
+                color: black; /* لون عناوين التاريخ والدوري أسود */
+                font-weight: bold;
+            }
+        </style>
     </body>
 </html>
