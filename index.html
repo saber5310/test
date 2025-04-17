@@ -111,7 +111,18 @@
                 let html = `<div class="date-header">مباريات يوم ${getCurrentDate()}</div>`;
                 
                 for (const league in matchesByLeague) {
-                    html += `<div class="league-header">${league}</div>`;
+                    // الحصول على اسم الدولة من أول مباراة في الدوري
+                    const country = matchesByLeague[league][0].league.country;
+                    const countryFlag = matchesByLeague[league][0].league.flag || '';
+                    
+                    html += `
+                        <div class="league-header">
+                            <span class="league-name">${league}</span>
+                            <span class="country-info">
+                                ${countryFlag ? `<img src="${countryFlag}" alt="${country}" class="country-flag">` : ''}
+                                <span class="country-name">${country}</span>
+                            </span>
+                        </div>`;
                     
                     matchesByLeague[league].forEach(match => {
                         const matchTime = new Date(match.fixture.timestamp * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
@@ -197,7 +208,7 @@
                 cursor: pointer;
                 font-weight: bold;
                 transition: all 0.3s;
-                color: black; /* لون النص أسود */
+                color: black;
             }
             
             .tab-button:hover {
@@ -209,17 +220,16 @@
                 color: white;
             }
             
-            /* تعديلات لجعل النص داخل الكروت أسود */
             .match-card {
-                color: black; /* لون النص الأساسي */
+                color: black;
             }
             
             .team-name, .vs, .score, .match-time, .match-venue {
-                color: black !important; /* تأكيد أن النص أسود */
+                color: black !important;
             }
             
             .match-status {
-                color: white !important; /* الحفاظ على لون النص الأبيض في حالة المباراة */
+                color: white !important;
             }
             
             .status-finished {
@@ -243,8 +253,40 @@
             }
             
             .date-header, .league-header {
-                color: black; /* لون عناوين التاريخ والدوري أسود */
+                color: black;
                 font-weight: bold;
+                margin: 15px 0 8px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 15px;
+                background-color: #f8f9fa;
+                border-radius: 6px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .league-name {
+                font-size: 1.1em;
+            }
+            
+            .country-info {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .country-name {
+                font-size: 1em;
+                font-weight: bold;
+                color: #2c7be5;
+                text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            }
+            
+            .country-flag {
+                width: 20px;
+                height: 15px;
+                border-radius: 3px;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.2);
             }
         </style>
     </body>
