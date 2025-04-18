@@ -5,12 +5,534 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>تفاصيل المباراة</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="api-football.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-        <!-- Google AdSense -->
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+        <style>
+            :root {
+                --primary-color: #3f51b5;
+                --secondary-color: #4CAF50;
+                --accent-color: #FF5722;
+                --text-color: #333;
+                --light-bg: #f5f5f5;
+                --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                --finished-color: #4CAF50;
+                --inprogress-color: #FF5722;
+                --scheduled-color: #FF9800;
+                --postponed-color: #607D8B;
+                --cancelled-color: #9E9E9E;
+            }
+            
+            body {
+                font-family: 'Tajawal', sans-serif;
+                background-color: #f9f9f9;
+                color: var(--text-color);
+                margin: 0;
+                padding: 0;
+            }
+            
+            header {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 15px 20px;
+                box-shadow: var(--card-shadow);
+            }
+            
+            header h1 {
+                margin: 0;
+                font-size: 1.5rem;
+            }
+            
+            header a {
+                color: white;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            #match-details-container {
+                max-width: 1000px;
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            
+            .loading, .error {
+                text-align: center;
+                padding: 40px;
+                font-size: 1.2rem;
+                background-color: white;
+                border-radius: 12px;
+                box-shadow: var(--card-shadow);
+            }
+            
+            .error {
+                color: #f44336;
+            }
+            
+            .match-details-card {
+                background-color: white;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: var(--card-shadow);
+                margin-bottom: 20px;
+            }
+            
+            .league-info {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                padding: 15px;
+                background-color: var(--light-bg);
+                border-bottom: 1px solid #eee;
+            }
+            
+            .league-logo {
+                width: 40px;
+                height: 40px;
+                object-fit: contain;
+            }
+            
+            .match-header {
+                padding: 15px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .match-header div {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.95rem;
+            }
+            
+            .match-header i {
+                color: var(--primary-color);
+            }
+            
+            .match-status {
+                font-weight: bold;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 0.9rem;
+            }
+            
+            .status-finished {
+                background-color: var(--finished-color);
+                color: white;
+            }
+            
+            .status-inprogress {
+                background-color: var(--inprogress-color);
+                color: white;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .status-scheduled {
+                background-color: var(--scheduled-color);
+                color: white;
+            }
+            
+            .status-postponed {
+                background-color: var(--postponed-color);
+                color: white;
+            }
+            
+            .status-cancelled {
+                background-color: var(--cancelled-color);
+                color: white;
+            }
+            
+            .live-badge {
+                background-color: #f44336;
+                color: white;
+                padding: 3px 8px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+                animation: pulse 1.5s infinite;
+            }
+            
+            @keyframes pulse {
+                0% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.1); opacity: 0.9; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+            
+            .teams-details {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .team-detail {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 30%;
+                min-width: 200px;
+            }
+            
+            .team-logo-large {
+                width: 80px;
+                height: 80px;
+                object-fit: contain;
+                margin-bottom: 10px;
+            }
+            
+            .team-name {
+                font-weight: 700;
+                font-size: 1.1rem;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+            
+            .team-score {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: var(--primary-color);
+            }
+            
+            .vs-details {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 30%;
+                min-width: 100px;
+            }
+            
+            .vs-details span {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #666;
+            }
+            
+            .match-tabs {
+                display: flex;
+                border-bottom: 1px solid #ddd;
+                padding: 0 15px;
+            }
+            
+            .match-tab {
+                padding: 12px 20px;
+                cursor: pointer;
+                font-weight: 600;
+                color: #666;
+                border-bottom: 3px solid transparent;
+                transition: all 0.3s;
+            }
+            
+            .match-tab.active {
+                color: var(--primary-color);
+                border-bottom-color: var(--primary-color);
+            }
+            
+            .tab-content {
+                display: none;
+                padding: 15px;
+            }
+            
+            .tab-content.active {
+                display: block;
+                animation: fadeIn 0.5s ease;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            
+            h3 {
+                color: var(--primary-color);
+                font-size: 1.3rem;
+                margin: 20px 0 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            h3 i {
+                font-size: 1.1rem;
+            }
+            
+            .events-container {
+                margin-top: 15px;
+            }
+            
+            .event {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                border-bottom: 1px solid #eee;
+                gap: 15px;
+            }
+            
+            .event:nth-child(even) {
+                background-color: var(--light-bg);
+            }
+            
+            .event-time {
+                font-weight: 700;
+                width: 40px;
+                text-align: center;
+            }
+            
+            .event-type {
+                font-weight: 600;
+                padding: 3px 8px;
+                border-radius: 4px;
+                font-size: 0.9rem;
+                min-width: 60px;
+                text-align: center;
+            }
+            
+            .event-type.goal {
+                background-color: #4CAF50;
+                color: white;
+            }
+            
+            .event-type.card {
+                background-color: #FFC107;
+                color: #333;
+            }
+            
+            .event-type.subst {
+                background-color: #2196F3;
+                color: white;
+            }
+            
+            .event-team {
+                flex-grow: 1;
+                font-weight: 600;
+            }
+            
+            .event-player {
+                font-weight: 500;
+                color: #555;
+            }
+            
+            .stats-container {
+                overflow-x: auto;
+            }
+            
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 15px 0;
+            }
+            
+            th, td {
+                padding: 12px 15px;
+                text-align: center;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            th {
+                background-color: var(--primary-color);
+                color: white;
+                font-weight: 600;
+            }
+            
+            tr:nth-child(even) {
+                background-color: var(--light-bg);
+            }
+            
+            .players-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin-top: 15px;
+            }
+            
+            .team-players {
+                flex: 1;
+                min-width: 300px;
+            }
+            
+            .player {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                border-bottom: 1px solid #eee;
+                gap: 15px;
+            }
+            
+            .player-number {
+                font-weight: 700;
+                width: 30px;
+                text-align: center;
+            }
+            
+            .player-name {
+                flex-grow: 1;
+            }
+            
+            .player-position {
+                font-size: 0.9rem;
+                color: #666;
+                min-width: 100px;
+            }
+            
+            .timeline-container {
+                margin-top: 20px;
+                position: relative;
+                height: 60px;
+                background-color: var(--light-bg);
+                border-radius: 5px;
+                overflow: hidden;
+            }
+            
+            .timeline-events {
+                position: relative;
+                height: 100%;
+            }
+            
+            .timeline-event {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 30px;
+            }
+            
+            .timeline-event-icon {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+            
+            .timeline-event-time {
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
+            
+            .goal-icon {
+                background-color: #4CAF50;
+                color: white;
+            }
+            
+            .yellow-card-icon {
+                background-color: #FFC107;
+                color: #333;
+            }
+            
+            .red-card-icon {
+                background-color: #f44336;
+                color: white;
+            }
+            
+            .substitution-icon {
+                background-color: #2196F3;
+                color: white;
+            }
+            
+            .match-officials {
+                padding: 15px;
+                border-top: 1px solid #eee;
+            }
+            
+            .referees {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin-top: 10px;
+            }
+            
+            .referees div {
+                background-color: var(--light-bg);
+                padding: 10px 15px;
+                border-radius: 5px;
+                font-size: 0.9rem;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .referees i {
+                color: var(--primary-color);
+            }
+            
+            .ad-container {
+                margin: 20px auto;
+                max-width: 1000px;
+                padding: 0 15px;
+            }
+            
+            footer {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 30px 0;
+                margin-top: 50px;
+                text-align: center;
+            }
+            
+            .footer-links {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+            }
+            
+            .footer-links a {
+                color: white;
+                text-decoration: none;
+                transition: opacity 0.3s;
+            }
+            
+            .footer-links a:hover {
+                opacity: 0.8;
+                text-decoration: underline;
+            }
+            
+            .copyright {
+                font-size: 0.9rem;
+                opacity: 0.8;
+            }
+            
+            @media (max-width: 768px) {
+                .teams-details {
+                    flex-direction: column;
+                    gap: 20px;
+                }
+                
+                .team-detail, .vs-details {
+                    width: 100%;
+                }
+                
+                .team-detail.home-team, .team-detail.away-team {
+                    flex-direction: row;
+                    justify-content: center;
+                    gap: 20px;
+                }
+                
+                .team-detail.home-team .team-score {
+                    order: -1;
+                }
+                
+                .team-logo-large {
+                    width: 60px;
+                    height: 60px;
+                }
+                
+                .team-score {
+                    font-size: 2rem;
+                }
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -80,73 +602,154 @@
                 const matchDate = new Date(match.fixture.timestamp * 1000);
                 const matchTime = matchDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                 const matchDateFormatted = matchDate.toLocaleDateString('ar-EG');
+                const statusClass = getStatusClass(match.fixture.status.short);
+                const statusLong = getStatusInArabic(match.fixture.status.long);
 
                 // تحضير أحداث المباراة
                 let eventsHtml = '';
+                let timelineHtml = '';
                 if (match.events && match.events.length > 0) {
-                    eventsHtml = '<h3><i class="fas fa-list"></i> أحداث المباراة</h3><div class="events-container">';
-                    match.events.forEach(event => {
-                        eventsHtml += `
-                            <div class="event">
-                                <span class="event-time">${event.time.elapsed}'</span>
-                                <span class="event-type ${event.type.toLowerCase()}">${getEventTypeInArabic(event.type)}</span>
-                                <span class="event-team">${event.team.name}</span>
-                                <span class="event-player">${event.player.name}</span>
-                                ${event.detail === 'Normal Goal' ? '⚽' : ''}
-                                ${event.detail === 'Yellow Card' ? '🟨' : ''}
-                                ${event.detail === 'Red Card' ? '🟥' : ''}
-                                ${event.detail === 'Penalty' ? '⏏️' : ''}
+                    eventsHtml = `
+                        <div class="events-container">
+                            <h3><i class="fas fa-list"></i> أحداث المباراة</h3>
+                            <div class="timeline-container">
+                                <div class="timeline-events">
+                                    ${generateTimelineEvents(match.events)}
+                                </div>
                             </div>
-                        `;
-                    });
-                    eventsHtml += '</div>';
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>الدقيقة</th>
+                                        <th>نوع الحدث</th>
+                                        <th>الفريق</th>
+                                        <th>اللاعب</th>
+                                        <th>التفاصيل</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${match.events.map(event => `
+                                        <tr>
+                                            <td>${event.time.elapsed}'${event.time.extra ? `+${event.time.extra}` : ''}</td>
+                                            <td><span class="event-type ${getEventTypeClass(event.type)}">${getEventTypeInArabic(event.type)}</span></td>
+                                            <td>${event.team.name}</td>
+                                            <td>${event.player.name}</td>
+                                            <td>${getEventDetailInArabic(event.detail)} ${getEventIcon(event.detail)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
                 }
 
                 // تحضير إحصائيات المباراة
                 let statsHtml = '';
                 if (match.statistics && match.statistics.length > 0) {
-                    statsHtml = '<h3><i class="fas fa-chart-bar"></i> إحصائيات المباراة</h3><div class="stats-container">';
-                    
                     const homeStats = match.statistics.find(s => s.team.id === match.teams.home.id);
                     const awayStats = match.statistics.find(s => s.team.id === match.teams.away.id);
                     
                     if (homeStats && awayStats) {
-                        statsHtml += `
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>الإحصائية</th>
-                                        <th>${match.teams.home.name}</th>
-                                        <th>${match.teams.away.name}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                        `;
-                        
-                        const importantStats = ['Total Shots', 'Shots on Goal', 'Shots off Goal', 'Shots Insidebox', 
-                                              'Shots Outsidebox', 'Ball Possession', 'Corner Kicks', 'Fouls', 
-                                              'Goalkeeper Saves', 'Passes accurate', 'Passes %'];
-                        
-                        homeStats.statistics.forEach((stat, index) => {
-                            const awayStat = awayStats.statistics[index];
-                            if (importantStats.includes(stat.type)) {
-                                statsHtml += `
-                                    <tr>
-                                        <td>${getStatInArabic(stat.type)}</td>
-                                        <td>${stat.value}</td>
-                                        <td>${awayStat.value}</td>
-                                    </tr>
-                                `;
-                            }
-                        });
-                        
-                        statsHtml += `
-                                </tbody>
-                            </table>
+                        statsHtml = `
+                            <div class="stats-container">
+                                <h3><i class="fas fa-chart-bar"></i> إحصائيات المباراة</h3>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>الإحصائية</th>
+                                            <th>${match.teams.home.name}</th>
+                                            <th>${match.teams.away.name}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${homeStats.statistics.map((stat, index) => {
+                                            const awayStat = awayStats.statistics[index];
+                                            return `
+                                                <tr>
+                                                    <td>${getStatInArabic(stat.type)}</td>
+                                                    <td>${stat.value}</td>
+                                                    <td>${awayStat.value}</td>
+                                                </tr>
+                                            `;
+                                        }).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
                         `;
                     }
+                }
+
+                // تحضير تشكيلات الفريقين
+                let lineupsHtml = '';
+                if (match.lineups && match.lineups.length > 0) {
+                    const homeLineup = match.lineups.find(l => l.team.id === match.teams.home.id);
+                    const awayLineup = match.lineups.find(l => l.team.id === match.teams.away.id);
                     
-                    statsHtml += '</div>';
+                    if (homeLineup && awayLineup) {
+                        lineupsHtml = `
+                            <div class="players-container">
+                                <h3><i class="fas fa-users"></i> تشكيلات الفريقين</h3>
+                                <div class="team-players">
+                                    <h4>${match.teams.home.name}</h4>
+                                    <div class="formation">تشكيل: ${homeLineup.formation || 'غير معروف'}</div>
+                                    ${homeLineup.startXI.map(player => `
+                                        <div class="player">
+                                            <span class="player-number">${player.player.number}</span>
+                                            <span class="player-name">${player.player.name}</span>
+                                            <span class="player-position">${getPositionInArabic(player.player.pos)}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div class="team-players">
+                                    <h4>${match.teams.away.name}</h4>
+                                    <div class="formation">تشكيل: ${awayLineup.formation || 'غير معروف'}</div>
+                                    ${awayLineup.startXI.map(player => `
+                                        <div class="player">
+                                            <span class="player-number">${player.player.number}</span>
+                                            <span class="player-name">${player.player.name}</span>
+                                            <span class="player-position">${getPositionInArabic(player.player.pos)}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+                // تحضير معلومات الحكام
+                let officialsHtml = '';
+                if (match.fixture.referee || match.fixture.assistants) {
+                    officialsHtml = `
+                        <div class="match-officials">
+                            <h3><i class="fas fa-whistle"></i> حكام المباراة</h3>
+                            <div class="referees">
+                                ${match.fixture.referee ? `<div><i class="fas fa-user"></i> الحكم: ${match.fixture.referee}</div>` : ''}
+                                ${match.fixture.assistants && match.fixture.assistants.length > 0 ? 
+                                    match.fixture.assistants.map((assistant, idx) => `
+                                        <div><i class="fas fa-user"></i> الحكم المساعد ${idx + 1}: ${assistant}</div>
+                                    `).join('') : ''
+                                }
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // تحضير حالة المباراة
+                let statusHtml = '';
+                if (statusClass === 'status-inprogress') {
+                    const elapsedTime = match.fixture.status.elapsed || 0;
+                    statusHtml = `
+                        <div class="match-status ${statusClass}">
+                            <span>${statusLong}</span>
+                            <div class="live-badge">مباشر ${elapsedTime}'</div>
+                        </div>
+                    `;
+                } else {
+                    statusHtml = `
+                        <div class="match-status ${statusClass}">
+                            ${statusLong}
+                        </div>
+                    `;
                 }
 
                 container.innerHTML = `
@@ -159,16 +762,14 @@
                         <div class="match-header">
                             <div class="match-date"><i class="far fa-calendar-alt"></i> ${matchDateFormatted} - ${matchTime}</div>
                             <div class="match-venue"><i class="fas fa-map-marker-alt"></i> ${match.fixture.venue.name}, ${match.fixture.venue.city}</div>
-                            <div class="match-status ${getStatusClass(match.fixture.status.short)}">
-                                ${getStatusInArabic(match.fixture.status.long)}
-                            </div>
+                            ${statusHtml}
                         </div>
                         
                         <div class="teams-details">
                             <div class="team-detail home-team">
                                 <img src="${match.teams.home.logo}" alt="${match.teams.home.name}" class="team-logo-large" loading="lazy">
                                 <span class="team-name">${match.teams.home.name}</span>
-                                <span class="team-score">${match.goals.home}</span>
+                                <span class="team-score">${match.goals.home !== null ? match.goals.home : '-'}</span>
                             </div>
                             
                             <div class="vs-details">
@@ -176,23 +777,101 @@
                             </div>
                             
                             <div class="team-detail away-team">
-                                <span class="team-score">${match.goals.away}</span>
+                                <span class="team-score">${match.goals.away !== null ? match.goals.away : '-'}</span>
                                 <img src="${match.teams.away.logo}" alt="${match.teams.away.name}" class="team-logo-large" loading="lazy">
                                 <span class="team-name">${match.teams.away.name}</span>
                             </div>
                         </div>
                         
-                        ${eventsHtml}
-                        ${statsHtml}
-                        
-                        <div class="match-officials">
-                            <h3><i class="fas fa-whistle"></i> حكام المباراة</h3>
-                            <div class="referees">
-                                ${match.fixture.referee ? `<div><i class="fas fa-user"></i> الحكم: ${match.fixture.referee}</div>` : ''}
-                            </div>
+                        <div class="match-tabs">
+                            <div class="match-tab active" onclick="changeTab('events')">الأحداث</div>
+                            <div class="match-tab" onclick="changeTab('stats')">الإحصائيات</div>
+                            <div class="match-tab" onclick="changeTab('lineups')">التشكيلات</div>
                         </div>
+                        
+                        <div class="tab-content active" id="events-tab">
+                            ${eventsHtml || '<p>لا توجد أحداث متاحة لهذه المباراة</p>'}
+                        </div>
+                        
+                        <div class="tab-content" id="stats-tab">
+                            ${statsHtml || '<p>لا توجد إحصائيات متاحة لهذه المباراة</p>'}
+                        </div>
+                        
+                        <div class="tab-content" id="lineups-tab">
+                            ${lineupsHtml || '<p>لا توجد تشكيلات متاحة لهذه المباراة</p>'}
+                        </div>
+                        
+                        ${officialsHtml}
                     </div>
                 `;
+            }
+
+            // دالة توليد الخط الزمني للأحداث
+            function generateTimelineEvents(events) {
+                if (!events || events.length === 0) return '';
+                
+                // تصفية الأحداث المهمة فقط
+                const importantEvents = events.filter(event => 
+                    event.type === 'Goal' || event.type === 'Card' || event.type === 'subst'
+                );
+                
+                if (importantEvents.length === 0) return '';
+                
+                // حساب أطول وقت في المباراة لتحديد المقياس
+                const maxTime = Math.max(...importantEvents.map(event => 
+                    event.time.elapsed + (event.time.extra || 0)
+                ));
+                
+                return importantEvents.map(event => {
+                    const time = event.time.elapsed + (event.time.extra || 0);
+                    const position = (time / maxTime) * 100;
+                    const isHomeTeam = event.team.id === events[0].team.id;
+                    
+                    let iconClass = '';
+                    let icon = '';
+                    
+                    if (event.type === 'Goal') {
+                        iconClass = 'goal-icon';
+                        icon = '⚽';
+                    } else if (event.type === 'Card') {
+                        if (event.detail === 'Yellow Card') {
+                            iconClass = 'yellow-card-icon';
+                            icon = '🟨';
+                        } else {
+                            iconClass = 'red-card-icon';
+                            icon = '🟥';
+                        }
+                    } else if (event.type === 'subst') {
+                        iconClass = 'substitution-icon';
+                        icon = '🔄';
+                    }
+                    
+                    return `
+                        <div class="timeline-event" style="left: ${position}%">
+                            <div class="timeline-event-icon ${iconClass}">${icon}</div>
+                            <div class="timeline-event-time">${time}'</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // دالة تغيير التبويبات
+            function changeTab(tabName) {
+                // إخفاء جميع المحتويات
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // إزالة النشاط من جميع الأزرار
+                document.querySelectorAll('.match-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // إظهار المحتوى المحدد
+                document.getElementById(`${tabName}-tab`).classList.add('active');
+                
+                // إضافة النشاط للزر المحدد
+                event.currentTarget.classList.add('active');
             }
 
             // دالة للحصول على كلاس حالة المباراة
@@ -202,9 +881,18 @@
                     'HT': 'inprogress',
                     '1H': 'inprogress',
                     '2H': 'inprogress',
+                    'ET': 'inprogress',
+                    'BT': 'inprogress',
+                    'P': 'inprogress',
+                    'SUSP': 'inprogress',
+                    'INT': 'inprogress',
                     'NS': 'scheduled',
+                    'TBD': 'scheduled',
                     'PST': 'postponed',
-                    'CANC': 'cancelled'
+                    'CANC': 'cancelled',
+                    'ABD': 'cancelled',
+                    'AWD': 'cancelled',
+                    'WO': 'cancelled'
                 };
                 return `status-${statusMap[status] || 'scheduled'}`;
             }
@@ -218,7 +906,12 @@
                     'Second Half': 'الشوط الثاني',
                     'Not Started': 'لم تبدأ بعد',
                     'Match Postponed': 'مؤجلة',
-                    'Match Cancelled': 'ملغاة'
+                    'Match Cancelled': 'ملغاة',
+                    'Extra Time': 'وقت إضافي',
+                    'Break Time': 'وقت مستقطع',
+                    'Penalty In Progress': 'ركلات جزاء',
+                    'Match Suspended': 'معلقة',
+                    'Match Interrupted': 'متوقفة مؤقتاً'
                 };
                 return statusMap[status] || status;
             }
@@ -228,9 +921,53 @@
                 const typeMap = {
                     'Goal': 'هدف',
                     'Card': 'بطاقة',
-                    'subst': 'تبديل'
+                    'subst': 'تبديل',
+                    'Var': 'VAR'
                 };
                 return typeMap[type] || type;
+            }
+
+            // دالة للحصول على كلاس نوع الحدث
+            function getEventTypeClass(type) {
+                const typeMap = {
+                    'Goal': 'goal',
+                    'Card': 'card',
+                    'subst': 'subst',
+                    'Var': 'var'
+                };
+                return typeMap[type] || '';
+            }
+
+            // دالة لترجمة تفاصيل الحدث
+            function getEventDetailInArabic(detail) {
+                const detailMap = {
+                    'Normal Goal': 'هدف عادي',
+                    'Own Goal': 'هدف في مرماه',
+                    'Penalty': 'ضربة جزاء',
+                    'Missed Penalty': 'ضربة جزاء ضائعة',
+                    'Yellow Card': 'بطاقة صفراء',
+                    'Red Card': 'بطاقة حمراء',
+                    'Second Yellow card': 'بطاقة صفراء ثانية',
+                    'Substitution': 'تبديل',
+                    'Goal cancelled': 'هدف ملغي',
+                    'Penalty confirmed': 'تأكيد ضربة جزاء',
+                    'Goal disallowed': 'هدف مرفوض'
+                };
+                return detailMap[detail] || detail;
+            }
+
+            // دالة للحصول على أيقونة الحدث
+            function getEventIcon(detail) {
+                const iconMap = {
+                    'Normal Goal': '⚽',
+                    'Own Goal': '⚽ (ذاتي)',
+                    'Penalty': '⏏️',
+                    'Missed Penalty': '⏏️ (ضائعة)',
+                    'Yellow Card': '🟨',
+                    'Red Card': '🟥',
+                    'Second Yellow card': '🟨🟥'
+                };
+                return iconMap[detail] || '';
             }
 
             // دالة لترجمة الإحصائيات
@@ -246,9 +983,38 @@
                     'Fouls': 'أخطاء',
                     'Goalkeeper Saves': 'تصديات الحارس',
                     'Passes accurate': 'تمريرات ناجحة',
-                    'Passes %': 'نسبة التمريرات'
+                    'Passes %': 'نسبة التمريرات',
+                    'Offsides': 'تسلل',
+                    'Yellow Cards': 'بطاقات صفراء',
+                    'Red Cards': 'بطاقات حمراء',
+                    'Total Passes': 'إجمالي التمريرات',
+                    'Tackles': 'تدخلات',
+                    'Attacks': 'هجمات',
+                    'Dangerous Attacks': 'هجمات خطيرة',
+                    'Blocked Shots': 'تسديدات محجوبة'
                 };
                 return statMap[stat] || stat;
+            }
+
+            // دالة لترجمة مراكز اللاعبين
+            function getPositionInArabic(pos) {
+                const positionMap = {
+                    'G': 'حارس مرمى',
+                    'D': 'مدافع',
+                    'M': 'لاعب وسط',
+                    'F': 'مهاجم',
+                    'GK': 'حارس مرمى',
+                    'CB': 'قلب دفاع',
+                    'LB': 'ظهير أيسر',
+                    'RB': 'ظهير أيمن',
+                    'DM': 'وسط دفاعي',
+                    'CM': 'وسط ملعب',
+                    'AM': 'وسط هجومي',
+                    'LW': 'جناح أيسر',
+                    'RW': 'جناح أيمن',
+                    'CF': 'مهاجم مركز'
+                };
+                return positionMap[pos] || pos;
             }
 
             // جلب تفاصيل المباراة عند تحميل الصفحة
