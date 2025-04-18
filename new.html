@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>أخبار رياضية - ليجـــا شـــوت | آخر الأخبار والتحليلات الرياضية</title>
+    <meta name="description" content="تابع آخر الأخبار الرياضية، التحليلات، التغطيات الحصرية، وآخر التطورات في عالم كرة القدم والرياضة العالمية على موقع ليجا شوت">
+    <meta name="keywords" content="أخبار رياضية, كرة القدم, الدوري المصري, الدوري الإنجليزي, دوري أبطال أوروبا, انتقالات لاعبين, تحليلات رياضية">
+    <meta name="author" content="ليجا شوت">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.legashot.online/news.html">
+    <meta property="og:title" content="أخبار رياضية - ليجـــا شـــوت | آخر الأخبار والتحليلات الرياضية">
+    <meta property="og:description" content="تابع آخر الأخبار الرياضية، التحليلات، التغطيات الحصرية، وآخر التطورات في عالم كرة القدم والرياضة العالمية">
+    <meta property="og:image" content="https://www.legashot.online/images/news-cover.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.legashot.online/news.html">
+    <meta property="twitter:title" content="أخبار رياضية - ليجـــا شـــوت | آخر الأخبار والتحليلات الرياضية">
+    <meta property="twitter:description" content="تابع آخر الأخبار الرياضية، التحليلات، التغطيات الحصرية، وآخر التطورات في عالم كرة القدم والرياضة العالمية">
+    <meta property="twitter:image" content="https://www.legashot.online/images/news-cover.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.legashot.online/news.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3f51b5;
+            --secondary-color: #4CAF50;
+            --accent-color: #FF5722;
+            --text-color: #333;
+            --light-bg: #f5f5f5;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --ad-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin: 20px 0;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        /* تبويبات التصنيفات */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 20px auto;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-width: 95%;
+        }
+        
+        .category-tab {
+            padding: 12px 24px;
+            background-color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .category-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+        
+        .category-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        /* مقالات الأخبار */
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .news-article {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .news-article:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .article-content {
+            padding: 20px;
+        }
+        
+        .article-category {
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .article-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            line-height: 1.4;
+        }
+        
+        .article-excerpt {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        .article-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .article-author {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .read-more {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .read-more:hover {
+            background-color: #303f9f;
+            transform: translateY(-2px);
+        }
+        
+        /* إعلانات متوافقة مع أدسنس */
+        .ad-container {
+            background-color: var(--ad-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            border: 1px dashed #ccc;
+        }
+        
+        .ad-label {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        /* تذييل الصفحة */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* مسار الموقع (Breadcrumb) */
+        .breadcrumb {
+            padding: 10px 15px;
+            background-color: var(--light-bg);
+            border-radius: 5px;
+            margin: 10px auto;
+            max-width: 1000px;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumb span {
+            color: #666;
+            margin: 0 5px;
+        }
+        
+        /* زر العودة للأعلى */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 99;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background-color: #303f9f;
+        }
+        
+        /* تحسينات للجوال */
+        @media (max-width: 768px) {
+            .news-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .category-tab {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- مسار الموقع (Breadcrumb) -->
+    <div class="breadcrumb">
+        <a href="/">الرئيسية</a>
+        <span>/</span>
+        <span>الأخبار الرياضية</span>
+    </div>
+
+    <div class="container">
+        <h1 class="animate__animated animate__fadeIn">الأخبار الرياضية</h1>
+        
+        <!-- تبويبات التصنيفات -->
+        <div class="category-tabs animate__animated animate__fadeInDown">
+            <button class="category-tab active" onclick="filterNews('all')">الكل</button>
+            <button class="category-tab" onclick="filterNews('football')">كرة القدم</button>
+            <button class="category-tab" onclick="filterNews('transfers')">انتقالات</button>
+            <button class="category-tab" onclick="filterNews('analysis')">تحليلات</button>
+            <button class="category-tab" onclick="filterNews('egypt')">الدوري المصري</button>
+            <button class="category-tab" onclick="filterNews('europe')">أوروبا</button>
+        </div>
+        
+        <!-- إعلان أعلى الصفحة -->
+        <div class="ad-container">
+            <span class="ad-label">إعلان</span>
+            <!-- كود أدسنس هنا -->
+            <div style="width: 100%; height: 90px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                مساحة إعلانية - 728x90
+            </div>
+        </div>
+        
+        <!-- قائمة المقالات -->
+        <div class="news-container">
+            <!-- المقالة 1 -->
+            <div class="news-article" data-categories="football egypt">
+                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="الأهلي يتوج بلقب الدوري المصري" class="article-image">
+                <div class="article-content">
+                    <span class="article-category" style="background-color: #f44336;">الدوري المصري</span>
+                    <h2 class="article-title">الأهلي يتوج بلقب الدوري المصري للمرة الـ44 في تاريخه</h2>
+                    <p class="article-excerpt">توج النادي الأهلي بلقب الدوري المصري الممتاز لموسم 2023-2024 بعد تعادله مع الزمالك 1-1 في القمة التي جمعتهما على استاد القاهرة الدولي. وحسم الأهلي اللقب قبل جولتين من نهاية المسابقة بفارق 8 نقاط عن وصيفه الزمالك. وسجل حسين الشحات هدف الأهلي بينما أدرك أحمد فتحي التعادل للزمالك. ويحقق الأهلي اللقب للمرة الثانية على التوالي والـ44 في تاريخه، ليعزز صدارته كأكثر الأندية تتويجاً بالدوري المصري.</p>
+                    <a href="article1.html" class="read-more">قراءة المزيد</a>
+                    <div class="article-meta">
+                        <span class="article-date"><i class="far fa-calendar-alt"></i> 15 يوليو 2024</span>
+                        <span class="article-author"><i class="far fa-user"></i> أحمد محمود</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- المقالة 2 -->
+            <div class="news-article" data-categories="football europe transfers">
+                <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="إرلينج هالاند ينضم لريال مدريد" class="article-image">
+                <div class="article-content">
+                    <span class="article-category" style="background-color: #2196F3;">انتقالات</span>
+                    <h2 class="article-title">ريال مدريد يعلن التعاقد مع هالاند مقابل 180 مليون يورو</h2>
+                    <p class="article-excerpt">أعلن نادي ريال مدريد الإسباني اليوم عن تعاقده مع النجم النرويجي إرلينج هالاند قادماً من مانشستر سيتي الإنجليزي مقابل 180 مليون يورو، ليصبح ثاني أغلى صفقة في تاريخ النادي الملكي بعد كيلين مبابي. ووقع هالاند عقداً لمدة 5 مواسم مع ريال مدريد، وسيحصل على راتب سنوي يقدر بـ35 مليون يورو. وجاءت هذه الصفقة بعد مفاوضات استمرت أشهراً بين الناديين، حيث كان هالاند قد سجل 62 هدفاً في 67 مباراة مع مانشستر سيتي منذ انضمامه عام 2022.</p>
+                    <a href="article2.html" class="read-more">قراءة المزيد</a>
+                    <div class="article-meta">
+                        <span class="article-date"><i class="far fa-calendar-alt"></i> 12 يوليو 2024</span>
+                        <span class="article-author"><i class="far fa-user"></i> محمد علي</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- المقالة 3 -->
+            <div class="news-article" data-categories="football analysis">
+                <img src="https://images.unsplash.com/photo-1579952363872-3f0869e06edc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="تحليل تكتيكي لمباراة مانشستر سيتي" class="article-image">
+                <div class="article-content">
+                    <span class="article-category" style="background-color: #4CAF50;">تحليلات</span>
+                    <h2 class="article-title">تحليل تكتيكي: كيف قلب جوارديولا موازين الدوري الإنجليزي؟</h2>
+                    <p class="article-excerpt">استطاع بيب جوارديولا مدرب مانشستر سيتي أن يقود فريقه للفوز بلقب الدوري الإنجليزي الممتاز للموسم 2023-2024 بعد تغيير جذري في خطته التكتيكية. اعتمد جوارديولا نظام 3-2-4-1 الذي أذهل الجميع وحقق 12 انتصاراً متتالياً لفريقه. في هذا التحليل نستعرض كيف استغل جوارديولا مراكز اللعب المكثفة في منتصف الملعب، وتحويل جون ستونز إلى لاعب خط وسط ارتكاز، واستغلال سرعة جيريمي دوكو على الجناح الأيمن. هذه الخطة الجديدة جعلت سيتي يسجل 89 هدفاً في الدوري ويتصدر الترتيب بفارق 5 نقاط عن ليفربول.</p>
+                    <a href="article3.html" class="read-more">قراءة المزيد</a>
+                    <div class="article-meta">
+                        <span class="article-date"><i class="far fa-calendar-alt"></i> 10 يوليو 2024</span>
+                        <span class="article-author"><i class="far fa-user"></i> خالد رياض</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- المقالة 4 -->
+            <div class="news-article" data-categories="football egypt">
+                <img src="https://images.unsplash.com/photo-1577032225470-1a1a1afd592a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="المصري يفوز بكأس مصر" class="article-image">
+                <div class="article-content">
+                    <span class="article-category" style="background-color: #f44336;">الدوري المصري</span>
+                    <h2 class="article-title">المصري البورسعيدي يتوج بلقب كأس مصر بعد غياب 15 عاماً</h2>
+                    <p class="article-excerpt">توج المصري البورسعيدي بلقب كأس مصر للمرة الرابعة في تاريخه بعد تغلبه على بيراميدز بهدفين دون رد في المباراة النهائية التي أقيمت على استاد القاهرة الدولي. سجل محمد جادو الهدف الأول في الدقيقة 23 من ضربة رأسية قوية، بينما أضاف أحمد رفعت الهدف الثاني في الدقيقة 67 من تسديدة قوية من خارج المنطقة. وحافظ المصري على نظافة شباكه طوال المباراة بفضل أداء مميز لحارسه محمد عواد. هذا اللقب هو الأول للمصري في البطولة منذ عام 2009، حيث فاز بها ثلاث مرات سابقة أعوام 1998 و2006 و2009.</p>
+                    <a href="article4.html" class="read-more">قراءة المزيد</a>
+                    <div class="article-meta">
+                        <span class="article-date"><i class="far fa-calendar-alt"></i> 8 يوليو 2024</span>
+                        <span class="article-author"><i class="far fa-user"></i> عمرو عبد الله</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- المقالة 5 -->
+            <div class="news-article" data-categories="football europe">
+                <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="ريال مدريد في نهائي دوري الأبطال" class="article-image">
+                <div class="article-content">
+                    <span class="article-category" style="background-color: #2196F3;">أوروبا</span>
+                    <h2 class="article-title">ريال مدريد يتأهل لنهائي دوري أبطال أوروبا بعد إقصاء مانشستر سيتي</h2>
+                    <p class="article-excerpt">تأهل ريال مدريد لنهائي دوري أبطال أوروبا للموسم 2023-2024 بعد فوزه على مانشستر سيتي 4-3 في مجموع المباراتين. في الذهاب بإنجلترا، انتهت المباراة بالتعادل 2-2، حيث سجل رودريجو وفينيسيوس لأصحاب الأرض، بينما أدرك فودين وهالاند التعادل لسيتي. في الإياب بمدريد، تقدم سيتي بهدف من جيريش لكن رودريجو سجل هدفين في الدقائق 88 و90+1 ليقود ريال مدريد للنهائي. وسيواجه ريال مدريد بايرن ميونخ في النهائي المقرر يوم 1 يونيو على ملعب ويمبلي بلندن.</p>
+                    <a href="article5.html" class="read-more">قراءة المزيد</a>
+                    <div class="article-meta">
+                        <span class="article-date"><i class="far fa-calendar-alt"></i> 6 يوليو 2024</span>
+                        <span class="article-author"><i class="far fa-user"></i> علي حسن</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- إعلان وسط الصفحة -->
+            <div class="ad-container" style="grid-column: 1 / -1;">
+                <span class="ad-label">إعلان</span>
+                <!-- كود أدسنس هنا -->
+                <div style="width: 100%; height: 250px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                    مساحة إعلانية - 970x250
+                </div>
+            </div>
+            
+            <!-- المقالة 6 -->
+            <div class="news-article" data-categories="football transfers">
+                <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="أغلى الصفقات الصيفية 2024" class="article-image">
+                <div class="article-content">
+                    <span class="article-category" style="background-color: #FF9800;">انتقالات</span>
+                    <h2 class="article-title">تعرف على أغلى 5 صفقات متوقعة في سوق الانتقالات الصيفية 2024</h2>
+                    <p class="article-excerpt">مع اقتراب انطلاق سوق الانتقالات الصيفية، تستعد الأندية الكبرى لتعزيز صفوفها بصفقات قوية. في المقدمة يأتي انتقال إرلينج هالاند إلى ريال مدريد مقابل 180 مليون يورو. ثانياً، فيكتور أوشيمين من نابولي إلى تشيلسي مقابل 130 مليون يورو. ثالثاً، جود بيلينجهام من بوروسيا دورتموند إلى ليفربول مقابل 110 مليون يورو. رابعاً، خافيير سيموني من أتلتيكو مدريد إلى باريس سان جيرمان مقابل 95 مليون يورو. خامساً، فلوريان فيرتز من باير ليفركوزن إلى مانشستر يونايتد مقابل 85 مليون يورو.</p>
+                    <a href="article6.html" class="read-more">قراءة المزيد</a>
+                    <div class="article-meta">
+                        <span class="article-date"><i class="far fa-calendar-alt"></i> 4 يوليو 2024</span>
+                        <span class="article-author"><i class="far fa-user"></i> وليد فتحي</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- المقالة 7 -->
+            <div class="news-article" data-categories="football analysis">
+                <img src="https://images.unsplash.com/photo-1543351611-58f69d7c1781?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="تحليل أداء محمد صلاح" class="article-image">
+                <div class="article-content">
+                    <span class="article-category" style="background-color: #4CAF50;">تحليلات</span>
+                    <h2 class="article-title">تحليل أداء: كيف ساعد محمد صلاح ليفربول في تحقيق الثنائية؟</h2>
+                    <p class="article-excerpt">محمد صلاح قدم أحد أفضل مواسمه مع ليفربول حيث سجل 30 هدفاً وصنع 12 أخرى في جميع البطولات، ليساهم بشكل كبير في حصد فريقه لكأس الاتحاد الإنجليزي والمركز الثاني في الدوري. في هذا التحليل نستعرض تطور أداء صلاح هذا الموسم حيث لعب 47 مباراة، وسجل كل 117 دقيقة في المتوسط. زادت نسبة تمريراته الرئيسية إلى 85%، كما زادت نسبة تدخلاته الناجحة إلى 62%. استطاع صلاح تسجيل 7 أهداف في 8 مباريات ضد فرق الستة الكبار، مما يثبت كفاءته في المباريات الكبيرة.</p>
+                    <a href="article7.html" class="read-more">قراءة المزيد</a>
+                    <div class="article-meta">
+                        <span class="article-date"><i class="far fa-calendar-alt"></i> 2 يوليو 2024</span>
+                        <span class="article-author"><i class="far fa-user"></i> أحمد شريف</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- المقالة 8 -->
+            <div class="news-article" data-categories="football egypt">
+                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="الزمالك في دوري الأبطال الأفريقي" class="article-image">
+                <div class="article-content">
+                    <span class="article-category" style="background-color: #f44336;">الدوري المصري</span>
+                    <h2 class="article-title">الزمالك يتأهل لنصف نهائي دوري أبطال أفريقيا بعد تغلبه على الترجمة التونسي</h2>
+                    <p class="article-excerpt">تأهل نادي الزمالك إلى نصف نهائي دوري أبطال أفريقيا للموسم 2023-2024 بعد فوزه على الترجمة التونسي بهدفين لهدف في المباراة التي أقيمت على استاد القاهرة الدولي. سجل المغربي أشرف بنشرقي هدفين في الدقائق 34 و72، بينما أدرك الترجمة التونسي هدف الشرف في الدقيقة 89 عبر محمد علي بن رمضان. واجه الزمالك صعوبة في الشوط الأول لكنه سيطر على مجريات اللعب في الشوط الثاني وسدد 15 كرة تجاه المرمى. في نصف النهائي، سيواجه الزمالك النجم الساحلي التونسي.</p>
+                    <a href="article8.html" class="read-more">قراءة المزيد</a>
+                    <div class="article-meta">
+                        <span class="article-date"><i class="far fa-calendar-alt"></i> 30 يونيو 2024</span>
+                        <span class="article-author"><i class="far fa-user"></i> محمود عبد الرحمن</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- المقالة 9 -->
+            <div class="news-article" data-categories="football europe">
+                <img src="https://images.unsplash.com/photo-1471295253337-3ceaaedca402?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="ليفربول بطل الدوري الإنجليزي" class="article-image">
+                <div class="article-content">
+                    <span class="article-category" style="background-color: #2196F3;">أوروبا</span>
+                    <h2 class="article-title">ليفربول يتوج بلقب الدوري الإنجليزي للمرة العشرين في تاريخه</h2>
+                    <p class="article-excerpt">توج ليفربول بلقب الدوري الإنجليزي الممتاز للموسم 2023-2024 للمرة العشرين في تاريخه بعد فوزه على أرسنال 2-0 في الجولة قبل الأخيرة من المسابقة. سجل محمد صلاح الهدف الأول من ركلة جزاء في الدقيقة 38، بينما أضاف داروين نونيز الهدف الثاني في الدقيقة 72. وحافظ ليفربول على نظافة شباكه بفضل أداء مميز لحارسه أليسون بيكر. أنهى ليفربول الموسم بـ92 نقطة، بفارق نقطتين عن مانشستر سيتي، محققاً ثنائية كأس الاتحاد والدوري.</p>
+                    <a href="article9.html" class="read-more">قراءة المزيد</a>
+                    <div class="article-meta">
+                        <span class="article-date"><i class="far fa-calendar-alt"></i> 28 يونيو 2024</span>
+                        <span class="article-author"><i class="far fa-user"></i> يوسف أحمد</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- المقالة 10 -->
+            <div class="news-article" data-categories="football transfers">
+                <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="انتقالات الدوري المصري" class="article-image">
+                <div class="article-content">
+                    <span class="article-category" style="background-color: #FF9800;">انتقالات</span>
+                    <h2 class="article-title">الأهلي والزمالك يعلنان عن أولى صفقاتهما استعداداً للموسم الجديد</h2>
+                    <p class="article-excerpt">أعلن النادي الأهلي عن تعاقده مع المدافع المغربي نور الدين أمرابط قادماً من الرجاء البيضاوي مقابل 3 ملايين دولار، ووقع عقداً لمدة 3 مواسم. بينما أعلن الزمالك تعاقده مع المهاجم الجزائري بلال بن ناصر من مولودية الجزائر مقابل 2.5 مليون دولار، ووقع عقداً لمدة 4 مواسم. كما أعلن الأهلي عن تجديد عقد محمود كهربا لمدة 3 مواسم أخرى، بينما جدد الزمالك مع حارسه محمد عواد لموسمين إضافيين. هذه الصفقات تأتي استعداداً للموسم الجديد الذي سيبدأ في سبتمبر المقبل.</p>
+                    <a href="article10.html" class="read-more">قراءة المزيد</a>
+                    <div class="article-meta">
+                        <span class="article-date"><i class="far fa-calendar-alt"></i> 26 يونيو 2024</span>
+                        <span class="article-author"><i class="far fa-user"></i> حسام الدين</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- إعلان أسفل الصفحة -->
+        <div class="ad-container">
+            <span class="ad-label">إعلان</span>
+            <!-- كود أدسنس هنا -->
+            <div style="width: 100%; height: 90px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                مساحة إعلانية - 728x90
+            </div>
+        </div>
+    </div>
+
+    <!-- زر العودة للأعلى -->
+    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <footer class="animate__animated animate__fadeInUp">
+        <div class="footer-links">
+            <a href="privacy.html">سياسة الخصوصية</a>
+            <a href="terms.html">شروط الاستخدام</a>
+            <a href="about.html">عن الموقع</a>
+            <a href="sitemap.html">خريطة الموقع</a>
+            <a href="contact.html">اتصل بـنـا</a>
+        </div>
+        <div class="copyright">
+            &copy; <span id="current-year"></span> ليجا شوت. جميع الحقوق محفوظة.
+        </div>
+    </footer>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "أخبار رياضية - ليجا شوت | آخر الأخبار والتحليلات الرياضية",
+      "description": "تابع آخر الأخبار الرياضية، التحليلات، التغطيات الحصرية، وآخر التطورات في عالم كرة القدم والرياضة العالمية",
+      "datePublished": "2024-07-15",
+      "dateModified": "2024-07-15",
+      "author": {
+        "@type": "Organization",
+        "name": "ليجا شوت"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ليجا شوت",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.legashot.online/images/logo.jpg"
+        }
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://www.legashot.online/images/news-cover.jpg"
+      }
+    }
+    </script>
+    
+    <script>
+        // تصفية الأخبار حسب التصنيف
+        function filterNews(category) {
+            const articles = document.querySelectorAll('.news-article');
+            const tabs = document.querySelectorAll('.category-tab');
+            
+            // تحديث الأزرار النشطة
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // تصفية المقالات
+            articles.forEach(article => {
+                if (category === 'all' || article.dataset.categories.includes(category)) {
+                    article.style.display = 'block';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+        }
+        
+        // إظهار/إخفاء زر العودة للأعلى
+        window.addEventListener('scroll', function() {
+            const backToTopButton = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        // تحديث سنة حقوق النشر
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // تحسينات SEO: إرسال حدث إلى Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('config', 'GA_MEASUREMENT_ID', {
+                    'page_title': 'الأخبار الرياضية',
+                    'page_path': '/news.html'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
