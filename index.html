@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7146888531609359"
-     crossorigin="anonymous"></script>
-    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ليجـــا شـــوت - أحدث مباريات كرة القدم وترتيب البطولات</title>
@@ -44,6 +41,7 @@
             --worldcup-color: #FFC107;
             --yesterday-color: #9C27B0;
             --tomorrow-color: #009688;
+            --history-color: #607D8B;
             --text-color: #333;
             --light-bg: #f5f5f5;
             --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -110,6 +108,10 @@
             border-right: 4px solid var(--tomorrow-color);
         }
         
+        .date-tab.history {
+            border-right: 4px solid var(--history-color);
+        }
+        
         .date-tab.yesterday.active {
             background-color: var(--yesterday-color);
             color: white;
@@ -122,6 +124,11 @@
         
         .date-tab.tomorrow.active {
             background-color: var(--tomorrow-color);
+            color: white;
+        }
+        
+        .date-tab.history.active {
+            background-color: var(--history-color);
             color: white;
         }
         
@@ -328,6 +335,10 @@
         
         .section-header.tomorrow::after {
             background: linear-gradient(to right, var(--tomorrow-color), var(--primary-color));
+        }
+        
+        .section-header.history::after {
+            background: linear-gradient(to right, var(--history-color), var(--primary-color));
         }
         
         /* كروت المباريات */
@@ -899,6 +910,7 @@
         <button class="date-tab yesterday" onclick="filterByDate('yesterday')">أمس</button>
         <button class="date-tab today active" onclick="filterByDate('today')">اليوم</button>
         <button class="date-tab tomorrow" onclick="filterByDate('tomorrow')">غداً</button>
+        <button class="date-tab history" onclick="filterByDate('history')">المباريات السابقة</button>
     </div>
     
     <!-- تبويبات الفلترة الرئيسية -->
@@ -1012,7 +1024,8 @@
         let allMatches = {
             yesterday: [],
             today: [],
-            tomorrow: []
+            tomorrow: [],
+            history: []
         };
         let currentDateFilter = 'today';
         let currentFilterType = 'all';
@@ -1024,6 +1037,8 @@
         const CACHE_CONFIG = {
             PREFIX: 'football_cache_',
             EXPIRY: 15 * 60 * 1000, // 15 دقيقة بالمللي ثانية
+            HISTORY_PREFIX: 'football_history_',
+            HISTORY_EXPIRY: 30 * 24 * 60 * 60 * 1000, // 30 يوم بالمللي ثانية
             API_KEY: '376800a4f1a5582465b88e9c37d3f326' // مفتاح API
         };
 
@@ -1084,6 +1099,9 @@
                     }
                 }
                 
+                // جلب المباريات السابقة من التخزين الدائم
+                loadHistoricalMatches();
+                
                 applyFilters();
                 hideLoader();
                 
@@ -1116,6 +1134,11 @@
             
             allMatches[period] = matches;
             saveToCache(date, matches);
+            
+            // إذا كانت مباريات اليوم، نقوم بحفظها في التخزين الدائم للمباريات السابقة
+            if (period === 'today') {
+                saveHistoricalMatches(matches);
+            }
         }
 
         // دالة حفظ البيانات في التخزين المؤقت
@@ -1146,6 +1169,66 @@
             return item.data;
         }
 
+        // دالة حفظ المباريات السابقة في التخزين الدائم
+        function saveHistoricalMatches(matches) {
+            const today = getFormattedDate();
+            const historicalMatches = getHistoricalMatches();
+            
+            // نتحقق أولاً إذا كان تاريخ اليوم موجود بالفعل
+            const existingIndex = historicalMatches.findIndex(item => item.date === today);
+            
+            if (existingIndex !== -1) {
+                // تحديث المباريات لهذا التاريخ
+                historicalMatches[existingIndex].matches = matches;
+            } else {
+                // إضافة تاريخ جديد
+                historicalMatches.push({
+                    date: today,
+                    matches: matches
+                });
+            }
+            
+            // حفظ فقط آخر 30 يوم لتجنب ملء الذاكرة
+            if (historicalMatches.length > 30) {
+                historicalMatches.shift();
+            }
+            
+            localStorage.setItem(CACHE_CONFIG.HISTORY_PREFIX, JSON.stringify({
+                data: historicalMatches,
+                timestamp: new Date().getTime()
+            }));
+        }
+
+        // دالة جلب المباريات السابقة من التخزين الدائم
+        function loadHistoricalMatches() {
+            const historicalData = localStorage.getItem(CACHE_CONFIG.HISTORY_PREFIX);
+            if (!historicalData) {
+                allMatches.history = [];
+                return;
+            }
+            
+            const parsedData = JSON.parse(historicalData);
+            const now = new Date();
+            
+            // التحقق من صلاحية البيانات (30 يوم)
+            if (now.getTime() - parsedData.timestamp > CACHE_CONFIG.HISTORY_EXPIRY) {
+                localStorage.removeItem(CACHE_CONFIG.HISTORY_PREFIX);
+                allMatches.history = [];
+                return;
+            }
+            
+            allMatches.history = parsedData.data || [];
+        }
+
+        // دالة جلب المباريات السابقة المخزنة
+        function getHistoricalMatches() {
+            const historicalData = localStorage.getItem(CACHE_CONFIG.HISTORY_PREFIX);
+            if (!historicalData) return [];
+            
+            const parsedData = JSON.parse(historicalData);
+            return parsedData.data || [];
+        }
+
         // دالة عرض مؤشر التحميل
         function showLoader() {
             document.getElementById('loader').style.display = 'flex';
@@ -1169,7 +1252,8 @@
             // تحديث breadcrumb
             document.getElementById('breadcrumb-date').textContent = 
                 period === 'yesterday' ? 'أمس' : 
-                period === 'today' ? 'اليوم' : 'غداً';
+                period === 'today' ? 'اليوم' : 
+                period === 'tomorrow' ? 'غداً' : 'المباريات السابقة';
             
             applyFilters();
         }
@@ -1203,7 +1287,21 @@
         // دالة تطبيق جميع الفلاتر
         function applyFilters() {
             // الحصول على المباريات للفترة الزمنية المحددة
-            let filteredMatches = allMatches[currentDateFilter];
+            let filteredMatches = [];
+            
+            if (currentDateFilter === 'history') {
+                // دمج جميع المباريات السابقة في مصفوفة واحدة
+                filteredMatches = allMatches.history.reduce((acc, day) => {
+                    return acc.concat(day.matches);
+                }, []);
+                
+                // تصفية المباريات المنتهية فقط
+                filteredMatches = filteredMatches.filter(match => {
+                    return getStatusClass(match.fixture.status.short) === 'status-finished';
+                });
+            } else {
+                filteredMatches = allMatches[currentDateFilter];
+            }
             
             // التصفية حسب النوع
             if (currentFilterType !== 'all') {
@@ -1220,8 +1318,8 @@
                 });
             }
             
-            // التصفية حسب الحالة
-            if (currentStatusFilter !== 'all') {
+            // التصفية حسب الحالة (لا تنطبق على المباريات السابقة)
+            if (currentStatusFilter !== 'all' && currentDateFilter !== 'history') {
                 filteredMatches = filteredMatches.filter(match => {
                     const matchStatus = getStatusClass(match.fixture.status.short);
                     return matchStatus === `status-${currentStatusFilter}`;
@@ -1253,6 +1351,11 @@
             // عرض المباريات
             let html = '';
             
+            // إضافة عنوان للتاريخ إذا كانت المباريات السابقة
+            if (currentDateFilter === 'history') {
+                html += `<div class="section-header history">المباريات السابقة</div>`;
+            }
+            
             for (const [index, league] of Object.keys(matchesByLeague).entries()) {
                 const firstMatch = matchesByLeague[league][0];
                 const country = firstMatch.league.country;
@@ -1277,6 +1380,7 @@
                     const matchTime = new Date(match.fixture.timestamp * 1000);
                     const statusClass = getStatusClass(match.fixture.status.short);
                     const statusLong = match.fixture.status.long;
+                    const matchDate = matchTime.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
                     
                     let timeDisplay = matchTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                     let extraInfo = '';
@@ -1303,8 +1407,13 @@
                         extraInfo = `<div class="live-badge">مباشر ${elapsedTime}'</div>`;
                     }
                     
+                    // إضافة تاريخ المباراة إذا كانت من المباريات السابقة
+                    const dateInfo = currentDateFilter === 'history' ? 
+                        `<div style="text-align: center; font-size: 0.9rem; color: #666; margin-bottom: 10px;">${matchDate}</div>` : '';
+                    
                     html += `
                         <div class="match-card">
+                            ${dateInfo}
                             <div class="teams" onclick="openMatchDetails(${match.fixture.id})">
                                 <div class="team">
                                     <img src="${match.teams.home.logo}" alt="${match.teams.home.name}" class="team-logo">
