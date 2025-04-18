@@ -3,19 +3,34 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="موقع ليجا شوت لمتابعة مباريات كرة القدم حول العالم - ترتيب الفرق - نتائج المباريات - مواعيد المباريات القادمة">
-    <meta name="keywords" content="كرة قدم, مباريات, نتائج, ترتيب, دوري, بطولات, ليجا شوت">
+    <title>ليجـــا شـــوت - أحدث مباريات كرة القدم وترتيب البطولات</title>
+    <meta name="description" content="تابع أحدث مباريات كرة القدم، ترتيب الفرق، نتائج المباريات، وجداول البطولات العالمية والعربية على موقع ليجا شوت">
+    <meta name="keywords" content="كرة القدم, مباريات اليوم, الدوري المصري, الدوري الإنجليزي, الدوري الإسباني, دوري أبطال أوروبا, كأس العالم, نتائج المباريات, ترتيب الفرق">
     <meta name="author" content="ليجا شوت">
-    <meta property="og:title" content="ليجا شوت - متابعة مباريات كرة القدم">
-    <meta property="og:description" content="موقع لمتابعة جميع مباريات كرة القدم حول العالم">
-    <meta property="og:url" content="https://www.legashot.online/">
+    
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://www.legashot.online/images/logo.png">
-    <meta name="robots" content="index, follow">
+    <meta property="og:url" content="https://www.legashot.online/">
+    <meta property="og:title" content="ليجـــا شـــوت - أحدث مباريات كرة القدم">
+    <meta property="og:description" content="تابع أحدث مباريات كرة القدم، ترتيب الفرق، نتائج المباريات، وجداول البطولات">
+    <meta property="og:image" content="https://www.legashot.online/images/logo.jpg">
+    <meta property="og:site_name" content="ليجا شوت">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.legashot.online/">
+    <meta property="twitter:title" content="ليجـــا شـــوت - أحدث مباريات كرة القدم">
+    <meta property="twitter:description" content="تابع أحدث مباريات كرة القدم، ترتيب الفرق، نتائج المباريات، وجداول البطولات">
+    <meta property="twitter:image" content="https://www.legashot.online/images/logo.jpg">
+    
+    <!-- Canonical URL -->
     <link rel="canonical" href="https://www.legashot.online/">
-    <title>ليجـــا شـــوت | متابعة مباريات كرة القدم</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #3f51b5;
@@ -30,10 +45,6 @@
             --light-bg: #f5f5f5;
             --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --ad-color: #f8f9fa;
-            --facebook-color: #3b5998;
-            --twitter-color: #1DA1F2;
-            --whatsapp-color: #25D366;
-            --telegram-color: #0088cc;
         }
         
         body {
@@ -650,7 +661,7 @@
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin: 15px 0;
+            margin: 20px 0;
             flex-wrap: wrap;
         }
         
@@ -664,7 +675,7 @@
             color: white;
             font-size: 18px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
         }
         
         .share-btn:hover {
@@ -672,19 +683,19 @@
         }
         
         .facebook {
-            background-color: var(--facebook-color);
+            background-color: #3b5998;
         }
         
         .twitter {
-            background-color: var(--twitter-color);
+            background-color: #1DA1F2;
         }
         
         .whatsapp {
-            background-color: var(--whatsapp-color);
+            background-color: #25D366;
         }
         
         .telegram {
-            background-color: var(--telegram-color);
+            background-color: #0088cc;
         }
         
         /* نافذة المشاركة */
@@ -696,106 +707,120 @@
             right: 0;
             bottom: 0;
             background-color: rgba(0,0,0,0.7);
-            z-index: 2000;
+            z-index: 1000;
             justify-content: center;
             align-items: center;
         }
         
-        .share-content {
+        .share-modal-content {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
-            width: 90%;
             max-width: 500px;
+            width: 90%;
             animation: fadeIn 0.3s ease;
         }
         
-        .share-header {
+        .share-modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
         }
         
-        .share-title {
-            font-size: 1.3rem;
-            color: var(--primary-color);
+        .share-modal-title {
+            font-size: 1.2rem;
             font-weight: bold;
+            color: var(--primary-color);
         }
         
-        .close-share {
+        .close-share-modal {
             font-size: 1.5rem;
             cursor: pointer;
             color: #666;
         }
         
-        .share-text {
-            margin: 15px 0;
-            padding: 10px;
+        .share-preview {
             border: 1px solid #eee;
+            padding: 15px;
+            margin-bottom: 15px;
             border-radius: 5px;
-            background-color: var(--light-bg);
+            background-color: #f9f9f9;
         }
         
-        .share-url {
-            margin: 15px 0;
-            padding: 10px;
-            border: 1px solid #eee;
-            border-radius: 5px;
-            background-color: var(--light-bg);
+        .share-preview-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .share-preview-desc {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .share-preview-url {
+            color: #999;
+            font-size: 0.8rem;
             word-break: break-all;
         }
         
-        /* أنماط الإعلانات */
-        .ad-container {
+        .share-preview-image {
             width: 100%;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: var(--ad-color);
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: var(--card-shadow);
-            border: 1px dashed #ccc;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-top: 10px;
         }
         
-        .ad-container.horizontal {
+        /* تحسينات SEO */
+        .breadcrumb {
+            padding: 10px 15px;
+            background-color: var(--light-bg);
+            border-radius: 5px;
+            margin: 10px auto;
             max-width: 1000px;
-            margin: 20px auto;
-            height: 90px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-size: 0.9rem;
         }
         
-        .ad-container.vertical {
-            width: 300px;
-            height: 250px;
-            margin: 20px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
         }
         
-        .ad-container.square {
-            width: 300px;
-            height: 300px;
-            margin: 20px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .breadcrumb a:hover {
+            text-decoration: underline;
         }
         
-        .ad-label {
-            font-size: 0.8rem;
+        .breadcrumb span {
             color: #666;
-            margin-bottom: 5px;
-            display: block;
-            text-transform: uppercase;
+            margin: 0 5px;
         }
         
-        .ad-content {
-            color: #999;
-            font-style: italic;
+        /* زر المشاركة السريعة */
+        .quick-share-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-share-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
         }
     </style>
 </head>
@@ -808,13 +833,17 @@
 
     <!-- نافذة المشاركة -->
     <div id="shareModal" class="share-modal">
-        <div class="share-content">
-            <div class="share-header">
-                <div class="share-title">مشاركة المباراة</div>
-                <div class="close-share" onclick="closeShareModal()">&times;</div>
+        <div class="share-modal-content">
+            <div class="share-modal-header">
+                <div class="share-modal-title">مشاركة المباراة</div>
+                <div class="close-share-modal" onclick="closeShareModal()">&times;</div>
             </div>
-            <div class="share-text" id="shareText"></div>
-            <div class="share-url" id="shareUrl">https://www.legashot.online/</div>
+            <div class="share-preview">
+                <div class="share-preview-title" id="shareMatchTitle">مباراة: فريق1 vs فريق2</div>
+                <div class="share-preview-desc" id="shareMatchDesc">مباراة مثيرة في إطار بطولة الدوري</div>
+                <div class="share-preview-url" id="shareMatchUrl">https://www.legashot.online/match/123</div>
+                <img src="https://www.legashot.online/images/share-preview.jpg" alt="معاينة المشاركة" class="share-preview-image" id="shareMatchImage">
+            </div>
             <div class="share-buttons">
                 <div class="share-btn facebook" onclick="shareOnFacebook()">
                     <i class="fab fa-facebook-f"></i>
@@ -828,13 +857,25 @@
                 <div class="share-btn telegram" onclick="shareOnTelegram()">
                     <i class="fab fa-telegram-plane"></i>
                 </div>
+                <div class="share-btn" style="background-color: #333;" onclick="copyShareLink()">
+                    <i class="fas fa-link"></i>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- إعلان رأسي في الأعلى -->
-    <div class="ad-container horizontal">
-        <span class="ad-content">مساحة إعلانية - 728x90</span>
+    <!-- زر المشاركة السريعة -->
+    <div class="quick-share-btn" onclick="openQuickShare()">
+        <i class="fas fa-share-alt"></i>
+    </div>
+
+    <!-- مسار الموقع (Breadcrumb) -->
+    <div class="breadcrumb">
+        <a href="/">الرئيسية</a>
+        <span>/</span>
+        <a href="#" id="breadcrumb-league">المباريات</a>
+        <span>/</span>
+        <span id="breadcrumb-date">اليوم</span>
     </div>
 
     <h1 class="animate__animated animate__fadeIn">ليجـــا شـــوت</h1>
@@ -901,34 +942,56 @@
         <button class="status-tab" onclick="filterByStatus('finished')">منتهية</button>
         <button class="status-tab" onclick="filterByStatus('cancelled')">ملغاة</button>
     </div>
-
-    <!-- إعلان أفقي في وسط الصفحة -->
-    <div class="ad-container horizontal">
-        <span class="ad-content">مساحة إعلانية - 728x90</span>
-    </div>
     
     <div id="matches-container"></div>
 
-    <!-- إعلان مربع بعد المباريات -->
-    <div class="ad-container square">
-        <span class="ad-content">مساحة إعلانية - 300x300</span>
-    </div>
-
     <footer class="animate__animated animate__fadeInUp">
-        <!-- إعلان أفقي في الفوتر -->
-        <div class="ad-container horizontal" style="margin-bottom: 20px;">
-            <span class="ad-content">مساحة إعلانية - 728x90</span>
-        </div>
-        
         <div class="footer-links">
             <a href="privacy.html">سياسة الخصوصية</a>
             <a href="terms.html">شروط الاستخدام</a>
             <a href="about.html">عن الموقع</a>
+            <a href="sitemap.xml">خريطة الموقع</a>
+            <a href="contact.html">اتصل بنا</a>
         </div>
         <div class="copyright">
-            &copy; 2023 ليجا شوت. جميع الحقوق محفوظة.
+            &copy; <span id="current-year"></span> ليجا شوت. جميع الحقوق محفوظة.
         </div>
     </footer>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsOrganization",
+      "name": "ليجا شوت",
+      "url": "https://www.legashot.online/",
+      "logo": "https://www.legashot.online/images/logo.jpg",
+      "description": "موقع متخصص في متابعة مباريات كرة القدم وترتيب البطولات",
+      "founder": {
+        "@type": "Person",
+        "name": "ليجا شوت"
+      },
+      "sameAs": [
+        "https://www.facebook.com/legashot",
+        "https://twitter.com/legashot",
+        "https://www.instagram.com/legashot"
+      ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ليجا شوت",
+      "url": "https://www.legashot.online/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.legashot.online/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 
     <script>
         // تخزين المباريات بشكل عام للتصفية لاحقاً
@@ -941,7 +1004,7 @@
         let currentFilterType = 'all';
         let currentStatusFilter = 'all';
         let countdownIntervals = {};
-        let currentMatchForSharing = null;
+        let currentMatchToShare = null;
         
         // إعدادات نظام التخزين المؤقت
         const CACHE_CONFIG = {
@@ -1089,6 +1152,11 @@
             });
             event.currentTarget.classList.add('active');
             
+            // تحديث breadcrumb
+            document.getElementById('breadcrumb-date').textContent = 
+                period === 'yesterday' ? 'أمس' : 
+                period === 'today' ? 'اليوم' : 'غداً';
+            
             applyFilters();
         }
         
@@ -1171,15 +1239,7 @@
             // عرض المباريات
             let html = '';
             
-            // إضافة إعلان بين كل دوريين (إذا كان هناك أكثر من دوري)
-            const leagueKeys = Object.keys(matchesByLeague);
-            if (leagueKeys.length > 1) {
-                html += `<div class="ad-container vertical" style="margin: 30px auto;">
-                            <span class="ad-content">مساحة إعلانية - 300x250</span>
-                         </div>`;
-            }
-            
-            for (const [index, league] of leagueKeys.entries()) {
+            for (const [index, league] of Object.keys(matchesByLeague).entries()) {
                 const firstMatch = matchesByLeague[league][0];
                 const country = firstMatch.league.country;
                 const countryFlag = firstMatch.league.flag || '';
@@ -1231,7 +1291,7 @@
                     
                     html += `
                         <div class="match-card">
-                            <div class="teams">
+                            <div class="teams" onclick="openMatchDetails(${match.fixture.id})">
                                 <div class="team">
                                     <img src="${match.teams.home.logo}" alt="${match.teams.home.name}" class="team-logo">
                                     <span class="team-name">${match.teams.home.name}</span>
@@ -1253,43 +1313,65 @@
                                 ${statusClass === 'status-inprogress' ? extraInfo : statusLong}
                                 ${statusClass === 'status-scheduled' ? extraInfo : ''}
                             </div>
-                            <div class="share-buttons" style="padding: 10px; display: flex; justify-content: center;">
-                                <div class="share-btn facebook" onclick="openShareModal(${match.fixture.id}, '${match.teams.home.name}', '${match.teams.away.name}', '${scoreDisplay}', '${league}', '${timeDisplay}')">
-                                    <i class="fas fa-share-alt"></i>
+                            <div class="share-buttons" style="padding: 10px; justify-content: center;">
+                                <div class="share-btn facebook" onclick="prepareShare(${match.fixture.id}, '${match.teams.home.name}', '${match.teams.away.name}', '${league}', '${statusLong}', '${match.teams.home.logo}', '${match.teams.away.logo}')">
+                                    <i class="fab fa-facebook-f"></i>
+                                </div>
+                                <div class="share-btn twitter" onclick="prepareShare(${match.fixture.id}, '${match.teams.home.name}', '${match.teams.away.name}', '${league}', '${statusLong}', '${match.teams.home.logo}', '${match.teams.away.logo}')">
+                                    <i class="fab fa-twitter"></i>
+                                </div>
+                                <div class="share-btn whatsapp" onclick="prepareShare(${match.fixture.id}, '${match.teams.home.name}', '${match.teams.away.name}', '${league}', '${statusLong}', '${match.teams.home.logo}', '${match.teams.away.logo}')">
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>
+                                <div class="share-btn telegram" onclick="prepareShare(${match.fixture.id}, '${match.teams.home.name}', '${match.teams.away.name}', '${league}', '${statusLong}', '${match.teams.home.logo}', '${match.teams.away.logo}')">
+                                    <i class="fab fa-telegram-plane"></i>
                                 </div>
                             </div>
                         </div>`;
                 });
-                
-                // إضافة إعلان بعد كل دوري (ما عدا الأخير)
-                if (index < leagueKeys.length - 1) {
-                    html += `<div class="ad-container horizontal" style="margin: 30px auto;">
-                                <span class="ad-content">مساحة إعلانية - 728x90</span>
-                             </div>`;
-                }
             }
             
             container.innerHTML = html;
         }
         
-        // دالة فتح نافذة المشاركة
-        function openShareModal(fixtureId, homeTeam, awayTeam, score, league, time) {
-            currentMatchForSharing = {fixtureId, homeTeam, awayTeam, score, league, time};
+        // دالة إعداد المشاركة
+        function prepareShare(fixtureId, homeTeam, awayTeam, league, status, homeLogo, awayLogo) {
+            currentMatchToShare = {
+                id: fixtureId,
+                homeTeam: homeTeam,
+                awayTeam: awayTeam,
+                league: league,
+                status: status,
+                homeLogo: homeLogo,
+                awayLogo: awayLogo
+            };
             
-            let statusText = '';
-            if (score === 'لم تبدأ') {
-                statusText = `مباراة قادمة بين ${homeTeam} و ${awayTeam} في ${league}`;
-            } else if (score.includes('-')) {
-                statusText = `نتيجة مباراة ${homeTeam} ${score} ${awayTeam} في ${league}`;
-            } else {
-                statusText = `مباراة بين ${homeTeam} و ${awayTeam} في ${league}`;
-            }
+            document.getElementById('shareMatchTitle').textContent = `${homeTeam} vs ${awayTeam}`;
+            document.getElementById('shareMatchDesc').textContent = `مباراة ${league} - ${status}`;
+            document.getElementById('shareMatchUrl').textContent = `https://www.legashot.online/match/${fixtureId}`;
             
-            const shareText = `${statusText}\nموعد المباراة: ${time}\nتابع المباراة على ليجا شوت`;
+            // استخدام صورة أحد الفريقين كصورة معاينة للمشاركة
+            const previewImage = homeLogo || awayLogo || 'https://www.legashot.online/images/share-preview.jpg';
+            document.getElementById('shareMatchImage').src = previewImage;
             
-            document.getElementById('shareText').textContent = shareText;
-            document.getElementById('shareUrl').textContent = `https://www.legashot.online/match?id=${fixtureId}`;
             document.getElementById('shareModal').style.display = 'flex';
+        }
+        
+        // دالة فتح نافذة المشاركة السريعة
+        function openQuickShare() {
+            if (navigator.share) {
+                // استخدام Web Share API إذا كان متاحاً
+                navigator.share({
+                    title: 'ليجا شوت - أحدث مباريات كرة القدم',
+                    text: 'تابع أحدث مباريات كرة القدم وترتيب البطولات على موقع ليجا شوت',
+                    url: 'https://www.legashot.online/'
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                });
+            } else {
+                // فتح نافذة المشاركة العادية إذا لم يكن Web Share API متاحاً
+                prepareShare(0, 'ليجا شوت', 'أحدث المباريات', 'موقع كرة القدم', 'تابع أحدث المباريات والنتائج', '', '');
+            }
         }
         
         // دالة إغلاق نافذة المشاركة
@@ -1299,30 +1381,49 @@
         
         // دالة المشاركة على فيسبوك
         function shareOnFacebook() {
-            const url = encodeURIComponent(`https://www.legashot.online/match?id=${currentMatchForSharing.fixtureId}`);
-            const text = encodeURIComponent(document.getElementById('shareText').textContent);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+            if (!currentMatchToShare) return;
+            
+            const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://www.legashot.online/match/${currentMatchToShare.id}`)}`;
+            window.open(url, '_blank', 'width=600,height=400');
         }
         
         // دالة المشاركة على تويتر
         function shareOnTwitter() {
-            const url = encodeURIComponent(`https://www.legashot.online/match?id=${currentMatchForSharing.fixtureId}`);
-            const text = encodeURIComponent(document.getElementById('shareText').textContent);
-            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+            if (!currentMatchToShare) return;
+            
+            const text = `شاهد مباراة ${currentMatchToShare.homeTeam} vs ${currentMatchToShare.awayTeam} في ${currentMatchToShare.league} - ${currentMatchToShare.status}`;
+            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(`https://www.legashot.online/match/${currentMatchToShare.id}`)}`;
+            window.open(url, '_blank', 'width=600,height=400');
         }
         
         // دالة المشاركة على واتساب
         function shareOnWhatsApp() {
-            const url = encodeURIComponent(`https://www.legashot.online/match?id=${currentMatchForSharing.fixtureId}`);
-            const text = encodeURIComponent(document.getElementById('shareText').textContent);
-            window.open(`https://wa.me/?text=${text}%0A${url}`, '_blank');
+            if (!currentMatchToShare) return;
+            
+            const text = `شاهد مباراة ${currentMatchToShare.homeTeam} vs ${currentMatchToShare.awayTeam} في ${currentMatchToShare.league} - ${currentMatchToShare.status}\nhttps://www.legashot.online/match/${currentMatchToShare.id}`;
+            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank', 'width=600,height=400');
         }
         
         // دالة المشاركة على تليجرام
         function shareOnTelegram() {
-            const url = encodeURIComponent(`https://www.legashot.online/match?id=${currentMatchForSharing.fixtureId}`);
-            const text = encodeURIComponent(document.getElementById('shareText').textContent);
-            window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
+            if (!currentMatchToShare) return;
+            
+            const text = `شاهد مباراة ${currentMatchToShare.homeTeam} vs ${currentMatchToShare.awayTeam} في ${currentMatchToShare.league} - ${currentMatchToShare.status}`;
+            const url = `https://t.me/share/url?url=${encodeURIComponent(`https://www.legashot.online/match/${currentMatchToShare.id}`)}&text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank', 'width=600,height=400');
+        }
+        
+        // دالة نسخ رابط المشاركة
+        function copyShareLink() {
+            if (!currentMatchToShare) return;
+            
+            const url = `https://www.legashot.online/match/${currentMatchToShare.id}`;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('تم نسخ الرابط بنجاح!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
         }
         
         // دالة العد التنازلي
@@ -1398,7 +1499,27 @@
         }
         
         // تحميل المباريات عند بدء التشغيل
-        document.addEventListener('DOMContentLoaded', fetchAllMatches);
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchAllMatches();
+            
+            // تحديث سنة حقوق النشر
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // إضافة حدث لإغلاق نافذة المشاركة عند النقر خارجها
+            document.getElementById('shareModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeShareModal();
+                }
+            });
+            
+            // تحسينات SEO: إرسال حدث إلى Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('config', 'GA_MEASUREMENT_ID', {
+                    'page_title': 'الصفحة الرئيسية',
+                    'page_path': '/'
+                });
+            }
+        });
     </script>
 </body>
 </html>
