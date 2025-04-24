@@ -32,7 +32,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7146888531609359" crossorigin="anonymous"></script>
@@ -40,16 +40,21 @@
     <style>
         :root {
             --primary-color: #3f51b5;
+            --primary-dark: #303f9f;
             --secondary-color: #4CAF50;
             --accent-color: #FF5722;
             --text-color: #333;
             --light-bg: #f5f5f5;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --light-gray: #e9ecef;
             --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --ad-color: #f8f9fa;
+            --transition: all 0.3s ease;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f9f9f9;
             color: var(--text-color);
             margin: 0;
@@ -63,12 +68,99 @@
             padding: 0 15px;
         }
         
-        h1 {
+        h1, h2, h3 {
+            color: var(--primary-dark);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            color: var(--secondary-color);
+        }
+        
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
             text-align: center;
-            color: var(--primary-color);
-            margin: 20px 0;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            z-index: 2;
+        }
+        
+        .hero h1 {
             font-size: 2.5rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
         /* تبويبات التصنيفات */
@@ -89,9 +181,17 @@
             cursor: pointer;
             font-weight: 700;
             font-size: 1.1rem;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             color: var(--text-color);
             box-shadow: var(--card-shadow);
+            border: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .category-tab i {
+            font-size: 0.9rem;
         }
         
         .category-tab:hover {
@@ -108,7 +208,7 @@
         /* مقالات الأخبار */
         .news-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
             margin: 30px 0;
         }
@@ -118,7 +218,7 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
+            transition: var(--transition);
             animation: fadeInUp 0.5s ease;
         }
         
@@ -137,10 +237,18 @@
             height: 200px;
             object-fit: cover;
             border-bottom: 3px solid var(--primary-color);
+            transition: transform 0.5s ease;
+        }
+        
+        .news-article:hover .article-image {
+            transform: scale(1.05);
         }
         
         .article-content {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
         
         .article-category {
@@ -151,20 +259,22 @@
             border-radius: 15px;
             font-size: 0.8rem;
             margin-bottom: 10px;
+            font-weight: bold;
         }
         
         .article-title {
             font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 10px;
-            color: var(--text-color);
+            color: var(--primary-dark);
             line-height: 1.4;
         }
         
         .article-excerpt {
-            color: #666;
+            color: var(--gray-color);
             margin-bottom: 15px;
             line-height: 1.6;
+            flex: 1;
         }
         
         .article-meta {
@@ -172,7 +282,7 @@
             justify-content: space-between;
             align-items: center;
             font-size: 0.85rem;
-            color: #888;
+            color: var(--gray-color);
             border-top: 1px solid #eee;
             padding-top: 15px;
         }
@@ -187,6 +297,8 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            color: var(--secondary-color);
+            font-weight: bold;
         }
         
         .read-more {
@@ -194,69 +306,253 @@
             padding: 8px 20px;
             background-color: var(--primary-color);
             color: white;
-            border-radius: 25px;
+            borderRadius: 25px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: var(--transition);
             margin-top: 10px;
             cursor: pointer;
+            align-self: flex-start;
         }
         
         .read-more:hover {
-            background-color: #303f9f;
+            background-color: var(--primary-dark);
             transform: translateY(-2px);
         }
         
-        /* إعلانات متوافقة مع أدسنس */
-        .ad-container {
-            background-color: var(--ad-color);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 30px 0;
+        /* Featured News */
+        .featured-news {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .featured-news .article-image {
+            height: 300px;
+        }
+        
+        .featured-news .article-content {
+            padding: 30px;
+        }
+        
+        .featured-news .article-title {
+            font-size: 1.8rem;
+        }
+        
+        /* Loading and Error States */
+        .loading, .error {
             text-align: center;
-            border: 1px dashed #ccc;
-            overflow: hidden;
+            padding: 40px;
+            grid-column: 1 / -1;
         }
         
-        .ad-label {
-            font-size: 0.8rem;
-            color: #888;
-            margin-bottom: 10px;
-            display: block;
-            text-transform: uppercase;
+        .loading i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            animation: spin 1s linear infinite;
         }
         
-        /* تذييل الصفحة */
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 30px 0;
-            margin-top: 50px;
-            text-align: center;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
-        .footer-links {
+        .error i {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+        
+        /* Pagination */
+        .pagination {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
+            margin: 40px 0;
+            gap: 10px;
         }
         
-        .footer-links a {
+        .page-btn {
+            padding: 8px 15px;
+            background-color: white;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .page-btn:hover, .page-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .page-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .newsletter h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            padding: 0 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .newsletter-btn:hover {
+            background-color: #45a049;
+        }
+        
+        /* Article Detail Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .article-modal {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active .article-modal {
+            transform: translateY(0);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.5rem;
+            color: var(--gray-color);
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            color: var(--accent-color);
+        }
+        
+        .article-header {
+            margin-bottom: 20px;
+        }
+        
+        .article-title {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .article-image-page {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .article-content-page {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .article-content-page p {
+            margin-bottom: 20px;
+        }
+        
+        .article-summary {
+            padding: 20px;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .original-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
             color: white;
             text-decoration: none;
-            transition: opacity 0.3s;
+            border-radius: 4px;
+            transition: var(--transition);
+            font-weight: bold;
         }
         
-        .footer-links a:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-        
-        .copyright {
-            font-size: 0.9rem;
-            opacity: 0.8;
+        .original-link:hover {
+            background-color: var(--primary-dark);
         }
         
         /* مسار الموقع (Breadcrumb) */
@@ -283,6 +579,170 @@
             margin: 0 5px;
         }
         
+        /* الأرشيف */
+        .archive-section {
+            margin: 40px 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .archive-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        
+        .archive-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .archive-item {
+            background-color: var(--light-bg);
+            padding: 15px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        
+        .archive-item:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .archive-item a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .archive-date {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .archive-count {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        .archive-item:hover .archive-count {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* تذييل الصفحة */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-logo i {
+            color: var(--secondary-color);
+        }
+        
+        .footer-about p {
+            margin-bottom: 15px;
+            color: var(--light-gray);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            color: var(--secondary-color);
+        }
+        
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+            color: white;
+        }
+        
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-right: 5px;
+        }
+        
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: var(--light-gray);
+        }
+        
+        .footer-contact i {
+            color: var(--secondary-color);
+            width: 20px;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+        
         /* زر العودة للأعلى */
         .back-to-top {
             position: fixed;
@@ -291,7 +751,7 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background-color: var(--primary-color);
+            background-color: var(--secondary-color);
             color: white;
             display: flex;
             align-items: center;
@@ -301,7 +761,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             z-index: 99;
             opacity: 0;
-            transition: all 0.3s;
+            transition: var(--transition);
         }
         
         .back-to-top.visible {
@@ -310,84 +770,142 @@
         
         .back-to-top:hover {
             transform: translateY(-5px);
-            background-color: #303f9f;
+            background-color: #45a049;
         }
         
         /* تحسينات للجوال */
-        @media (max-width: 768px) {
-            .news-container {
+        @media (max-width: 992px) {
+            .featured-news {
                 grid-template-columns: 1fr;
             }
             
-            h1 {
+            .featured-news .article-image {
+                height: 250px;
+            }
+            
+            .article-modal {
+                padding: 20px;
+            }
+            
+            .article-title {
+                font-size: 1.5rem;
+            }
+            
+            .archive-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+            
+            nav {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 15px;
+            }
+            
+            nav.show {
+                display: flex;
+            }
+            
+            .hero h1 {
                 font-size: 2rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 30px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-btn {
+                border-radius: 30px;
+            }
+            
+            .news-container {
+                grid-template-columns: 1fr;
             }
             
             .category-tab {
                 padding: 10px 15px;
                 font-size: 0.9rem;
             }
-            
-            .ad-container {
-                padding: 10px;
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                height: 250px;
             }
-        }
-
-        /* صفحة المقال المفرد */
-        .article-page {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 0 15px;
-            display: none;
-        }
-
-        .article-header {
-            margin-bottom: 30px;
-        }
-
-        .article-title-page {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-
-        .article-image-page {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .article-content-page {
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-
-        .article-content-page p {
-            margin-bottom: 20px;
-        }
-
-        .back-to-news {
-            display: inline-block;
-            padding: 10px 25px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin-top: 30px;
-            cursor: pointer;
-        }
-
-        .back-to-news:hover {
-            background-color: #303f9f;
-            transform: translateY(-2px);
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .category-tabs {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                scrollbar-width: thin;
+            }
+            
+            .category-tabs::-webkit-scrollbar {
+                height: 5px;
+            }
+            
+            .category-tabs::-webkit-scrollbar-thumb {
+                background-color: var(--primary-color);
+                border-radius: 5px;
+            }
+            
+            .article-modal {
+                width: 95%;
+                padding: 15px;
+            }
+            
+            .article-title {
+                font-size: 1.3rem;
+            }
+            
+            .article-content-page, .article-summary {
+                font-size: 1rem;
+            }
+            
+            .archive-list {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-running"></i>
+                <span>ليجا شوت</span>
+            </a>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+
+        </div>
+    </header>
+    
     <!-- مسار الموقع (Breadcrumb) -->
     <div class="breadcrumb">
         <a href="/">الرئيسية</a>
@@ -396,16 +914,36 @@
     </div>
 
     <div class="container">
-        <h1 class="animate__animated animate__fadeIn" id="main-title">الأخبار الرياضية</h1>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>أحدث الأخبار والتحليلات الرياضية</h1>
+                <p>تابع كل ما هو جديد في عالم الرياضة من أخبار، نتائج، تحليلات وإحصائيات</p>
+            </div>
+        </section>
         
         <!-- تبويبات التصنيفات -->
         <div class="category-tabs animate__animated animate__fadeInDown" id="category-tabs">
-            <button class="category-tab active" onclick="filterNews('all')">الكل</button>
-            <button class="category-tab" onclick="filterNews('football')">كرة القدم</button>
-            <button class="category-tab" onclick="filterNews('transfers')">انتقالات</button>
-            <button class="category-tab" onclick="filterNews('analysis')">تحليلات</button>
-            <button class="category-tab" onclick="filterNews('egypt')">الدوري المصري</button>
-            <button class="category-tab" onclick="filterNews('europe')">أوروبا</button>
+            <button class="category-tab active" data-category="all">
+                <i class="fas fa-list"></i>
+                <span>الكل</span>
+            </button>
+            <button class="category-tab" data-category="كرة قدم">
+                <i class="fas fa-futbol"></i>
+                <span>كرة قدم</span>
+            </button>
+            <button class="category-tab" data-category="كرة سلة">
+                <i class="fas fa-basketball-ball"></i>
+                <span>كرة سلة</span>
+            </button>
+            <button class="category-tab" data-category="تنس">
+                <i class="fas fa-table-tennis"></i>
+                <span>تنس</span>
+            </button>
+            <button class="category-tab" data-category="رياضات أولمبية">
+                <i class="fas fa-medal"></i>
+                <span>أولمبياد</span>
+            </button>
         </div>
         
         <!-- إعلان أعلى الصفحة -->
@@ -424,495 +962,41 @@
         </div>
         
         <!-- قائمة المقالات -->
-        <div class="news-container" id="news-container">
-            <!-- المقالة 1 -->
-            <div class="news-article" data-categories="football egypt">
-                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="الأهلي يتوج بلقب الدوري المصري" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #f44336;">الدوري المصري</span>
-                    <h2 class="article-title">الأهلي يتوج بلقب الدوري المصري للمرة الـ44 في تاريخه</h2>
-                    <p class="article-excerpt">توج النادي الأهلي بلقب الدوري المصري الممتاز لموسم 2023-2024 بعد تعادله مع الزمالك 1-1 في القمة التي جمعتهما على استاد القاهرة الدولي. وحسم الأهلي اللقب قبل جولتين من نهاية المسابقة بفارق 8 نقاط عن وصيفه الزمالك. وسجل حسين الشحات هدف الأهلي بينما أدرك أحمد فتحي التعادل للزمالك. ويحقق الأهلي اللقب للمرة الثانية على التوالي والـ44 في تاريخه، ليعزز صدارته كأكثر الأندية تتويجاً بالدوري المصري.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <p>في تفاصيل المباراة، بدأ الأهلي المباراة بضغط هجومي قوي واستطاع تسجيل الهدف الأول في الدقيقة 23 عن طريق حسين الشحات الذي استقبل كرة عرضية رائعة من علي معلول وسددها بقوة في مرمى محمد أبو جبل.</p>
-                        <p>في الشوط الثاني، حاول الزمالك تعديل النتيجة ونجح في ذلك في الدقيقة 67 عندما سجل أحمد فتحي هدف التعادل من كرة ثابتة بعد ارتكاس من دفاع الأهلي.</p>
-                        <p>المدرب السويسري مارتن يول مدرب الأهلي أعرب عن سعادته باللقب وقال: "هذا إنجاز رائع للفريق الذي عمل بجد طوال الموسم. نحن فخورون بهذا الإنجاز وسنستمر في العمل لتحقيق المزيد".</p>
-                        <p>من جانبه، أعرب مدرب الزمالك عن استيائه من بعض القرارات التحكيمية لكنه أشاد بأداء فريقه ووعد الجماهير بالعودة أقوى في الموسم المقبل.</p>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(1)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 15 يوليو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> أحمد محمود</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المقالة 2 -->
-            <div class="news-article" data-categories="football europe transfers">
-                <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="إرلينج هالاند ينضم لريال مدريد" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #2196F3;">انتقالات</span>
-                    <h2 class="article-title">ريال مدريد يعلن التعاقد مع هالاند مقابل 180 مليون يورو</h2>
-                    <p class="article-excerpt">أعلن نادي ريال مدريد الإسباني اليوم عن تعاقده مع النجم النرويجي إرلينج هالاند قادماً من مانشستر سيتي الإنجليزي مقابل 180 مليون يورو، ليصبح ثاني أغلى صفقة في تاريخ النادي الملكي بعد كيلين مبابي. ووقع هالاند عقداً لمدة 5 مواسم مع ريال مدريد، وسيحصل على راتب سنوي يقدر بـ35 مليون يورو. وجاءت هذه الصفقة بعد مفاوضات استمرت أشهراً بين الناديين، حيث كان هالاند قد سجل 62 هدفاً في 67 مباراة مع مانشستر سيتي منذ انضمامه عام 2022.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <p>هالاند سيحمل القميص رقم 9 في ريال مدريد خلفاً لكاريم بنزيما الذي غادر النادي الموسم الماضي. وقال هالاند في مؤتمر صحفي: "إنه حلم أصبح حقيقة. ريال مدريد هو أكبر نادي في العالم وأنا متحمس للغاية لهذه الفرصة".</p>
-                        <p>من جانبه، قال فلورنتينو بيريز رئيس ريال مدريد: "هالاند هو أحد أفضل اللاعبين في العالم وسيساعدنا في تحقيق أهدافنا الكبيرة في السنوات المقبلة".</p>
-                        <p>الصفقة شملت أيضاً بنداً يسمح لمانشستر سيتي بالحصول على نسبة 15% من أي صفقة بيع مستقبلية للاعب. كما تضمنت بند إطلاق سراح بقيمة 500 مليون يورو.</p>
-                        <p>هالاند سيلعب أول مباراة رسمية له مع ريال مدريد في كأس السوبر الأوروبي ضد أتلتيكو مدريد في منتصف أغسطس المقبل.</p>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(2)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 12 يوليو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> محمد علي</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المقالة 3 -->
-            <div class="news-article" data-categories="football analysis">
-                <img src="https://images.unsplash.com/photo-1579952363872-3f0869e06edc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="تحليل تكتيكي لمباراة مانشستر سيتي" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #4CAF50;">تحليلات</span>
-                    <h2 class="article-title">تحليل تكتيكي: كيف قلب جوارديولا موازين الدوري الإنجليزي؟</h2>
-                    <p class="article-excerpt">استطاع بيب جوارديولا مدرب مانشستر سيتي أن يقود فريقه للفوز بلقب الدوري الإنجليزي الممتاز للموسم 2023-2024 بعد تغيير جذري في خطته التكتيكية. اعتمد جوارديولا نظام 3-2-4-1 الذي أذهل الجميع وحقق 12 انتصاراً متتالياً لفريقه. في هذا التحليل نستعرض كيف استغل جوارديولا مراكز اللعب المكثفة في منتصف الملعب، وتحويل جون ستونز إلى لاعب خط وسط ارتكاز، واستغلال سرعة جيريمي دوكو على الجناح الأيمن. هذه الخطة الجديدة جعلت سيتي يسجل 89 هدفاً في الدوري ويتصدر الترتيب بفارق 5 نقاط عن ليفربول.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <h3>التحول التكتيكي الكبير</h3>
-                        <p>بعد الخسارة من ليفربول في نوفمبر الماضي، قرر جوارديولا إجراء تغيير جذري في خطة الفريق. بدلاً من الاعتماد على نظام 4-3-3 التقليدي، تحول إلى 3-2-4-1 الذي يعتمد على كثافة عددية في منتصف الملعب.</p>
-                        
-                        <h3>دور جون ستونز الرئيسي</h3>
-                        <p>أحد أهم التغييرات كان تحويل جون ستونز من مدافع مركزي إلى لاعب خط وسط ارتكاز. ستونز كان ينزل من خط الدفاع إلى منتصف الملعب عند الاستحواذ، مما وفر كثافة عددية في الوسط وساعد في بناء الهجمات.</p>
-                        
-                        <h3>الجناحان الهجوميان</h3>
-                        <p>اعتمد جوارديولا على سرعة جيريمي دوكو على الجناح الأيمن وخفة حركة جاك جريليش على اليسار. دوكو سجل 8 أهداف وصنع 12 أخرى في الدوري بعد هذا التغيير التكتيكي.</p>
-                        
-                        <h3>إحصائيات تثبت نجاح الخطة</h3>
-                        <ul>
-                            <li>متوسط استحواذ 68% (الأعلى في الدوري)</li>
-                            <li>متوسط 17 تسديدة على المرمى لكل مباراة</li>
-                            <li>تحسن نسبة التمريرات الناجحة من 88% إلى 92%</li>
-                            <li>12 انتصارًا متتاليًا في الدوري</li>
-                        </ul>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(3)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 10 يوليو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> خالد رياض</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المقالة 4 -->
-            <div class="news-article" data-categories="football egypt">
-                <img src="https://images.unsplash.com/photo-1577032225470-1a1a1afd592a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="المصري يفوز بكأس مصر" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #f44336;">الدوري المصري</span>
-                    <h2 class="article-title">المصري البورسعيدي يتوج بلقب كأس مصر بعد غياب 15 عاماً</h2>
-                    <p class="article-excerpt">توج المصري البورسعيدي بلقب كأس مصر للمرة الرابعة في تاريخه بعد تغلبه على بيراميدز بهدفين دون رد في المباراة النهائية التي أقيمت على استاد القاهرة الدولي. سجل محمد جادو الهدف الأول في الدقيقة 23 من ضربة رأسية قوية، بينما أضاف أحمد رفعت الهدف الثاني في الدقيقة 67 من تسديدة قوية من خارج المنطقة. وحافظ المصري على نظافة شباكه طوال المباراة بفضل أداء مميز لحارسه محمد عواد. هذا اللقب هو الأول للمصري في البطولة منذ عام 2009، حيث فاز بها ثلاث مرات سابقة أعوام 1998 و2006 و2009.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <p>المباراة النهائية شهدت أداءً رائعًا من الفريق البورسعيدي الذي سيطر على مجريات اللعب منذ الصافرة الأولى. الهدف الأول جاء من ركلة ركنية نفذها أحمد رفعت وارتفع لها محمد جادو ليسددها بقوة في الشباك.</p>
-                        <p>في الشوط الثاني، حاول بيراميدز تعديل النتيجة لكن تصديات الحارس محمد عواد أحبطت جميع محاولاتهم. في الدقيقة 67، سجل أحمد رفعت الهدف الثاني بتسديدة قوية من خارج المنطقة علق عليها مدرب بيراميدز قائلاً: "هدف من عالم آخر".</p>
-                        <p>هذا اللقب يؤهل المصري للمشاركة في كأس السوبر المصري ضد بطل الدوري الأهلي، كما يمنحه مقعدًا في دوري أبطال أفريقيا الموسم المقبل.</p>
-                        <p>جماهير المصري التي حضرت بأعداد كبيرة من بورسعيد أقامت احتفالات كبيرة في الشوارع بعد المباراة، حيث يعتبر هذا الإنجاز نقطة تحول كبيرة للنادي الذي عانى في السنوات الأخيرة.</p>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(4)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 8 يوليو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> عمرو عبد الله</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المقالة 5 -->
-            <div class="news-article" data-categories="football europe">
-                <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="ريال مدريد في نهائي دوري الأبطال" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #2196F3;">أوروبا</span>
-                    <h2 class="article-title">ريال مدريد يتأهل لنهائي دوري أبطال أوروبا بعد إقصاء مانشستر سيتي</h2>
-                    <p class="article-excerpt">تأهل ريال مدريد لنهائي دوري أبطال أوروبا للموسم 2023-2024 بعد فوزه على مانشستر سيتي 4-3 في مجموع المباراتين. في الذهاب بإنجلترا، انتهت المباراة بالتعادل 2-2، حيث سجل رودريجو وفينيسيوس لأصحاب الأرض، بينما أدرك فودين وهالاند التعادل لسيتي. في الإياب بمدريد، تقدم سيتي بهدف من جيريش لكن رودريجو سجل هدفين في الدقائق 88 و90+1 ليقود ريال مدريد للنهائي. وسيواجه ريال مدريد بايرن ميونخ في النهائي المقرر يوم 1 يونيو على ملعب ويمبلي بلندن.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <h3>مباراة العودة بملعب سانتياجو برنابيو</h3>
-                        <p>في مباراة العودة التي أقيمت في مدريد، تقدم مانشستر سيتي بهدف في الدقيقة 73 عن طريق جيريش الذي استفاد من خطأ دفاعي من دافيد ألابا. بدا أن سيتي في طريقه للنهائي لكن ريال مدريد قلب الطاولة في الدقائق الأخيرة.</p>
-                        
-                        <h3>المعجزة المتكررة</h3>
-                        <p>في الدقيقة 88، سجل رودريجو الهدف الأول بعد تمريرة رائعة من لوكا مودريتش. ثم في الدقيقة 90+1، سجل رودريجو مرة أخرى بعد تمريرة عرضية من ماركوس أسينسيو ليقود فريقه للنهائي.</p>
-                        
-                        <h3>ردود الفعل</h3>
-                        <p>قال كارلو أنشيلوتي مدرب ريال مدريد: "هذا الفريق لا يعرف المستحيل. لدينا روح قتالية لا مثيل لها". من جانبه، أعرب بيب جوارديولا عن خيبة أمله لكنه أشاد بأداء فريقه.</p>
-                        
-                        <h3>إحصائيات المباراة</h3>
-                        <ul>
-                            <li>حيازة الكرة: سيتي 62% - ريال مدريد 38%</li>
-                            <li>التسديدات على المرمى: سيتي 9 - ريال مدريد 5</li>
-                            <li>الأخطاء: سيتي 12 - ريال مدريد 15</li>
-                            <li>الكروت الصفراء: سيتي 2 - ريال مدريد 3</li>
-                        </ul>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(5)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 6 يوليو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> علي حسن</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- إعلان وسط الصفحة -->
-            <div class="ad-container" style="grid-column: 1 / -1;">
-                <span class="ad-label">إعلان</span>
-                <!-- كود أدسنس هنا -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-format="fluid"
-                     data-ad-layout-key="-6t+ed+2i-1n-4w"
-                     data-ad-client="ca-pub-7146888531609359"
-                     data-ad-slot="1234567891"></ins>
-                <script>
-                     (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-            
-            <!-- المقالة 6 -->
-            <div class="news-article" data-categories="football transfers">
-                <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="أغلى الصفقات الصيفية 2024" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #FF9800;">انتقالات</span>
-                    <h2 class="article-title">تعرف على أغلى 5 صفقات متوقعة في سوق الانتقالات الصيفية 2024</h2>
-                    <p class="article-excerpt">مع اقتراب انطلاق سوق الانتقالات الصيفية، تستعد الأندية الكبرى لتعزيز صفوفها بصفقات قوية. في المقدمة يأتي انتقال إرلينج هالاند إلى ريال مدريد مقابل 180 مليون يورو. ثانياً، فيكتور أوشيمين من نابولي إلى تشيلسي مقابل 130 مليون يورو. ثالثاً، جود بيلينجهام من بوروسيا دورتموند إلى ليفربول مقابل 110 مليون يورو. رابعاً، خافيير سيموني من أتلتيكو مدريد إلى باريس سان جيرمان مقابل 95 مليون يورو. خامساً، فلوريان فيرتز من باير ليفركوزن إلى مانشستر يونايتد مقابل 85 مليون يورو.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <h3>1. إرلينج هالاند إلى ريال مدريد (180 مليون يورو)</h3>
-                        <p>الصفقة الأغلى هذا الصيف ستكون انتقال هالاند من مانشستر سيتي إلى ريال مدريد. اللاعب النرويجي وافق على شروط الشخصية وسيوقع عقدًا لمدة 5 مواسم.</p>
-                        
-                        <h3>2. فيكتور أوشيمين إلى تشيلسي (130 مليون يورو)</h3>
-                        <p>تشيلسي بحاجة ماسة لهداف بعد أداء جاكسون المخيب الموسم الماضي. أوشيمين كان من أفضل الهدافين في الدوري الإيطالي وسيكون إضافة قوية للبلوز.</p>
-                        
-                        <h3>3. جود بيلينجهام إلى ليفربول (110 مليون يورو)</h3>
-                        <p>ليفربول يبحث عن تعزيز خط الوسط بعد رحيل جيمس ميلنر وأليكس أوكسليد تشامبرلين. بيلينجهام يعتبر أحد أفضل لاعبي خط الوسط في أوروبا حالياً.</p>
-                        
-                        <h3>4. خافيير سيموني إلى باريس سان جيرمان (95 مليون يورو)</h3>
-                        <p>باريس يبحث عن بديل لكيليان مبابي الذي من المتوقع أن يغادر النادي هذا الصيف. سيموني سجل 25 هدفًا في الدوري الإسباني الموسم الماضي.</p>
-                        
-                        <h3>5. فلوريان فيرتز إلى مانشستر يونايتد (85 مليون يورو)</h3>
-                        <p>إريك تين هاج يريد تعزيز خط الهجوم بعد رحيل كريستيانو رونالدو. فيرتز يتمتع بمرونة في اللعب في أكثر من مركز وهو ما يناسب خطة تين هاج.</p>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(6)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 4 يوليو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> وليد فتحي</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المقالة 7 -->
-            <div class="news-article" data-categories="football analysis">
-                <img src="https://images.unsplash.com/photo-1543351611-58f69d7c1781?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="تحليل أداء محمد صلاح" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #4CAF50;">تحليلات</span>
-                    <h2 class="article-title">تحليل أداء: كيف ساعد محمد صلاح ليفربول في تحقيق الثنائية؟</h2>
-                    <p class="article-excerpt">محمد صلاح قدم أحد أفضل مواسمه مع ليفربول حيث سجل 30 هدفاً وصنع 12 أخرى في جميع البطولات، ليساهم بشكل كبير في حصد فريقه لكأس الاتحاد الإنجليزي والمركز الثاني في الدوري. في هذا التحليل نستعرض تطور أداء صلاح هذا الموسم حيث لعب 47 مباراة، وسجل كل 117 دقيقة في المتوسط. زادت نسبة تمريراته الرئيسية إلى 85%، كما زادت نسبة تدخلاته الناجحة إلى 62%. استطاع صلاح تسجيل 7 أهداف في 8 مباريات ضد فرق الستة الكبار، مما يثبت كفاءته في المباريات الكبيرة.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <h3>تطور الأداء الفني</h3>
-                        <p>محمد صلاح أضاف بعدًا جديدًا لأدائه هذا الموسم حيث تحول من مجرد هداف إلى صانع ألعاب أيضًا. نسبة التمريرات الحاسمة زادت من 1.8 لكل مباراة إلى 2.5 هذا الموسم.</p>
-                        
-                        <h3>الإحصائيات المميزة</h3>
-                        <ul>
-                            <li>30 هدفًا في جميع البطولات</li>
-                            <li>12 صناعة هدف</li>
-                            <li>نسبة نجاح في المراوغة 58%</li>
-                            <li>7 أهداف في ديربيات الستة الكبار</li>
-                            <li>5 أهداف في كأس الاتحاد الإنجليزي</li>
-                        </ul>
-                        
-                        <h3>أفضل مبارياته</h3>
-                        <p>1. ليفربول 4 - 0 مانشستر يونايتد (هدفان وصناعة)</p>
-                        <p>2. ليفربول 3 - 2 مانشستر سيتي (هدف وصناعة)</p>
-                        <p>3. أرسنال 2 - 3 ليفربول (هدفان)</p>
-                        
-                        <h3>تصريحات المدرب</h3>
-                        <p>يورجن كلوب: "محمد كان استثنائيًا هذا الموسم. لقد تطور كثيرًا كقائد وفهمه للعبة أصبح أعمق. هو ليس مجرد هداف بل أصبح لاعبًا كاملاً".</p>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(7)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 2 يوليو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> أحمد شريف</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المقالة 8 -->
-            <div class="news-article" data-categories="football egypt">
-                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="الزمالك في دوري الأبطال الأفريقي" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #f44336;">الدوري المصري</span>
-                    <h2 class="article-title">الزمالك يتأهل لنصف نهائي دوري أبطال أفريقيا بعد تغلبه على الترجمة التونسي</h2>
-                    <p class="article-excerpt">تأهل نادي الزمالك إلى نصف نهائي دوري أبطال أفريقيا للموسم 2023-2024 بعد فوزه على الترجمة التونسي بهدفين لهدف في المباراة التي أقيمت على استاد القاهرة الدولي. سجل المغربي أشرف بنشرقي هدفين في الدقائق 34 و72، بينما أدرك الترجمة التونسي هدف الشرف في الدقيقة 89 عبر محمد علي بن رمضان. واجه الزمالك صعوبة في الشوط الأول لكنه سيطر على مجريات اللعب في الشوط الثاني وسدد 15 كرة تجاه المرمى. في نصف النهائي، سيواجه الزمالك النجم الساحلي التونسي.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <h3>تفاصيل المباراة</h3>
-                        <p>الشوط الأول شهد سيطرة نسبية للترجمة الذي كان أكثر خطورة. لكن في الدقيقة 34، استفاد الزمالك من خطأ دفاعي ليسجل أشرف بنشرقي الهدف الأول من تسديدة قوية من داخل المنطقة.</p>
-                        
-                        <h3>الهدف الثاني</h3>
-                        <p>في الدقيقة 72، سجل بنشرقي الهدف الثاني بعد عرضية دقيقة من أحمد فتحي زيدان. هذا الهدف ضمن للزمالك التأهل بشكل شبه مؤكد.</p>
-                        
-                        <h3>رد الفعل التونسي</h3>
-                        <p>في الدقيقة 89، سجل الترجمة هدف الشرف عن طريق محمد علي بن رمضان من ركلة حرة مباشرة، لكنه جاء متأخرًا جدًا.</p>
-                        
-                        <h3>إحصائيات المباراة</h3>
-                        <ul>
-                            <li>التسديدات على المرمى: الزمالك 7 - الترجمة 4</li>
-                            <li>حيازة الكرة: الزمالك 52% - الترجمة 48%</li>
-                            <li>الأخطاء: الزمالك 18 - الترجمة 14</li>
-                            <li>الكروت الصفراء: الزمالك 3 - الترجمة 2</li>
-                        </ul>
-                        
-                        <h3>تصريحات ما بعد المباراة</h3>
-                        <p>مدرب الزمالك: "نحن سعداء بهذا الإنجاز لكن أمامنا مباراة صعبة ضد النجم الساحلي. سنستعد جيدًا".</p>
-                        <p>أشرف بنشرقي: "سعداء بهذا الفوز لكن يجب أن نركز على المباراة المقبلة. الهدف هو الوصول للنهائي".</p>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(8)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 30 يونيو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> محمود عبد الرحمن</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المقالة 9 -->
-            <div class="news-article" data-categories="football europe">
-                <img src="https://images.unsplash.com/photo-1471295253337-3ceaaedca402?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="ليفربول بطل الدوري الإنجليزي" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #2196F3;">أوروبا</span>
-                    <h2 class="article-title">ليفربول يتوج بلقب الدوري الإنجليزي للمرة العشرين في تاريخه</h2>
-                    <p class="article-excerpt">توج ليفربول بلقب الدوري الإنجليزي الممتاز للموسم 2023-2024 للمرة العشرين في تاريخه بعد فوزه على أرسنال 2-0 في الجولة قبل الأخيرة من المسابقة. سجل محمد صلاح الهدف الأول من ركلة جزاء في الدقيقة 38، بينما أضاف داروين نونيز الهدف الثاني في الدقيقة 72. وحافظ ليفربول على نظافة شباكه بفضل أداء مميز لحارسه أليسون بيكر. أنهى ليفربول الموسم بـ92 نقطة، بفارق نقطتين عن مانشستر سيتي، محققاً ثنائية كأس الاتحاد والدوري.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <h3>المباراة التاريخية</h3>
-                        <p>في مباراة حاسمة على ملعب الإمارات، تمكن ليفربول من حسم اللقب بفوزه على أرسنال 2-0. الهدف الأول جاء من ركلة جزاء بعد عرقلة بواقيخو على صلاح داخل المنطقة.</p>
-                        
-                        <h3>أداء مميز من نونيز</h3>
-                        <p>داروين نونيز كان من أفضل اللاعبين على الملعب وسجل الهدف الثاني بعد تمريرة رائعة من تياغو ألكانتارا. هذا الهدف ضمن اللقب للريدز.</p>
-                        
-                        <h3>إحصائيات الموسم</h3>
-                        <ul>
-                            <li>92 نقطة من 38 مباراة</li>
-                            <li>85 هدفًا سجله الفريق (الأكثر في الدوري)</li>
-                            <li>28 هدفًا لصلاح (هداف الدوري)</li>
-                            <li>18 نظافة شباك لأليسون</li>
-                            <li>12 انتصارًا خارج الديار</li>
-                        </ul>
-                        
-                        <h3>احتفالات جماهيرية</h3>
-                        <p>جماهير ليفربول احتشدت بآلاف في شوارع المدينة للاحتفال باللقب. يورجن كلوب مدرب الفريق قال: "هذا فريق خاص جدًا وسيبقى في تاريخ النادي".</p>
-                        
-                        <h3>المستقبل</h3>
-                        <p>مع تأكيد بقاء كلوب لموسم آخر على الأقل، يتطلع ليفربول لتعزيز صفوفه هذا الصيف والمنافسة على دوري الأبطال الموسم المقبل.</p>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(9)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 28 يونيو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> يوسف أحمد</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المقالة 10 -->
-            <div class="news-article" data-categories="football transfers">
-                <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="انتقالات الدوري المصري" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #FF9800;">انتقالات</span>
-                    <h2 class="article-title">الأهلي والزمالك يعلنان عن أولى صفقاتهما استعداداً للموسم الجديد</h2>
-                    <p class="article-excerpt">أعلن النادي الأهلي عن تعاقده مع المدافع المغربي نور الدين أمرابط قادماً من الرجاء البيضاوي مقابل 3 ملايين دولار، ووقع عقداً لمدة 3 مواسم. بينما أعلن الزمالك تعاقده مع المهاجم الجزائري بلال بن ناصر من مولودية الجزائر مقابل 2.5 مليون دولار، ووقع عقداً لمدة 4 مواسم. كما أعلن الأهلي عن تجديد عقد محمود كهربا لمدة 3 مواسم أخرى، بينما جدد الزمالك مع حارسه محمد عواد لموسمين إضافيين. هذه الصفقات تأتي استعداداً للموسم الجديد الذي سيبدأ في سبتمبر المقبل.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <h3>صفقة الأهلي: نور الدين أمرابط</h3>
-                        <p>المدافع المغربي (26 عامًا) كان أحد أبرز لاعبي الرجاء البيضاوي في الموسمين الماضيين. يتميز بقوة بدنية كبيرة وقدرة على اللعب في مركز قلب الدفاع والظهير الأيمن.</p>
-                        
-                        <h3>صفقة الزمالك: بلال بن ناصر</h3>
-                        <p>المهاجم الجزائري الشاب (22 عامًا) كان هداف مولودية الجزائر في الموسم الماضي بـ18 هدفًا. يتمتع بسرعة فائقة وقدرة على اللعب على الأجنحة أيضًا.</p>
-                        
-                        <h3>التجديدات</h3>
-                        <p>الأهلي جدد عقد محمود كهربا لثلاث مواسم إضافية بعد أدائه المميز الموسم الماضي حيث سجل 12 هدفًا. الزمالك من جهته جدد عقد حارسه محمد عواد لموسمين إضافيين.</p>
-                        
-                        <h3>تصريحات المسؤولين</h3>
-                        <p>رئيس الأهلي: "نحن سعداء بضم أمرابط الذي سيعزز خط دفاعنا. لدينا المزيد من الصفقات قريبًا".</p>
-                        <p>مدير الكرة في الزمالك: "بلال بن ناصر موهبة كبيرة وسيساعدنا في خط الهجوم. نعمل على المزيد من التعاقدات".</p>
-                        
-                        <h3>الصفقات القادمة</h3>
-                        <p>يستهدف الأهلي لاعب خط وسط أجنبي ومدافع أيسر، بينما يبحث الزمالك عن ظهير أيمن ولاعب خط وسط مهاجم.</p>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(10)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 26 يونيو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> حسام الدين</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المقالة 11 (جديدة) -->
-            <div class="news-article" data-categories="football europe analysis">
-                <img src="https://images.unsplash.com/photo-1543351611-58f69d7c1781?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="تحليل أداء كيليان مبابي" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #4CAF50;">تحليلات</span>
-                    <h2 class="article-title">تحليل أداء: كيف قاد مبابي باريس سان جيرمان للثلاثية المحلية؟</h2>
-                    <p class="article-excerpt">قدم كيليان مبابي موسمًا استثنائيًا مع باريس سان جيرمان حيث قاد الفريق للفوز بالثلاثية المحلية (الدوري الفرنسي، كأس فرنسا، كأس الأبطال) للمرة الثانية في تاريخ النادي. سجل مبابي 42 هدفًا في جميع البطولات، منها 28 هدفًا في الدوري الفرنسي، ليحقق لقب هداف الدوري للمرة الخامسة على التوالي. في هذا التحليل نستعرض تطور أداء مبابي هذا الموسم حيث زادت نسبة تدخلاته الناجحة إلى 68%، كما زادت نسبة تمريراته الرئيسية إلى 88%. استطاع مبابي تسجيل 9 أهداف في 10 مباريات ضد فرق الخمسة الكبار في الدوري الفرنسي، مما يثبت كفاءته في المباريات الكبيرة.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <h3>تطور الأداء الفني</h3>
-                        <p>أصبح مبابي أكثر نضجًا هذا الموسم حيث تحول من مجرد هداف إلى قائد حقيقي للفريق بعد رحيل نيمار وليونيل ميسي. قاد الفريق في العديد من المباريات الصعبة وكان حاسمًا في اللحظات الحاسمة.</p>
-                        
-                        <h3>إحصائيات الموسم</h3>
-                        <ul>
-                            <li>42 هدفًا في جميع البطولات</li>
-                            <li>15 صناعة هدف</li>
-                            <li>نسبة نجاح في المراوغة 65%</li>
-                            <li>9 أهداف في مباريات ضد فرق الخمسة الكبار</li>
-                            <li>5 أهداف في كأس فرنسا</li>
-                        </ul>
-                        
-                        <h3>أفضل مبارياته</h3>
-                        <p>1. باريس سان جيرمان 4 - 0 مارسيليا (هاتريك)</p>
-                            <p>2. باريس سان جيرمان 3 - 1 ليون (هدفان)</p>
-                            <p>3. موناكو 2 - 3 باريس سان جيرمان (هدف وصناعتان)</p>
-                            
-                            <h3>تصريحات المدرب</h3>
-                            <p>كريستوف غالتيه: "كيليان كان استثنائيًا هذا الموسم. هو ليس فقط هدافًا كبيرًا بل أصبح قائدًا حقيقيًا للفريق. أداؤه في المباريات الكبيرة كان مميزًا".</p>
-                            
-                            <h3>المستقبل</h3>
-                            <p>مع اقتراب نهاية عقده، تزداد التكهنات حول مستقبله. ريال مدريد يظهر اهتمامًا كبيرًا به، لكن باريس يبذل جهودًا كبيرة لإقناعه بالبقاء.</p>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(11)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 24 يونيو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> سامي رشدي</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المقالة 12 (جديدة) -->
-            <div class="news-article" data-categories="football egypt transfers">
-                <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="صفقات الأهلي والزمالك" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #FF9800;">انتقالات</span>
-                    <h2 class="article-title">الأهلي يضم نجم المنتخب المغربي والزمالك يحصل على خدمات مهاجم جزائري واعد</h2>
-                    <p class="article-excerpt">أعلن النادي الأهلي عن تعاقده مع المدافع المغربي نور الدين أمرابط قادماً من الرجاء البيضاوي المغربي بعقد يمتد لثلاثة مواسم مقابل 3 ملايين دولار. أمرابط (26 عامًا) كان أحد أبرز لاعبي الدوري المغربي وشارك مع المنتخب في كأس العالم 2022. من جهته، أعلن الزمالك تعاقده مع المهاجم الجزائري الشاب بلال بن ناصر (22 عامًا) من مولودية الجزائر بعقد لأربعة مواسم مقابل 2.5 مليون دولار. بن ناصر سجل 18 هدفًا في الموسم الماضي وكان من أبرز الهدافين في الدوري الجزائري. كما جدد الأهلي عقد محمود كهربا لثلاث مواسم إضافية بعد أدائه المميز الموسم الماضي.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <h3>تفاصيل صفقة أمرابط مع الأهلي</h3>
-                        <p>نور الدين أمرابط سيحصل على راتب سنوي يقدر بمليون دولار بالإضافة إلى حوافز تتعلق بالإنجازات. اللاعب سيلعب بقميص رقم 24 وستكون مهمته الأساسية تعزيز خط دفاع الأهلي الذي تأثر بعدة إصابات الموسم الماضي.</p>
-                        
-                        <h3>مواصفات أمرابط</h3>
-                        <ul>
-                            <li>الطول: 188 سم</li>
-                            <li>المراكز: قلب دفاع - ظهير أيمن</li>
-                            <li>عدد المباريات مع الرجاء: 124 مباراة</li>
-                            <li>الأهداف: 12 هدفًا</li>
-                            <li>مشاركات مع المنتخب: 18 مباراة</li>
-                        </ul>
-                        
-                        <h3>تفاصيل صفقة بن ناصر مع الزمالك</h3>
-                        <p>بلال بن ناصر سيحصل على راتب سنوي يقدر بـ800 ألف دولار بالإضافة إلى حوافز. اللاعب سيلعب بقميص رقم 9 وسيكون بديلاً عن كاسونغو الذي غادر النادي نهاية الموسم الماضي.</p>
-                        
-                        <h3>مواصفات بن ناصر</h3>
-                        <ul>
-                            <li>الطول: 182 سم</li>
-                            <li>المراكز: مهاجم صريح - جناح أيمن</li>
-                            <li>عدد المباريات مع مولودية الجزائر: 86 مباراة</li>
-                            <li>الأهداف: 34 هدفًا</li>
-                            <li>مشاركات مع المنتخب: 3 مباريات</li>
-                        </ul>
-                        
-                        <h3>التجديدات</h3>
-                        <p>الأهلي جدد عقد محمود كهربا لثلاث مواسم إضافية براتب سنوي يقدر بـ1.2 مليون دولار. كهربا كان من أفضل لاعبي الفريق الموسم الماضي وسيبقى عمادًا في خط الهجوم.</p>
-                        <p>الزمالك جدد عقد حارسه محمد عواد لموسمين إضافيين براتب سنوي يقدر بـ600 ألف دولار. عواد كان حاسمًا في العديد من المباريات الموسم الماضي.</p>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(12)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 22 يونيو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> عمرو زكي</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- المقالة 13 (جديدة) -->
-            <div class="news-article" data-categories="football europe">
-                <img src="https://images.unsplash.com/photo-1471295253337-3ceaaedca402?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="نهائي دوري أبطال أوروبا" class="article-image">
-                <div class="article-content">
-                    <span class="article-category" style="background-color: #2196F3;">أوروبا</span>
-                    <h2 class="article-title">ريال مدريد يتوج بلقب دوري أبطال أوروبا للمرة الـ15 في تاريخه بعد فوز دراماتيكي على بايرن ميونخ</h2>
-                    <p class="article-excerpt">توج ريال مدريد بلقب دوري أبطال أوروبا للمرة الـ15 في تاريخه بعد فوزه الدراماتيكي على بايرن ميونخ 3-2 في المباراة النهائية التي أقيمت على ملعب ويمبلي بلندن. تقدم بايرن بهدفين من هاري كين وليروي ساني في الشوط الأول، لكن ريال مدريد قلب النتيجة في الشوط الثاني بأهداف من فينيسيوس جونيور وكاريم بنزيما، قبل أن يسجل رودريجو الهدف الفاصل في الدقيقة 89. حارس ريال مدريد تيبو كورتوا كان بطل المباراة بعد أن أنقذ عدة كرات خطيرة، بينما خسر بايرن ميونخ نهائي البطولة للمرة الثالثة في آخر 5 مشاركات له.</p>
-                    <div class="article-full-content" style="display:none;">
-                        <h3>المباراة النهائية</h3>
-                        <p>في واحدة من أكثر النهائيات إثارة في تاريخ المسابقة، تمكن ريال مدريد من قلب تأخره بهدفين إلى فوز 3-2 على بايرن ميونخ. هاري كين سجل الهدف الأول لبايرن في الدقيقة 24 من ضربة جزاء، ثم أضاف ليروي ساني الهدف الثاني في الدقيقة 36.</p>
-                        
-                        <h3>قلب الموازين</h3>
-                        <p>في الشوط الثاني، بدأ ريال مدريد بضغط هجومي قوي وسجل فينيسيوس جونيور الهدف الأول في الدقيقة 53. ثم سجل كاريم بنزيما هدف التعادل في الدقيقة 68 بعد خطأ دفاعي من دايوت أبيكانو.</p>
-                        
-                        <h3>الهدف الفاصل</h3>
-                        <p>في الدقيقة 89، سجل رودريجو الهدف الفاصل لريال مدريد بعد تمريرة رائعة من لوكا مودريتش. حاول بايرن تعديل النتيجة في الوقت بدل الضائع لكن كورتوا أنقذ عدة كرات خطيرة.</p>
-                        
-                        <h3>إحصائيات المباراة</h3>
-                        <ul>
-                            <li>حيازة الكرة: بايرن 56% - ريال مدريد 44%</li>
-                            <li>التسديدات على المرمى: بايرن 8 - ريال مدريد 6</li>
-                            <li>الأخطاء: بايرن 14 - ريال مدريد 16</li>
-                            <li>الكروت الصفراء: بايرن 3 - ريال مدريد 4</li>
-                        </ul>
-                        
-                        <h3>تصريحات ما بعد المباراة</h3>
-                        <p>كارلو أنشيلوتي: "هذا فريق لا يعرف المستحيل. لدينا روح قتالية لا مثيل لها".</p>
-                        <p>هاري كين: "نحن محطمون. كان لدينا اللقب في أيدينا لكن ريال مدريد فريق خاص جدًا".</p>
-                        <p>تيبو كورتوا: "هذا هو سبب مجيئي إلى ريال مدريد. للفوز بهذه البطولة الرائعة".</p>
-                    </div>
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle(13)">قراءة المزيد</a>
-                    <div class="article-meta">
-                        <span class="article-date"><i class="far fa-calendar-alt"></i> 20 يونيو 2024</span>
-                        <span class="article-author"><i class="far fa-user"></i> محمد صلاح</span>
-                    </div>
-                </div>
+        <div class="news-container" id="newsContainer">
+            <div class="loading">
+                <i class="fas fa-spinner"></i>
+                <p>جاري تحميل الأخبار...</p>
             </div>
         </div>
-
-         <div class="news-article" data-categories="football europe">
-    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="كارلو أنشيلوتي" class="article-image">
-    <div class="article-content">
-        <span class="article-category" style="background-color: #2196F3;">أوروبا</span>
-        <h2 class="article-title">تقارير: أنشيلوتي قد يغادر ريال مدريد والبرازيل تنتظره.. وألونسو المرشح الأبرم للخلافة</h2>
-        <p class="article-excerpt">كشفت تقارير صحفية أن المدرب الإيطالي كارلو أنشيلوتي قد يكون على وشك مغادرة ريال مدريد، مع اهتمام كبير من المنتخب البرازيلي بضمّه لقيادة "السيلساو" في كأس العالم 2026. وأشارت التقارير إلى أن الإسباني تشابي ألونسو، مدرب باير ليفركوزن، هو المرشح الأبرز لخلافة أنشيلوتي في حال رحيله.</p>
-        <div class="article-full-content" style="display:none;">
-            <h3>البرازيل وجهة محتملة</h3>
-            <p>نقلت صحيفة "نيويورك تايمز" عن مصادرها أن أنشيلوتي من المرجح أن يترك "الريال" قريبًا، فيما تُعد البرازيل الوجهة الأكثر ترجيحًا له. وكانت صحيفة "ذا أتلنتيك" قد كشفت سابقًا أن الاتحاد البرازيلي يعتبر أنشيلوتي المرشح المثالي لتدريب الفريق، بل ووصفه بـ"حلم رئيس الاتحاد".</p>
-            
-            <h3>مفاوضات سرية</h3>
-            <p>أشارت التقارير إلى أن ممثلًا عن الاتحاد البرازيلي حضر مباراة ريال مدريد أمام أرسنال في دوري أبطال أوروبا الأسبوع الماضي، في محاولة للتواصل مع أنشيلوتي، وهو ما نفته الهيئة البرازيلية رسميًا. يذكر أن أنشيلوتي، البالغ من العمر 65 عامًا، أكد مؤخرًا أنه سيناقش مستقبله مع إدارة النادي الملكي بنهاية الموسم، رغم أن عقده يمتد حتى 2026.</p>
-            
-            <h3>موعد حاسم</h3>
-            <p>ومن المقرر أن يعقد أنشيلوتي اجتماعًا مع مسؤولي الريال بعد نهائي كأس الملك ضد برشلونة في 26 أبريل الجاري لتحديد مصيره. يأتي هذا في وقت يبحث فيه ريال مدريد عن بدائل، حيث يُعتبر الإسباني تشابي ألونسو، مدرب باير ليفركوزن الحالي، الأوفر حظًا لخلافة الإيطالي.</p>
-            
-            <h3>إنجازات أنشيلوتي مع الريال</h3>
-            <ul>
-                <li>قاد الفريق لتحقيق لقب دوري الأبطال مرتين</li>
-                <li>حصل على لقب الدوري الإسباني موسم 2021-2022</li>
-                <li>فاز بكأس العالم للأندية مرتين</li>
-                <li>قاد الفريق لتحقيق 10 بطولات رسمية</li>
-            </ul>
-            
-            <h3>تصريحات رئيس الاتحاد البرازيلي</h3>
-            <p>صرح رئيس الاتحاد البرازيلي: "أنشيلوتي يمثل أولوية قصوى لنا، نريده قائدًا للمشروع الجديد". بينما فضّل أنشيلوتي عدم التعليق بقوله: "كل تركيزي الآن على ريال مدريد ونهاية الموسم".</p>
-        </div>
-        <a href="javascript:void(0)" class="read-more" onclick="showArticle(13)">قراءة المزيد</a>
-        <div class="article-meta">
-            <span class="article-date"><i class="far fa-calendar-alt"></i> 21 أبريل 2024</span>
-            <span class="article-author"><i class="far fa-user"></i> أحمد الشهري</span>
-        </div>
-    </div>
-</div>
         
-        <!-- صفحة المقال المفرد -->
-        <div class="article-page" id="article-page">
-            <div class="article-header">
-                <h1 class="article-title-page" id="article-title-page"></h1>
-                <img src="" alt="" class="article-image-page" id="article-image-page">
-                <div class="article-meta">
-                    <span class="article-date" id="article-date-page"></span>
-                    <span class="article-author" id="article-author-page"></span>
-                </div>
+        <!-- أخبار اليوم -->
+        <div id="todayNewsContainer"></div>
+        
+        <!-- الأرشيف -->
+        <div class="archive-section" id="archiveSection">
+            <h2 class="archive-title">أرشيف الأخبار</h2>
+            <div class="archive-list" id="archiveList">
+                <!-- سيتم تعبئته بالجافاسكريبت -->
             </div>
-            <div class="article-content-page" id="article-content-page">
-            </div>
-            <a href="javascript:void(0)" class="back-to-news" onclick="backToNews()">العودة إلى الأخبار</a>
         </div>
+        
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <button class="page-btn" id="prevPage"><i class="fas fa-chevron-right"></i> السابق</button>
+            <div class="page-numbers" id="pageNumbers"></div>
+            <button class="page-btn" id="nextPage">التالي <i class="fas fa-chevron-left"></i></button>
+        </div>
+        
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <h2>اشترك في النشرة البريدية</h2>
+            <p>احصل على آخر الأخبار والتحليلات مباشرة إلى بريدك الإلكتروني</p>
+            
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" class="newsletter-input" placeholder="بريدك الإلكتروني" required>
+                <button type="submit" class="newsletter-btn">اشتراك</button>
+            </form>
+        </section>
         
         <!-- إعلان أسفل الصفحة -->
         <div class="ad-container">
@@ -929,25 +1013,69 @@
             </script>
         </div>
     </div>
+    
+    <!-- Article Detail Modal -->
+    <div class="modal-overlay" id="articleModal">
+        <div class="article-modal">
+            <button class="close-modal" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="article-header">
+                <h2 class="article-title" id="modalArticleTitle"></h2>
+                <div class="article-meta">
+                    <span class="article-source" id="modalArticleSource"></span>
+                    <span class="article-date" id="modalArticleDate"></span>
+                </div>
+            </div>
+            <img src="" alt="" class="article-image-page" id="modalArticleImage">
+            <div class="article-summary" id="modalArticleSummary"></div>
+            <div class="article-content-page" id="modalArticleContent"></div>
+            <a href="#" class="original-link" id="modalArticleLink" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-external-link-alt"></i> قراءة الخبر الأصلي
+            </a>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <i class="fas fa-running"></i>
+                    <span>ليجا شوت</span>
+                </div>
+                <p>نقدم آخر الأخبار والتحليلات الرياضية من مصادر موثوقة حول العالم.</p>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
 
-    <!-- زر العودة للأعلى -->
-    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+
+            
+            <div class="footer-links">
+                <h3>روابط هامه</h3>
+                <ul>
+                <a href="privacy.html">سياسة الخصوصية</a>
+                <a href="terms.html">شروط الاستخدام</a>
+                <a href="about.html">عن الموقع</a>
+
+                </ul>
+            </div>
+            
+
+        <div class="copyright">
+            <p>&copy; <span id="current-year"></span> ليجا شوت. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </div>
     
-    <footer class="animate__animated animate__fadeInUp">
-        <div class="footer-links">
-            <a href="privacy.html">سياسة الخصوصية</a>
-            <a href="terms.html">شروط الاستخدام</a>
-            <a href="about.html">عن الموقع</a>
-            <a href="sitemap.html">خريطة الموقع</a>
-            <a href="contact.html">اتصل بـنـا</a>
-        </div>
-        <div class="copyright">
-            &copy; <span id="current-year"></span> ليجا شوت. جميع الحقوق محفوظة.
-        </div>
-    </footer>
-
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
     {
@@ -977,86 +1105,505 @@
     </script>
     
     <script>
-        // تصفية الأخبار حسب التصنيف
-        function filterNews(category) {
-            const articles = document.querySelectorAll('.news-article');
-            const tabs = document.querySelectorAll('.category-tab');
+        // بيانات التطبيق
+        const app = {
+            currentCategory: 'all',
+            currentPage: 1,
+            itemsPerPage: 18, // زيادة عدد الأخبار المعروضة في الصفحة
+            allNewsItems: [],
+            filteredNews: [],
+            currentArticle: null,
+            archiveData: {},
+            newsUpdateInterval: null,
             
-            // تحديث الأزرار النشطة
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active');
+            // روابط RSS من Google News لمختلف الرياضات
+            rssFeeds: {
+                'all': 'https://news.google.com/rss/search?q=رياضة&hl=ar&gl=AE&ceid=AE:ar',
+                'كرة قدم': 'https://news.google.com/rss/search?q=كرة+قدم&hl=ar&gl=AE&ceid=AE:ar',
+                'كرة سلة': 'https://news.google.com/rss/search?q=كرة+سلة&hl=ar&gl=AE&ceid=AE:ar',
+                'تنس': 'https://news.google.com/rss/search?q=تنس&hl=ar&gl=AE&ceid=AE:ar',
+                'رياضات أولمبية': 'https://news.google.com/rss/search?q=رياضات+أولمبية&hl=ar&gl=AE&ceid=AE:ar'
+            },
             
-            // تصفية المقالات
-            articles.forEach(article => {
-                if (category === 'all' || article.dataset.categories.includes(category)) {
-                    article.style.display = 'block';
-                } else {
-                    article.style.display = 'none';
+            // تهيئة التطبيق
+            init: function() {
+                this.setupEventListeners();
+                this.fetchNews(this.currentCategory);
+                document.getElementById('current-year').textContent = new Date().getFullYear();
+                
+                // بدء تحديث الأخبار كل 3 دقائق
+                this.startNewsUpdateInterval();
+            },
+            
+            // بدء التحديث التلقائي للأخبار
+            startNewsUpdateInterval: function() {
+                if (this.newsUpdateInterval) {
+                    clearInterval(this.newsUpdateInterval);
                 }
-            });
-        }
-        
-        // إظهار/إخفاء زر العودة للأعلى
-        window.addEventListener('scroll', function() {
-            const backToTopButton = document.querySelector('.back-to-top');
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('visible');
-            } else {
-                backToTopButton.classList.remove('visible');
-            }
-        });
-        
-        // عرض المقال المفرد
-        function showArticle(articleNumber) {
-            const article = document.querySelectorAll('.news-article')[articleNumber-1];
-            const title = article.querySelector('.article-title').textContent;
-            const imageSrc = article.querySelector('.article-image').src;
-            const imageAlt = article.querySelector('.article-image').alt;
-            const date = article.querySelector('.article-date').innerHTML;
-            const author = article.querySelector('.article-author').innerHTML;
-            const content = article.querySelector('.article-full-content').innerHTML;
+                this.newsUpdateInterval = setInterval(() => {
+                    this.fetchNews(this.currentCategory);
+                    console.log('تم تحديث الأخبار تلقائياً');
+                }, 180000); // 3 دقائق = 180000 مللي ثانية
+            },
             
-            document.getElementById('article-title-page').textContent = title;
-            document.getElementById('article-image-page').src = imageSrc;
-            document.getElementById('article-image-page').alt = imageAlt;
-            document.getElementById('article-date-page').innerHTML = date;
-            document.getElementById('article-author-page').innerHTML = author;
-            document.getElementById('article-content-page').innerHTML = content;
-            
-            // إخفاء قائمة المقالات وإظهار المقال المفرد
-            document.getElementById('news-container').style.display = 'none';
-            document.getElementById('category-tabs').style.display = 'none';
-            document.getElementById('main-title').style.display = 'none';
-            document.getElementById('article-page').style.display = 'block';
-            document.getElementById('breadcrumb-text').textContent = title;
-            
-            // التمرير إلى أعلى الصفحة
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-        
-        // العودة إلى قائمة الأخبار
-        function backToNews() {
-            document.getElementById('news-container').style.display = 'grid';
-            document.getElementById('category-tabs').style.display = 'flex';
-            document.getElementById('main-title').style.display = 'block';
-            document.getElementById('article-page').style.display = 'none';
-            document.getElementById('breadcrumb-text').textContent = 'الأخبار الرياضية';
-        }
-        
-        // تحديث سنة حقوق النشر
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-            
-            // تحسينات SEO: إرسال حدث إلى Google Analytics
-            if (typeof gtag !== 'undefined') {
-                gtag('config', 'GA_MEASUREMENT_ID', {
-                    'page_title': 'الأخبار الرياضية',
-                    'page_path': '/news.html'
+            // إعداد مستمعي الأحداث
+            setupEventListeners: function() {
+                // تبديل القائمة في الجوال
+                document.getElementById('navToggle').addEventListener('click', () => {
+                    document.getElementById('mainNav').classList.toggle('show');
                 });
+                
+                // أحداث أزرار التصنيفات
+                document.querySelectorAll('.category-tab').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelector('.category-tab.active').classList.remove('active');
+                        btn.classList.add('active');
+                        this.currentCategory = btn.dataset.category;
+                        this.currentPage = 1;
+                        this.fetchNews(this.currentCategory);
+                    });
+                });
+                
+                // التصفح بين الصفحات
+                document.getElementById('prevPage').addEventListener('click', () => this.prevPage());
+                document.getElementById('nextPage').addEventListener('click', () => this.nextPage());
+                
+                // النشرة البريدية
+                document.getElementById('newsletterForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const email = e.target.querySelector('input').value;
+                    this.subscribeToNewsletter(email);
+                });
+                
+                // زر العودة للأعلى
+                document.getElementById('backToTop').addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                
+                // إظهار/إخفاء زر العودة للأعلى عند التمرير
+                window.addEventListener('scroll', () => {
+                    const backToTopBtn = document.getElementById('backToTop');
+                    if (window.pageYOffset > 300) {
+                        backToTopBtn.classList.add('visible');
+                    } else {
+                        backToTopBtn.classList.remove('visible');
+                    }
+                });
+                
+                // إغلاق نافذة المقال
+                document.getElementById('closeModal').addEventListener('click', () => {
+                    this.closeArticleModal();
+                });
+                
+                // إغلاق النافذة عند النقر خارجها
+                document.getElementById('articleModal').addEventListener('click', (e) => {
+                    if (e.target === document.getElementById('articleModal')) {
+                        this.closeArticleModal();
+                    }
+                });
+            },
+            
+            // جلب الأخبار من RSS
+            fetchNews: async function(category) {
+                try {
+                    document.getElementById('newsContainer').innerHTML = `
+                        <div class="loading">
+                            <i class="fas fa-spinner"></i>
+                            <p>جاري تحميل الأخبار...</p>
+                        </div>
+                    `;
+                    
+                    const rssUrl = this.rssFeeds[category];
+                    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+                    
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+                    
+                    if (data.status === 'ok') {
+                        this.allNewsItems = data.items.map(item => ({
+                            ...item,
+                            category: category === 'all' ? this.detectCategory(item.title) : category,
+                            pubDate: new Date(item.pubDate),
+                            source: this.extractSourceFromUrl(item.link) // استخراج المصدر من الرابط
+                        }));
+                        
+                        // تنظيم الأرشيف حسب الشهر
+                        this.organizeArchive();
+                        
+                        // تصفية الأخبار لعرض الأخبار اليومية أولاً
+                        this.filteredNews = [...this.allNewsItems];
+                        
+                        // عرض الأخبار اليومية في قسم خاص
+                        this.displayTodayNews();
+                        
+                        // عرض بقية الأخبار
+                        this.displayNews();
+                    } else {
+                        throw new Error('Failed to fetch news');
+                    }
+                } catch (error) {
+                    console.error('Error fetching news:', error);
+                    document.getElementById('newsContainer').innerHTML = `
+                        <div class="error">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>حدث خطأ أثناء جلب الأخبار. يرجى المحاولة لاحقاً.</p>
+                        </div>
+                    `;
+                }
+            },
+            
+            // استخراج المصدر من رابط الخبر
+            extractSourceFromUrl: function(url) {
+                if (!url) return 'مصدر غير معروف';
+                
+                try {
+                    const domain = new URL(url).hostname;
+                    const cleanDomain = domain.replace(/^www\./, '').split('.')[0];
+                    
+                    // تحسين أسماء المصادر المعروفة
+                    const knownSources = {
+                        'kooora': 'كورة',
+                        'yallakora': 'يلا كورة',
+                        'filgoal': 'فيلجول',
+                        'aljazeera': 'الجزيرة',
+                        'alarabiya': 'العربية',
+                        'bbc': 'بي بي سي',
+                        'skynewsarabia': 'سكاي نيوز عربية'
+                    };
+                    
+                    return knownSources[cleanDomain] || 
+                           cleanDomain.charAt(0).toUpperCase() + cleanDomain.slice(1);
+                } catch (e) {
+                    return 'مصدر غير معروف';
+                }
+            },
+            
+            // تنظيم الأرشيف حسب الشهر
+            organizeArchive: function() {
+                this.archiveData = {};
+                const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+                                    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+                
+                this.allNewsItems.forEach(item => {
+                    const date = new Date(item.pubDate);
+                    const year = date.getFullYear();
+                    const month = date.getMonth();
+                    const monthName = monthNames[month];
+                    const key = `${year}-${month}`;
+                    
+                    if (!this.archiveData[key]) {
+                        this.archiveData[key] = {
+                            year: year,
+                            month: month,
+                            monthName: monthName,
+                            count: 0
+                        };
+                    }
+                    this.archiveData[key].count++;
+                });
+                
+                this.displayArchive();
+            },
+            
+            // عرض الأرشيف
+            displayArchive: function() {
+                const archiveList = document.getElementById('archiveList');
+                let archiveHTML = '';
+                
+                // تحويل الأرشيف إلى مصفوفة وترتيبها من الأحدث إلى الأقدم
+                const sortedArchive = Object.values(this.archiveData).sort((a, b) => {
+                    if (a.year !== b.year) return b.year - a.year;
+                    return b.month - a.month;
+                });
+                
+                sortedArchive.forEach(archiveItem => {
+                    archiveHTML += `
+                        <div class="archive-item">
+                            <a href="#" onclick="app.filterByArchive(${archiveItem.year}, ${archiveItem.month})">
+                                <div class="archive-date">${archiveItem.monthName} ${archiveItem.year}</div>
+                                <div class="archive-count">${archiveItem.count} خبر</div>
+                            </a>
+                        </div>
+                    `;
+                });
+                
+                archiveList.innerHTML = archiveHTML;
+            },
+            
+            // تصفية الأخبار حسب الأرشيف
+            filterByArchive: function(year, month) {
+                this.filteredNews = this.allNewsItems.filter(item => {
+                    const date = new Date(item.pubDate);
+                    return date.getFullYear() === year && date.getMonth() === month;
+                });
+                
+                this.currentPage = 1;
+                this.displayNews();
+                return false; // لمنع سلوك الرابط الافتراضي
+            },
+            
+            // عرض الأخبار اليومية
+            displayTodayNews: function() {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                const todayNews = this.allNewsItems.filter(item => {
+                    const newsDate = new Date(item.pubDate);
+                    newsDate.setHours(0, 0, 0, 0);
+                    return newsDate.getTime() === today.getTime();
+                });
+                
+                if (todayNews.length > 0) {
+                    let todayHTML = `
+                        <div class="featured-news">
+                            <h2 style="grid-column: 1 / -1; margin-bottom: 20px;">أخبار اليوم</h2>
+                    `;
+                    
+                    todayNews.slice(0, 4).forEach((item, index) => {
+                        const imageUrl = this.extractBestImage(item.content);
+                        let description = '';
+                        if (item.content) {
+                            description = item.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
+                        }
+                        
+                        todayHTML += `
+                            <div class="news-article">
+                                <img src="${imageUrl}" alt="${item.title}" class="article-image" onerror="this.src='${this.getDefaultImage()}'">
+                                <div class="article-content">
+                                    <span class="article-category">${item.category}</span>
+                                    <h2 class="article-title">${item.title}</h2>
+                                    <p class="article-excerpt">${description}</p>
+                                    <div class="article-meta">
+                                        <span class="article-date"><i class="far fa-calendar-alt"></i> ${this.formatDate(item.pubDate)}</span>
+                                        <span class="article-author"><i class="far fa-user"></i> ${item.source || 'مصدر غير معروف'}</span>
+                                    </div>
+                                    <button class="read-more" onclick="app.showArticleModal(${index})">قراءة المزيد</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    todayHTML += `</div>`;
+                    document.getElementById('todayNewsContainer').innerHTML = todayHTML;
+                } else {
+                    document.getElementById('todayNewsContainer').innerHTML = '';
+                }
+            },
+            
+            // اكتشاف التصنيف من عنوان الخبر
+            detectCategory: function(title) {
+                const lowerTitle = title.toLowerCase();
+                
+                if (lowerTitle.includes('كرة قدم') || lowerTitle.includes('دوري') || lowerTitle.includes('مباراة')) {
+                    return 'كرة قدم';
+                } else if (lowerTitle.includes('كرة سلة') || lowerTitle.includes('nba') || lowerTitle.includes('سلة')) {
+                    return 'كرة سلة';
+                } else if (lowerTitle.includes('تنس')) {
+                    return 'تنس';
+                } else if (lowerTitle.includes('أولمبياد') || lowerTitle.includes('أولمبية')) {
+                    return 'رياضات أولمبية';
+                } else {
+                    return 'رياضات متفرقة';
+                }
+            },
+            
+            // استخراج أفضل صورة من المحتوى
+            extractBestImage: function(content) {
+                if (!content) return this.getDefaultImage();
+                
+                // البحث عن جميع الصور في المحتوى
+                const imgRegex = /<img[^>]+src="([^">]+)"/g;
+                let matches;
+                const images = [];
+                
+                while ((matches = imgRegex.exec(content)) !== null) {
+                    images.push(matches[1]);
+                }
+                
+                // اختيار الصورة الأولى إذا وجدت، وإلا الصورة الافتراضية
+                return images.length > 0 ? images[0] : this.getDefaultImage();
+            },
+            
+            // الحصول على صورة افتراضية
+            getDefaultImage: function() {
+                return 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80';
+            },
+            
+            // تنسيق التاريخ
+            formatDate: function(date) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return date.toLocaleDateString('ar-EG', options);
+            },
+            
+            // عرض الأخبار
+            displayNews: function() {
+                const startIdx = (this.currentPage - 1) * this.itemsPerPage;
+                const endIdx = startIdx + this.itemsPerPage;
+                const newsToDisplay = this.filteredNews.slice(startIdx, endIdx);
+                
+                if (newsToDisplay.length === 0) {
+                    document.getElementById('newsContainer').innerHTML = `
+                        <div class="loading">
+                            <i class="fas fa-newspaper"></i>
+                            <p>لا توجد أخبار متاحة حالياً.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let newsHTML = '';
+                
+                newsToDisplay.forEach((item, index) => {
+                    // استخراج أفضل صورة للمقال
+                    const imageUrl = this.extractBestImage(item.content);
+                    
+                    // استخراج الوصف من المحتوى
+                    let description = '';
+                    if (item.content) {
+                        description = item.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
+                    }
+                    
+                    newsHTML += `
+                        <div class="news-article" data-categories="${item.category}">
+                            <img src="${imageUrl}" alt="${item.title}" class="article-image" onerror="this.src='${this.getDefaultImage()}'">
+                            <div class="article-content">
+                                <span class="article-category">${item.category}</span>
+                                <h2 class="article-title">${item.title}</h2>
+                                <p class="article-excerpt">${description}</p>
+                                <div class="article-meta">
+                                    <span class="article-date"><i class="far fa-calendar-alt"></i> ${this.formatDate(item.pubDate)}</span>
+                                    <span class="article-author"><i class="far fa-user"></i> ${item.source || 'مصدر غير معروف'}</span>
+                                </div>
+                                <button class="read-more" onclick="app.showArticleModal(${index + startIdx})">قراءة المزيد</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                document.getElementById('newsContainer').innerHTML = newsHTML;
+                this.updatePagination();
+            },
+            
+            // عرض نافذة تفاصيل المقال
+            showArticleModal: function(index) {
+                const article = this.filteredNews[index];
+                this.currentArticle = article;
+                
+                // استخراج أفضل صورة للمقال
+                const imageUrl = this.extractBestImage(article.content);
+                
+                // تعبئة البيانات في النافذة
+                document.getElementById('modalArticleTitle').textContent = article.title;
+                document.getElementById('modalArticleSource').textContent = article.source || 'مصدر غير معروف';
+                document.getElementById('modalArticleDate').textContent = this.formatDate(article.pubDate);
+                document.getElementById('modalArticleImage').src = imageUrl;
+                document.getElementById('modalArticleImage').alt = article.title;
+                document.getElementById('modalArticleImage').onerror = () => {
+                    document.getElementById('modalArticleImage').src = this.getDefaultImage();
+                };
+                
+                // استخدام المحتوى الأصلي للخبر
+                let content = article.content || 'لا يوجد محتوى متاح لهذا الخبر';
+                content = content.replace(/<[^>]*>/g, ''); // إزالة الوسوم HTML
+                
+                document.getElementById('modalArticleSummary').textContent = content.substring(0, 300) + '...';
+                document.getElementById('modalArticleContent').textContent = content;
+                document.getElementById('modalArticleLink').href = article.link;
+                
+                // عرض النافذة
+                document.getElementById('articleModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            },
+            
+            // إغلاق نافذة المقال
+            closeArticleModal: function() {
+                document.getElementById('articleModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            },
+            
+            // الصفحة السابقة
+            prevPage: function() {
+                if (this.currentPage > 1) {
+                    this.currentPage--;
+                    this.displayNews();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            },
+            
+            // الصفحة التالية
+            nextPage: function() {
+                const totalPages = Math.ceil(this.filteredNews.length / this.itemsPerPage);
+                if (this.currentPage < totalPages) {
+                    this.currentPage++;
+                    this.displayNews();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            },
+            
+            // تحديث أرقام الصفحات
+            updatePagination: function() {
+                const totalPages = Math.ceil(this.filteredNews.length / this.itemsPerPage);
+                const pageNumbersContainer = document.getElementById('pageNumbers');
+                let pageNumbersHTML = '';
+                
+                // تحديد عدد أرقام الصفحات المعروضة
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, this.currentPage - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+                
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+                
+                // زر الصفحة الأولى إذا لزم الأمر
+                if (startPage > 1) {
+                    pageNumbersHTML += `<button class="page-btn" onclick="app.goToPage(1)">1</button>`;
+                    if (startPage > 2) {
+                        pageNumbersHTML += `<span class="page-dots">...</span>`;
+                    }
+                }
+                
+                // أرقام الصفحات
+                for (let i = startPage; i <= endPage; i++) {
+                    pageNumbersHTML += `
+                        <button class="page-btn ${i === this.currentPage ? 'active' : ''}" onclick="app.goToPage(${i})">
+                            ${i}
+                        </button>
+                    `;
+                }
+                
+                // زر الصفحة الأخيرة إذا لزم الأمر
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) {
+                        pageNumbersHTML += `<span class="page-dots">...</span>`;
+                    }
+                    pageNumbersHTML += `<button class="page-btn" onclick="app.goToPage(${totalPages})">${totalPages}</button>`;
+                }
+                
+                pageNumbersContainer.innerHTML = pageNumbersHTML;
+                
+                // تفعيل/تعطيل أزرار السابق/التالي
+                document.getElementById('prevPage').classList.toggle('disabled', this.currentPage === 1);
+                document.getElementById('nextPage').classList.toggle('disabled', this.currentPage === totalPages);
+            },
+            
+            // الانتقال إلى صفحة معينة
+            goToPage: function(page) {
+                this.currentPage = page;
+                this.displayNews();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            },
+            
+            // الاشتراك في النشرة البريدية
+            subscribeToNewsletter: function(email) {
+                // هنا يمكنك إضافة كود لإرسال البريد الإلكتروني إلى الخادم
+                alert(`شكراً على اشتراكك! سيتم إرسال النشرة إلى ${email}`);
+                document.getElementById('newsletterForm').reset();
             }
-        });
+        };
+        
+        // بدء التطبيق
+        app.init();
     </script>
 </body>
 </html>
