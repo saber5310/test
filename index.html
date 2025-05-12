@@ -44,6 +44,7 @@
             --yesterday-color: #9C27B0;
             --tomorrow-color: #009688;
             --history-color: #607D8B;
+            --news-color: #E91E63;
             --text-color: #333;
             --light-bg: #f5f5f5;
             --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -51,11 +52,17 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f9f9f9;
             color: var(--text-color);
             margin: 0;
             padding: 0;
+            line-height: 1.6;
+        }
+        
+        @font-face {
+            font-family: 'Tajawal';
+            src: url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
         }
         
         h1 {
@@ -64,6 +71,12 @@
             margin: 20px 0;
             font-size: 2.5rem;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            padding: 10px;
+            background: linear-gradient(135deg, rgba(63, 81, 181, 0.1), rgba(255, 255, 255, 0.5));
+            border-radius: 10px;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         /* تبويبات الفترات الزمنية */
@@ -74,6 +87,10 @@
             flex-wrap: wrap;
             gap: 10px;
             max-width: 95%;
+            background: linear-gradient(135deg, rgba(63, 81, 181, 0.05), rgba(255, 255, 255, 0.8));
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
         }
         
         .date-tab {
@@ -87,6 +104,8 @@
             transition: all 0.3s ease;
             color: var(--text-color);
             box-shadow: var(--card-shadow);
+            min-width: 100px;
+            text-align: center;
         }
         
         .date-tab:hover {
@@ -114,6 +133,10 @@
             border-right: 4px solid var(--history-color);
         }
         
+        .date-tab.news {
+            border-right: 4px solid var(--news-color);
+        }
+        
         .date-tab.yesterday.active {
             background-color: var(--yesterday-color);
             color: white;
@@ -134,6 +157,11 @@
             color: white;
         }
         
+        .date-tab.news.active {
+            background-color: var(--news-color);
+            color: white;
+        }
+        
         /* تبويبات الدول والبطولات */
         .filter-tabs {
             display: flex;
@@ -142,9 +170,10 @@
             flex-wrap: wrap;
             gap: 10px;
             max-width: 95%;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, rgba(63, 81, 181, 0.05), rgba(255, 255, 255, 0.8));
             padding: 15px;
             border-radius: 15px;
+            box-shadow: var(--card-shadow);
         }
         
         .filter-tab {
@@ -158,6 +187,8 @@
             transition: all 0.3s ease;
             color: var(--text-color);
             box-shadow: var(--card-shadow);
+            min-width: 80px;
+            text-align: center;
         }
         
         .filter-tab:hover {
@@ -213,9 +244,10 @@
             flex-wrap: wrap;
             gap: 10px;
             max-width: 95%;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, rgba(63, 81, 181, 0.05), rgba(255, 255, 255, 0.8));
             padding: 15px;
             border-radius: 15px;
+            box-shadow: var(--card-shadow);
         }
         
         .status-tab {
@@ -229,6 +261,8 @@
             transition: all 0.3s ease;
             color: var(--text-color);
             box-shadow: var(--card-shadow);
+            min-width: 80px;
+            text-align: center;
         }
         
         .status-tab:hover {
@@ -262,6 +296,8 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            min-width: 120px;
+            justify-content: center;
         }
         
         .dropdown-btn:hover {
@@ -341,6 +377,10 @@
         
         .section-header.history::after {
             background: linear-gradient(to right, var(--history-color), var(--primary-color));
+        }
+        
+        .section-header.news::after {
+            background: linear-gradient(to right, var(--news-color), var(--primary-color));
         }
         
         /* كروت المباريات */
@@ -580,7 +620,7 @@
         }
         
         footer {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), #5c6bc0);
             color: white;
             padding: 30px 0;
             margin-top: 50px;
@@ -599,6 +639,7 @@
             color: white;
             text-decoration: none;
             transition: opacity 0.3s;
+            font-weight: 500;
         }
         
         .footer-links a:hover {
@@ -609,6 +650,7 @@
         .copyright {
             font-size: 0.9rem;
             opacity: 0.8;
+            margin-top: 20px;
         }
 
         /* مؤشر التحميل */
@@ -811,6 +853,7 @@
         .breadcrumb a {
             color: var(--primary-color);
             text-decoration: none;
+            font-weight: 500;
         }
         
         .breadcrumb a:hover {
@@ -846,9 +889,94 @@
             transform: scale(1.1);
             box-shadow: 0 6px 16px rgba(0,0,0,0.3);
         }
+        
+        /* إشعار مانع الإعلانات */
+        .adblock-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #f44336;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            z-index: 9999;
+            display: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .adblock-alert p {
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .adblock-alert button {
+            background-color: white;
+            color: #f44336;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-left: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .adblock-alert button:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* عداد الزوار */
+        .visitor-counter {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        
+        /* تبويب الأخبار */
+        .news-tab {
+            background-color: var(--news-color);
+            color: white;
+        }
+        
+        /* تحسينات للهواتف */
+        @media (max-width: 768px) {
+            .date-tab, .filter-tab, .status-tab {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .league-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .league-info, .country-info {
+                justify-content: center;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- إشعار مانع الإعلانات -->
+    <div class="adblock-alert" id="adblockAlert">
+        <p>يبدو أنك تستخدم مانع إعلانات. يرجى تعطيله لدعم موقعنا والاستمرار في تقديم المحتوى المجاني.</p>
+        <button onclick="document.getElementById('adblockAlert').style.display = 'none'">حسناً</button>
+    </div>
+
     <!-- مؤشر التحميل -->
     <div id="loader" class="loader-container" style="display: none;">
         <div class="loader"></div>
@@ -904,8 +1032,7 @@
         <span>/</span>
         <span id="breadcrumb-date">اليوم</span>
         <span>/</span>
-        <a href="new.html" id="breadcrumb-league">الاخبار الرياضية</a>
-
+        <a href="new.html" class="news-tab">الأخبار الرياضية</a>
     </div>
 
     <h1 class="animate__animated animate__fadeIn">ليجـــا شـــوت</h1>
@@ -915,8 +1042,8 @@
         <button class="date-tab yesterday" onclick="filterByDate('yesterday')">أمس</button>
         <button class="date-tab today active" onclick="filterByDate('today')">اليوم</button>
         <button class="date-tab tomorrow" onclick="filterByDate('tomorrow')">غداً</button>
-        <button class="date-tab history" onclick="filterByDate('history')">المباريات السابقة</button>                                  
-
+        <button class="date-tab history" onclick="filterByDate('history')">المباريات السابقة</button>
+        <button class="date-tab news" onclick="window.location.href='new.html'">الأخبار الرياضية</button>
     </div>
     
     <!-- تبويبات الفلترة الرئيسية -->
@@ -947,23 +1074,12 @@
         <button class="filter-tab country" onclick="filterByType('Spain')">
             <span>إسبانيا</span>
         </button>
-
-        <!-- القائمة المنسدلة للدول الأخرى -->
-        <div class="dropdown">
-            <button class="dropdown-btn">
-                <span>دول أخرى</span>
-                <span>▼</span>
-            </button>
-            <div class="dropdown-content">
-                <a href="#" onclick="filterByType('Germany')">ألمانيا</a>
-                <a href="#" onclick="filterByType('Italy')">إيطاليا</a>
-                <a href="#" onclick="filterByType('France')">فرنسا</a>
-                <a href="#" onclick="filterByType('Portugal')">البرتغال</a>
-                <a href="#" onclick="filterByType('Morocco')">المغرب</a>
-                <a href="#" onclick="filterByType('Algeria')">الجزائر</a>
-                <a href="#" onclick="filterByType('Tunisia')">تونس</a>
-            </div>
-        </div>
+        <button class="filter-tab country" onclick="filterByType('Germany')">
+            <span>ألمانيا</span>
+        </button>
+        <button class="filter-tab country" onclick="filterByType('Italy')">
+            <span>إيطاليا</span>
+        </button>
     </div>
     
     <!-- تبويبات حالة المباريات -->
@@ -984,7 +1100,10 @@
             <a href="about.html">عن الموقع</a>
             <a href="sitemap.html">خريطة الموقع</a>
             <a href="contact.html">اتصل بـنـا</a>
-            <a href="new.html">الاخبار الرياضية</a>
+            <a href="new.html" class="news-tab">الأخبار الرياضية</a>
+        </div>
+        <div class="visitor-counter" id="visitorCounter">
+            عدد الزوار: جاري التحميل...
         </div>
         <div class="copyright">
             &copy; <span id="current-year"></span> ليجا شوت. جميع الحقوق محفوظة.
@@ -1628,6 +1747,43 @@
             return `status-${statusMap[status] || 'scheduled'}`;
         }
         
+        // دالة كشف مانع الإعلانات
+        function detectAdBlock() {
+            return new Promise((resolve) => {
+                const ad = document.createElement('div');
+                ad.innerHTML = '&nbsp;';
+                ad.className = 'adsbox';
+                ad.style.position = 'absolute';
+                ad.style.left = '-9999px';
+                document.body.appendChild(ad);
+                
+                setTimeout(() => {
+                    const isBlocked = ad.offsetHeight === 0;
+                    document.body.removeChild(ad);
+                    resolve(isBlocked);
+                }, 100);
+            });
+        }
+        
+        // دالة تحديث عداد الزوار
+        function updateVisitorCounter() {
+            // يمكن استبدال هذا بطلب إلى خادم لحفظ وإحصاء الزوار
+            // هنا نستخدم localStorage فقط للعرض التوضيحي
+            let visitors = localStorage.getItem('site_visitors');
+            
+            if (!visitors) {
+                visitors = Math.floor(Math.random() * 1000) + 500; // قيمة افتراضية
+            } else {
+                visitors = parseInt(visitors) + 1;
+            }
+            
+            localStorage.setItem('site_visitors', visitors);
+            
+            // تنسيق الرقم مع فواصل
+            const formatted = visitors.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            document.getElementById('visitorCounter').textContent = `عدد الزوار: ${formatted}`;
+        }
+        
         // تحميل المباريات عند بدء التشغيل
         document.addEventListener('DOMContentLoaded', function() {
             fetchAllMatches();
@@ -1641,6 +1797,16 @@
                     closeShareModal();
                 }
             });
+            
+            // كشف مانع الإعلانات
+            detectAdBlock().then(isBlocked => {
+                if (isBlocked) {
+                    document.getElementById('adblockAlert').style.display = 'block';
+                }
+            });
+            
+            // تحديث عداد الزوار
+            updateVisitorCounter();
             
             // تحسينات SEO: إرسال حدث إلى Google Analytics
             if (typeof gtag !== 'undefined') {
